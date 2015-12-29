@@ -43,9 +43,12 @@ void log(const char file[], int line, const char* format, ...);
 
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 240
-#define SCREEN_SIZE 3
+#define SCREEN_SIZE 2
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Joe & Mac Caveman Ninja"
+
+#define IMG_TITLE_SCREEN "Assets\\Graphics\\title_screen.png"
+#define IMG_READY "Assets\\Graphics\\ready.png"
 
 #endif //__GLOBALS_H__

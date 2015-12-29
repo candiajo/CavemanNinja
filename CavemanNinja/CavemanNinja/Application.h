@@ -9,6 +9,8 @@ class ModuleInput;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleRender;
+class ModuleSceneTitle;
+class ModuleBeginLevel;
 
 class Application
 {
@@ -25,6 +27,9 @@ public:
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleRender* renderer;
+	ModuleSceneTitle* scene_title;
+	ModuleSceneTitle* scene_dino;
+	ModuleBeginLevel* begin_level;
 
 private:
 	std::list<Module*> modules;

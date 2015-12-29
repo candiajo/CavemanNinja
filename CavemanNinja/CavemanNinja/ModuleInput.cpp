@@ -6,7 +6,7 @@
 #pragma comment( lib, "SDL2.lib" )
 #pragma comment( lib, "SDL2main.lib" )
 
-ModuleInput::ModuleInput()
+ModuleInput::ModuleInput(bool active) : Module(active)
 {
 	keyboard.fill(KEY_IDLE);
 }

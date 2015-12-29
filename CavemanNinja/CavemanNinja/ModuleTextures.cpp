@@ -5,11 +5,11 @@
 #include "SDL.h"
 
 #include "SDL_image.h"
-#pragma comment( lib, "SDL2_image.lib" )
+#pragma comment(lib, "SDL2_image.lib")
 
 using namespace std;
 
-ModuleTextures::ModuleTextures()
+ModuleTextures::ModuleTextures(bool active) : Module(active)
 {}
 
 ModuleTextures::~ModuleTextures()

@@ -10,6 +10,9 @@
     <Filter Include="Core Modules">
       <UniqueIdentifier>{2176e530-87e7-4623-9908-db7c9a43f697}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game Modules">
+      <UniqueIdentifier>{7448d784-af1c-483f-840d-25a27d82543f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -36,6 +39,12 @@
     <ClCompile Include="ModuleRender.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSceneTitle.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleBeginLevel.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -57,6 +66,12 @@
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="ModuleRender.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleSceneTitle.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleBeginLevel.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>

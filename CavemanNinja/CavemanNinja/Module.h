@@ -7,7 +7,6 @@ class Module
 {
 public:
 	Module();
-
 	Module(bool active);
 	virtual ~Module();
 
@@ -29,7 +28,7 @@ public:
 
 	virtual bool CleanUp();
 
-private:
+protected:
 	bool active;
 };
 

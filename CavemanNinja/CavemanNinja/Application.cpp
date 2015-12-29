@@ -3,13 +3,20 @@
 #include "ModuleWindow.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleSceneTitle.h"
+#include "ModuleBeginLevel.h"
 
 Application::Application()
 {
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(window = new ModuleWindow());
-	modules.push_back(textures = new ModuleTextures());
-	modules.push_back(renderer = new ModuleRender());
+	modules.push_back(input = new ModuleInput(true));
+	modules.push_back(window = new ModuleWindow(true));
+	modules.push_back(textures = new ModuleTextures(true));
+	modules.push_back(begin_level = new ModuleBeginLevel(true));
+
+	modules.push_back(scene_title = new ModuleSceneTitle(true));
+	modules.push_back(scene_dino = new ModuleSceneTitle(false));
+
+	modules.push_back(renderer = new ModuleRender(true));
 }
 
 Application::~Application()
@@ -43,13 +50,16 @@ update_status Application::Update()
 	update_status ret = UPDATE_CONTINUE;
 
 	for (auto it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate();
+		if ((*it)->IsEnabled())
+			ret = (*it)->PreUpdate();
 
 	for (auto it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update();
+		if ((*it)->IsEnabled())
+			ret = (*it)->Update();
 
 	for (auto it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate();
+		if ((*it)->IsEnabled())
+			ret = (*it)->PostUpdate();
 
 	return ret;
 }

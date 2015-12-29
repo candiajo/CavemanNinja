@@ -7,8 +7,8 @@
 class ModuleInput : public Module
 {
 public:
-	ModuleInput();
-	virtual ~ModuleInput();
+	ModuleInput(bool active);
+	~ModuleInput();
 
 	bool Init();
 	update_status PreUpdate();
