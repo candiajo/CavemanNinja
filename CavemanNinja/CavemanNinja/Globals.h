@@ -32,6 +32,11 @@ enum key_state
 	KEY_UP
 };
 
+struct T_frame_info
+{
+	int x, y, h, w;
+	int x_offset, y_offset;
+};
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 void log(const char file[], int line, const char* format, ...);
@@ -48,7 +53,8 @@ void log(const char file[], int line, const char* format, ...);
 #define VSYNC true
 #define TITLE "Joe & Mac Caveman Ninja"
 
-#define IMG_TITLE_SCREEN "Assets\\Graphics\\title_screen.png"
-#define IMG_READY "Assets\\Graphics\\ready.png"
+#define IMG_TITLE_SCREEN "Content\\Graphics\\title_screen.png"
+#define IMG_READY "Content\\Graphics\\ready.png"
+#define ANI_TEST "Content\\Data\\ani_test.ini"
 
 #endif //__GLOBALS_H__

@@ -1,5 +1,8 @@
+//#include <vld.h> 
+
 #include "Globals.h"
 #include "Application.h"
+#include "File.h"
 
 Application* App = nullptr;
 
@@ -8,7 +11,7 @@ int main()
 	int return_state = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 	int update_return;
-
+	
 	while (state != MAIN_EXIT)
 	{
 		switch (state)

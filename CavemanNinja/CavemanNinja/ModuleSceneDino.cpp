@@ -1,6 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleSceneTitle.h"
+#include "ModuleSceneDino.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
@@ -8,13 +8,13 @@
 
 #include "SDL.h"
 
-ModuleSceneTitle::ModuleSceneTitle(bool start_enabled) : Module(start_enabled)
+ModuleSceneDino::ModuleSceneDino(bool start_enabled) : Module(start_enabled)
 {}
 
-ModuleSceneTitle::~ModuleSceneTitle()
+ModuleSceneDino::~ModuleSceneDino()
 {}
 
-bool ModuleSceneTitle::Start()
+bool ModuleSceneDino::Start()
 {
 	LOG("Loading Title assets");
 
@@ -25,21 +25,21 @@ bool ModuleSceneTitle::Start()
 	return (texture_title != nullptr);
 }
 
-update_status ModuleSceneTitle::Update()
+update_status ModuleSceneDino::Update()
 {
 	// Draw title screen -------------------------------------
 	App->renderer->Blit(texture_title, 0, 0, NULL);
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->begin_level->Transition(App->scene_title, this, 1);
+		App->begin_level->Transition(App->scene_dino, this, 1);
 		//App->audio->PlayFx(fx);
 	}
 
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleSceneTitle::CleanUp()
+bool ModuleSceneDino::CleanUp()
 {
 	LOG("Unloading Title scene");
 
