@@ -16,7 +16,14 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	SDL_Texture* texture_title = nullptr;
+	SDL_Texture* texture_scene_dino = nullptr;
+
+private:
+	void LoadData();
+	Frame_info bgvolcanos;
+	Frame_info bgflowers;
+	Frame_info bgplatform;
+	//Animation girl;
 };
 
 #endif //__MODULESCENEDINO_H__

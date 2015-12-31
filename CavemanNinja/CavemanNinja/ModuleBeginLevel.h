@@ -14,7 +14,7 @@ public:
 
 	bool Start();
 	update_status Update();
-	void Transition(Module* next_scene, Module* previous_scene = nullptr, Uint32 time = 1);
+	void Transition(Module* next_scene, Module* previous_scene = nullptr, Uint32 time = 0);
 
 private:
 	SDL_Texture* texture_ready;

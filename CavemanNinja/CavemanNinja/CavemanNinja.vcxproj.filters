@@ -51,6 +51,9 @@
     <ClCompile Include="ModuleSceneDino.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="ModuleSceneDino.h">
       <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

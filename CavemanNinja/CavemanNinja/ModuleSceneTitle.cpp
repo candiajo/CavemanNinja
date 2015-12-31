@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneTitle.h"
+#include "ModuleSceneDino.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
@@ -32,7 +33,7 @@ update_status ModuleSceneTitle::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->begin_level->Transition(App->scene_title, this, 1);
+		App->begin_level->Transition(App->scene_dino, this, 1);
 		//App->audio->PlayFx(fx);
 	}
 

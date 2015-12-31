@@ -12,7 +12,7 @@ File::~File()
 	file.close();
 }
 
-bool File::GetFrameInfo(string& name, T_frame_info& frame_info)
+bool File::GetFrameInfo(string& name, Frame_info& frame_info)
 {
 	bool result = false;
 	string txt;
@@ -20,17 +20,17 @@ bool File::GetFrameInfo(string& name, T_frame_info& frame_info)
 	if (file.is_open())
 	{
 		getline(file, name, '_');	// get the name of the animation
-		if (name != "")				// there are no more frames
+		if (name != "end")			// there are no more frames
 		{
 			getline(file, txt, ':');	// to discard: "_01.png"
 			getline(file, txt, ':');	// x
-			frame_info.x = stoi(txt);
+			frame_info.section.x = stoi(txt);
 			getline(file, txt, ':');	// y
-			frame_info.y = stoi(txt);
+			frame_info.section.y = stoi(txt);
 			getline(file, txt, ':');	// w
-			frame_info.w = stoi(txt);
+			frame_info.section.w = stoi(txt);
 			getline(file, txt, ':');	// h
-			frame_info.h = stoi(txt);
+			frame_info.section.h = stoi(txt);
 			getline(file, txt, '*');	// x_offset
 			frame_info.x_offset = stoi(txt);
 			getline(file, txt, '*');	// y_offset

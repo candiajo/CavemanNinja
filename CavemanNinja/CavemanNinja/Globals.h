@@ -32,9 +32,9 @@ enum key_state
 	KEY_UP
 };
 
-struct T_frame_info
+struct Frame_info
 {
-	int x, y, h, w;
+	SDL_Rect section;
 	int x_offset, y_offset;
 };
 
@@ -54,7 +54,9 @@ void log(const char file[], int line, const char* format, ...);
 #define TITLE "Joe & Mac Caveman Ninja"
 
 #define IMG_TITLE_SCREEN "Content\\Graphics\\title_screen.png"
+#define IMG_SCENE_DINO "Content\\Graphics\\scene_dino.png"
 #define IMG_READY "Content\\Graphics\\ready.png"
-#define ANI_TEST "Content\\Data\\ani_test.ini"
+#define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
+
 
 #endif //__GLOBALS_H__
