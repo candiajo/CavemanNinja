@@ -13,6 +13,9 @@
     <Filter Include="Game Modules">
       <UniqueIdentifier>{7448d784-af1c-483f-840d-25a27d82543f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StatesMachine">
+      <UniqueIdentifier>{45a7de60-0297-4e26-b236-8d1fef8154c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -54,6 +57,18 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="CrouchState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -91,6 +106,21 @@
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayer.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="CrouchState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkState.h">
+      <Filter>StatesMachine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

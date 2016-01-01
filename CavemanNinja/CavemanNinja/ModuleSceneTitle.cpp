@@ -9,7 +9,7 @@
 
 #include "SDL.h"
 
-ModuleSceneTitle::ModuleSceneTitle(bool start_enabled) : Module(start_enabled)
+ModuleSceneTitle::ModuleSceneTitle(bool active) : Module(active)
 {}
 
 ModuleSceneTitle::~ModuleSceneTitle()

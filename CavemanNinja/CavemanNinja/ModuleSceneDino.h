@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -23,7 +24,7 @@ private:
 	Frame_info bgvolcanos;
 	Frame_info bgflowers;
 	Frame_info bgplatform;
-	//Animation girl;
+	Animation girl;
 };
 
 #endif //__MODULESCENEDINO_H__

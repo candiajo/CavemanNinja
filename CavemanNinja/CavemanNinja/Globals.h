@@ -32,10 +32,30 @@ enum key_state
 	KEY_UP
 };
 
+enum Direction
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+
+enum info_type
+{
+	FRAME_INFO,
+	SPEED_INFO,
+	LOOP_INFO
+};
+
 struct Frame_info
 {
 	SDL_Rect section;
 	int x_offset, y_offset;
+};
+
+struct Point
+{
+	float x, y;
 };
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
@@ -56,7 +76,21 @@ void log(const char file[], int line, const char* format, ...);
 #define IMG_TITLE_SCREEN "Content\\Graphics\\title_screen.png"
 #define IMG_SCENE_DINO "Content\\Graphics\\scene_dino.png"
 #define IMG_READY "Content\\Graphics\\ready.png"
+#define IMG_PLAYER "Content\\Graphics\\joe.png"
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
+#define DATA_PLAYER "Content\\Data\\joe.ini"
 
+#define WALK_SPEED 1
 
 #endif //__GLOBALS_H__
+
+/* DEBUG - TODELETE
+#include "ModuleInput.h"
+
+if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) x++;
+if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) x--;
+if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) y--;
+if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) y++;
+LOG("x: %d \n", x);
+LOG("y: %d \n", y);
+*/

@@ -6,6 +6,7 @@
 #include "ModuleSceneTitle.h"
 #include "ModuleSceneDino.h"
 #include "ModuleBeginLevel.h"
+#include "ModulePlayer.h"
 
 Application::Application()
 {
@@ -14,8 +15,10 @@ Application::Application()
 	modules.push_back(textures = new ModuleTextures(true));
 	modules.push_back(begin_level = new ModuleBeginLevel(true));
 
-	modules.push_back(scene_title = new ModuleSceneTitle(true));
-	modules.push_back(scene_dino = new ModuleSceneDino(false));
+	modules.push_back(scene_title = new ModuleSceneTitle(false));
+	modules.push_back(scene_dino = new ModuleSceneDino(true));
+
+	modules.push_back(player1 = new ModulePlayer(true));
 
 	modules.push_back(renderer = new ModuleRender(true));
 }

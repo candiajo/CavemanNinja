@@ -12,6 +12,7 @@ class ModuleRender;
 class ModuleSceneTitle;
 class ModuleSceneDino;
 class ModuleBeginLevel;
+class ModulePlayer;
 
 class Application
 {
@@ -31,6 +32,7 @@ public:
 	ModuleSceneTitle* scene_title;
 	ModuleSceneDino* scene_dino;
 	ModuleBeginLevel* begin_level;
+	ModulePlayer* player1;
 
 private:
 	std::list<Module*> modules;

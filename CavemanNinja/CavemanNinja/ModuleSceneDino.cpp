@@ -11,7 +11,7 @@
 
 #include "SDL.h"
 
-ModuleSceneDino::ModuleSceneDino(bool start_enabled) : Module(start_enabled)
+ModuleSceneDino::ModuleSceneDino(bool active) : Module(active)
 {}
 
 ModuleSceneDino::~ModuleSceneDino()
@@ -34,10 +34,13 @@ void ModuleSceneDino::LoadData()
 {
 	std::string name;
 	Frame_info frame;
+	float speed;
+	bool loop;
+	info_type info;
 
 	File background_data(DATA_SCENE_DINO);
 
-	while (background_data.GetFrameInfo(name, frame))
+	while (background_data.GetAnimInfo(info, name, frame, speed, loop))
 	{
 		if (name == "bgvolcanos")
 		{
@@ -53,16 +56,25 @@ void ModuleSceneDino::LoadData()
 		}
 		else if (name == "girl")
 		{
-			// girl frames
+			switch (info)
+			{
+			case FRAME_INFO: girl.frames.push_back(frame);	break;
+			case SPEED_INFO: girl.speed = speed;			break;
+			case LOOP_INFO: girl.loop = loop;				break;
+			}
 		}
 	}
 }
 
 update_status ModuleSceneDino::Update()
 {
+	int x_girl = girl.GetCurrentFrame().x_offset;
+	int y_girl = girl.GetCurrentFrame().y_offset;
+
 	App->renderer->Blit(texture_scene_dino, bgvolcanos.x_offset, bgvolcanos.y_offset, &bgvolcanos.section);
 	App->renderer->Blit(texture_scene_dino, bgplatform.x_offset, bgplatform.y_offset, &bgplatform.section);
 	App->renderer->Blit(texture_scene_dino, bgflowers.x_offset, bgflowers.y_offset, &bgflowers.section);
+	App->renderer->Blit(texture_scene_dino, x_girl, y_girl, &(girl.GetCurrentFrame().section));
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
