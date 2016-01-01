@@ -13,6 +13,7 @@ class ModuleSceneTitle;
 class ModuleSceneDino;
 class ModuleBeginLevel;
 class ModulePlayer;
+class ModuleCollisions;
 
 class Application
 {
@@ -33,6 +34,7 @@ public:
 	ModuleSceneDino* scene_dino;
 	ModuleBeginLevel* begin_level;
 	ModulePlayer* player1;
+	ModuleCollisions* collisions;
 
 private:
 	std::list<Module*> modules;

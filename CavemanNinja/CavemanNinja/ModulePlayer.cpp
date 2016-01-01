@@ -9,8 +9,6 @@
 #include "CrouchState.h"
 
 #include "ModuleInput.h"
-#include "SDL.h"
-
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
@@ -23,13 +21,14 @@ ModulePlayer::~ModulePlayer()
 
 bool ModulePlayer::Start()
 {
+	direction = RIGHT;
 	LOG("Loading player");
 
 	texture_player = App->textures->Load(IMG_PLAYER);
 	LoadData();
 
 	//todelete
-	position.x = 0;
+	position.x = 100;
 	position.y = 215-59;
 
 	return true;
@@ -49,7 +48,7 @@ update_status ModulePlayer::Update()
 
 	position.x += x_speed;
 	position.y += y_speed;
-	App->renderer->Blit(texture_player, (int)position.x, (int)position.y, &((*current_animation).GetCurrentFrame().section));
+	App->renderer->Blit(texture_player, (int)position.x, (int)position.y, &((*current_animation).GetCurrentFrame().section), Flip());
 
 	return UPDATE_CONTINUE;
 }
@@ -63,50 +62,27 @@ bool ModulePlayer::CleanUp()
 void ModulePlayer::LoadData()
 {
 	std::string name;
-	Frame_info frame;
-	float speed;
-	bool loop;
 	info_type info;
+	Generic_data data;
 
 	File player_data(DATA_PLAYER);
 
-	while (player_data.GetAnimInfo(info, name, frame, speed, loop))
+	while (player_data.GetAnimInfo(info, name, data))
 	{
-		if (name == "crouch")
-		{
-			switch (info)
-			{
-			case FRAME_INFO: crouch.frames.push_back(frame);	break;
-			case SPEED_INFO: crouch.speed = speed;				break;
-			case LOOP_INFO: crouch.loop = loop;					break;
-			}
-		}
-		else if (name == "idle")
-		{
-			switch (info)
-			{
-			case FRAME_INFO: idle.frames.push_back(frame);	break;
-			case SPEED_INFO: idle.speed = speed;			break;
-			case LOOP_INFO: idle.loop = loop;				break;
-			}
-		}
-		else if (name == "lookup")
-		{
-			switch (info)
-			{
-			case FRAME_INFO: lookup.frames.push_back(frame);	break;
-			case SPEED_INFO: lookup.speed = speed;				break;
-			case LOOP_INFO: lookup.loop = loop;					break;
-			}
-		}
-		else if (name == "walk")
-		{
-			switch (info)
-			{
-			case FRAME_INFO: walk.frames.push_back(frame);	break;
-			case SPEED_INFO: walk.speed = speed;			break;
-			case LOOP_INFO: walk.loop = loop;				break;
-			}
-		}
+		if (name == "crouch") StoreData(info, data, crouch, this);
+		else if (name == "idle") StoreData(info, data, idle, this);
+		else if (name == "lookup") StoreData(info, data, lookup, this);
+		else if (name == "walk") StoreData(info, data, walk, this);
 	}
+}
+
+SDL_RendererFlip ModulePlayer::Flip()
+{
+	if (direction == LEFT) return SDL_FLIP_HORIZONTAL;
+	else return SDL_FLIP_NONE;
+}
+
+void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+{
+
 }

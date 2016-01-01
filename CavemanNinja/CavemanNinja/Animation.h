@@ -3,7 +3,9 @@
 
 #include "SDL_rect.h"
 #include "Globals.h"
+
 #include <vector>
+#include <list>
 
 using namespace std;
 
@@ -14,13 +16,14 @@ public:
 	~Animation();
 
 	Frame_info& GetCurrentFrame();
-	// const Frame_info& PeekCurrentFrame() const; // TODO ¿lo necesito o lo borro?
+	const Frame_info& PeekCurrentFrame() const;
 	bool Finished();
 	void Reset();
 
 	float speed = 1.0f;
 	bool loop = true;
 	vector<Frame_info> frames;
+	list<Collider*> colliders;
 
 private:
 	float current_frame = 0.0f;

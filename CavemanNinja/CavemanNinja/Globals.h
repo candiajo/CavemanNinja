@@ -1,7 +1,10 @@
 #ifndef __GLOBALS_H__
 #define __GLOBALS_H__
 
+#include <list>
 #include "SDL_rect.h"
+
+class Collider;
 
 typedef unsigned int uint;
 typedef unsigned char uchar;
@@ -34,6 +37,7 @@ enum key_state
 
 enum Direction
 {
+	NONE,
 	LEFT,
 	RIGHT,
 	UP,
@@ -44,18 +48,44 @@ enum info_type
 {
 	FRAME_INFO,
 	SPEED_INFO,
-	LOOP_INFO
+	LOOP_INFO,
+	OFFSET_INFO,
+	FRAME_COLLIDER,
+	ANIMATION_COLLIDER
+};
+
+enum collider_type
+{
+	COLLIDER_GROUND = 1,		// down limit of the screen
+	COLLIDER_PLATFORM = 2,		// the player can walk on it, but can also jump down
+	COLLIDER_PLAYER_BODY = 3,	// where player receives damage
+	COLLIDER_PLAYER_ATTACK = 4,	// hand weapon and feet (on jump)
+	COLLIDER_PLAYER_GROUND = 5,	// for detecting contact with the ground (collider on the feet)
+	COLLIDER_PLAYER_SHOT = 6,	// throwable weapon
+	COLLIDER_ENEMY = 7,			// where enemies can get damage and cause damage to the player
+	COLLIDER_DINO = 8,			// for the dinosaur's head
+	NUM_COLLIDERS				// 
 };
 
 struct Frame_info
 {
 	SDL_Rect section;
-	int x_offset, y_offset;
+	int x_offset = 0;
+	int y_offset = 0;
+	std::list<Collider*> colliders;
 };
 
 struct Point
 {
 	float x, y;
+};
+
+struct Generic_data
+{
+	int val1, val2, val3, val4;
+	float val5;
+	collider_type type;
+	bool yes_no;
 };
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
@@ -79,8 +109,21 @@ void log(const char file[], int line, const char* format, ...);
 #define IMG_PLAYER "Content\\Graphics\\joe.png"
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
 #define DATA_PLAYER "Content\\Data\\joe.ini"
+#define DATA_MATRIX "Content\\Data\\collision matrix.ini"
+
+#define	LEFT_LIMIT -20
+#define	RIGHT_LIMIT 200
 
 #define WALK_SPEED 1
+
+#define RELEASE( x ) \
+    { \
+       if( x != nullptr ) \
+	          { \
+         delete x; \
+	     x = nullptr; \
+	          } \
+    }
 
 #endif //__GLOBALS_H__
 

@@ -21,9 +21,9 @@ public:
 
 private:
 	void LoadData();
-	Frame_info bgvolcanos;
-	Frame_info bgflowers;
-	Frame_info bgplatform;
+	Animation bgvolcanos;
+	Animation bgflowers;
+	Animation bgplatform;
 	Animation girl;
 };
 

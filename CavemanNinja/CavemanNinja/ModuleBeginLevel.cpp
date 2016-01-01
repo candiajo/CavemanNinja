@@ -45,7 +45,7 @@ update_status ModuleBeginLevel::Update()
 		}
 		else
 		{
-			App->renderer->Blit(texture_ready, center_x, center_y, NULL);
+			App->renderer->Blit(texture_ready, center_x, center_y, NULL, SDL_FLIP_NONE);
 		}
 	}
 	return UPDATE_CONTINUE;

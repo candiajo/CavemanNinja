@@ -11,7 +11,8 @@ public:
 	File(const char* path);
 	~File();
 	
-	bool GetAnimInfo(info_type& info, std::string& name, Frame_info& frame_info, float& speed, bool& loop);
+	bool GetAnimInfo(info_type& info, std::string& name, Generic_data& data);
+	bool GetMatrixInfo(Generic_data& data);
 
 private:
 	bool Open();

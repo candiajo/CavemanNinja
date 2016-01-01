@@ -29,7 +29,7 @@ bool ModuleSceneTitle::Start()
 update_status ModuleSceneTitle::Update()
 {
 	// Draw title screen -------------------------------------
-	App->renderer->Blit(texture_title, 0, 0, NULL);
+	App->renderer->Blit(texture_title, 0, 0, NULL, SDL_FLIP_NONE);
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{

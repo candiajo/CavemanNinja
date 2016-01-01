@@ -26,13 +26,10 @@ Frame_info& Animation::GetCurrentFrame()
 	}
 }
 
-// TODO ¿lo necesito?
-/*
 const Frame_info& Animation::PeekCurrentFrame() const
 {
 	return frames[(int)current_frame];
 }
-*/
 
 bool Animation::Finished()
 {

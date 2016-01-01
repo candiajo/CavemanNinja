@@ -7,12 +7,14 @@
 #include "ModuleSceneDino.h"
 #include "ModuleBeginLevel.h"
 #include "ModulePlayer.h"
+#include "ModuleCollisions.h"
 
 Application::Application()
 {
 	modules.push_back(input = new ModuleInput(true));
 	modules.push_back(window = new ModuleWindow(true));
 	modules.push_back(textures = new ModuleTextures(true));
+	modules.push_back(collisions = new ModuleCollisions(true));
 	modules.push_back(begin_level = new ModuleBeginLevel(true));
 
 	modules.push_back(scene_title = new ModuleSceneTitle(false));

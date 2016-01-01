@@ -8,8 +8,6 @@
 
 class IdleState;
 
-
-
 class WalkState : public PlayerState
 {
 public:
@@ -19,7 +17,7 @@ public:
 	virtual void enter(ModulePlayer& player);
 
 private:
-	Direction direction;
+	Direction ScreenLimitReached(ModulePlayer& player);
 };
 
 #endif //__MODULEWALKSTATE_H__

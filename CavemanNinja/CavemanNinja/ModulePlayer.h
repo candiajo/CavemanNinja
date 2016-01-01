@@ -5,7 +5,9 @@
 #include "Animation.h"
 #include "Globals.h"
 
-struct SDL_Texture;
+#include "SDL.h"
+
+//struct SDL_Texture;
 class PlayerState;
 
 class ModulePlayer : public Module
@@ -18,6 +20,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
+
 	Animation* current_animation = nullptr;
 	Animation idle;
 	Animation walk;
@@ -25,11 +29,14 @@ public:
 	Animation lookup;
 	float x_speed = 0;
 	float y_speed = 0;
+	Direction direction;
+	Point position;
+
 private:
 	void LoadData();
+	SDL_RendererFlip Flip();
 	SDL_Texture* texture_player = nullptr;
 	PlayerState* state;
-	Point position;
 };
 
 #endif // __MODULEPLAYER_H__

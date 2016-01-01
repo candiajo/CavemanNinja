@@ -15,51 +15,95 @@ File::~File()
 // returns the info of the next line in the .ini file
 // it can be frame info
 // or animation speed info
-bool File::GetAnimInfo(info_type& info, string& name, Frame_info& frame_info, float& speed, bool& loop)
+
+bool File::GetAnimInfo(info_type& info, std::string& name, Generic_data& data)
 {
 	bool result = false;
-	string txt;
+	string txt, discard;
 	
 	if (file.is_open())
 	{
 		getline(file, name, '_');	// get the name of the animation
-		if (name != "end")			// there are no more frames
+		if (name != "end")			// there are no more lines
 		{
-			getline(file, txt, ':');	// "speed", "loop" or text to discard: "_01.png"
-			if (txt == "speed")			// the line has the speed of the animation............
+			getline(file, txt, '_');		// "speed", "loop", "colliderframe", "collideranimation", "frame"
+			getline(file, discard, ':');	// to discard "xxx.png:" o ":"
+			if (txt == "speed")			
 			{
-				getline(file, txt, '*');			// speed
-				speed = stof(txt);
-				getline(file, txt, '\n');			// end of line
+				getline(file, txt, '\n');			// speed
+				data.val5 = stof(txt);
 				info = SPEED_INFO;
 			}
-			else if (txt == "loopinfo")			// the line says if animation loops or not of the animation............
+			else if (txt == "loop")			// the line says if animation loops or not of the animation............
 			{
-				getline(file, txt, '*');			// "loop" or "noloop"
-				loop = (txt == "loop");
-				getline(file, txt, '\n');			// end of line
+				getline(file, txt, '\n');			// 0 = no loop,  1 = loop
+				data.val1 = stoi(txt);
 				info = LOOP_INFO;
 			}
-			else						// the line has frame info.............................
+			else if (txt == "offset")			// the offset of that frame............
 			{
-				getline(file, txt, ':');	// x
-				frame_info.section.x = stoi(txt);
-				getline(file, txt, ':');	// y
-				frame_info.section.y = stoi(txt);
-				getline(file, txt, ':');	// w
-				frame_info.section.w = stoi(txt);
-				getline(file, txt, ':');	// h
-				frame_info.section.h = stoi(txt);
-				getline(file, txt, '*');	// x_offset
-				frame_info.x_offset = stoi(txt);
-				getline(file, txt, '*');	// y_offset
-				frame_info.y_offset = stoi(txt);
-				getline(file, txt, '\n');	// end of line
+				getline(file, txt, ':');		// x offset
+				data.val1 = stoi(txt);
+				getline(file, txt, '\n');		// y offset
+				data.val2 = stoi(txt);
+				info = OFFSET_INFO;
+			}
+			else if (txt == "frame") 
+			{
+				getline(file, txt, ':');		// x
+				data.val1 = stoi(txt);
+				getline(file, txt, ':');		// y
+				data.val2 = stoi(txt);
+				getline(file, txt, ':');		// w
+				data.val3 = stoi(txt);
+				getline(file, txt, '\n');		// h
+				data.val4 = stoi(txt);
+
 				info = FRAME_INFO;
+			}
+			else // it's a collider
+			{
+				if (txt == "colliderframe")	info = FRAME_COLLIDER;
+				else if (txt == "collideranimation") info = ANIMATION_COLLIDER;
+
+				getline(file, txt, ':');		// x
+				data.val1 = stoi(txt);
+				getline(file, txt, ':');		// y
+				data.val2 = stoi(txt);
+				getline(file, txt, ':');		// w
+				data.val3 = stoi(txt);
+				getline(file, txt, ':');		// h
+				data.val4 = stoi(txt);
+				getline(file, txt, '*');		// Collider type
+				data.type = static_cast<collider_type>(stoi(txt));
+				getline(file, discard, '\n');	// to discard coments
 			}
 			result = true;
 		}
 	}
 	
+	return result;
+}
+
+bool File::GetMatrixInfo(Generic_data& data)
+{
+	bool result = false;
+	string txt;
+
+	if (file.is_open())
+	{
+		getline(file, txt, ':');	// row
+		if (txt != "end")			// there are no more lines
+		{
+			data.val1 = stoi(txt);
+			getline(file, txt, '-');		// column
+			data.val2 = stoi(txt);
+			getline(file, txt, '\n');		// value (yes / no)
+			data.yes_no = (txt == "yes");
+			result = true;
+		}
+		else result = false;
+	}
+
 	return result;
 }

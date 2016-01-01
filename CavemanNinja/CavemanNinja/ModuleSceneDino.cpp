@@ -8,6 +8,8 @@
 #include "ModuleInput.h"
 #include "ModuleBeginLevel.h"
 #include "File.h"
+#include "ModuleCollisions.h"
+#include "Collider.h"
 
 #include "SDL.h"
 
@@ -27,55 +29,49 @@ bool ModuleSceneDino::Start()
 
 	LoadData();	// load .ini data
 
+	bgplatform.colliders.front()->SetPos(bgplatform.frames.front().x_offset, bgplatform.frames.front().y_offset);
+	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first (and only) collider
+
+	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().x_offset, bgflowers.frames.front().y_offset);
+	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
 	return (texture_scene_dino != nullptr);
 }
 
 void ModuleSceneDino::LoadData()
 {
 	std::string name;
-	Frame_info frame;
-	float speed;
-	bool loop;
 	info_type info;
+	Generic_data data;
 
 	File background_data(DATA_SCENE_DINO);
-
-	while (background_data.GetAnimInfo(info, name, frame, speed, loop))
+	
+	while (background_data.GetAnimInfo(info, name, data))
 	{
-		if (name == "bgvolcanos")
-		{
-			bgvolcanos = frame;
-		}
-		else if (name == "bgplatform")
-		{
-			bgplatform = frame;
-		}
-		else if (name == "bgflowers")
-		{
-			bgflowers = frame;
-		}
-		else if (name == "girl")
-		{
-			switch (info)
-			{
-			case FRAME_INFO: girl.frames.push_back(frame);	break;
-			case SPEED_INFO: girl.speed = speed;			break;
-			case LOOP_INFO: girl.loop = loop;				break;
-			}
-		}
+		if (name == "bgvolcanos") StoreData(info, data, bgvolcanos, this);
+		else if (name == "bgplatform") StoreData(info, data, bgplatform, this);
+		else if (name == "bgflowers") StoreData(info, data, bgflowers, this);
+		else if (name == "girl") StoreData(info, data, girl, this);
 	}
 }
 
 update_status ModuleSceneDino::Update()
 {
-	int x_girl = girl.GetCurrentFrame().x_offset;
-	int y_girl = girl.GetCurrentFrame().y_offset;
+	int x = bgvolcanos.GetCurrentFrame().x_offset;
+	int y = bgvolcanos.GetCurrentFrame().y_offset;
+	App->renderer->Blit(texture_scene_dino, x, y, &(bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	App->renderer->Blit(texture_scene_dino, bgvolcanos.x_offset, bgvolcanos.y_offset, &bgvolcanos.section);
-	App->renderer->Blit(texture_scene_dino, bgplatform.x_offset, bgplatform.y_offset, &bgplatform.section);
-	App->renderer->Blit(texture_scene_dino, bgflowers.x_offset, bgflowers.y_offset, &bgflowers.section);
-	App->renderer->Blit(texture_scene_dino, x_girl, y_girl, &(girl.GetCurrentFrame().section));
+	x = bgplatform.GetCurrentFrame().x_offset;
+	y = bgplatform.GetCurrentFrame().y_offset;
+	App->renderer->Blit(texture_scene_dino, x, y, &(bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
 
+	x = bgflowers.GetCurrentFrame().x_offset;
+	y = bgflowers.GetCurrentFrame().y_offset;
+	App->renderer->Blit(texture_scene_dino, x, y, &(bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
+
+	x = girl.GetCurrentFrame().x_offset;
+	y = girl.GetCurrentFrame().y_offset;
+	App->renderer->Blit(texture_scene_dino, x, y, &(girl.GetCurrentFrame().section), SDL_FLIP_NONE);
+	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
 		App->begin_level->Transition(App->scene_title, this, 1);
