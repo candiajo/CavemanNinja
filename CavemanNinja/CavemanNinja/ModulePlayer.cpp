@@ -7,13 +7,14 @@
 #include "PlayerState.h"
 #include "IdleState.h"
 #include "CrouchState.h"
+#include "Collider.h"
+#include "ModuleCollisions.h"
 
 #include "ModuleInput.h"
 
-ModulePlayer::ModulePlayer(bool active) : Module(active)
+ModulePlayer::ModulePlayer(bool active) : ModuleSprite(active)
 {
 	state = new IdleState();
-	state->enter(*this);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -26,6 +27,8 @@ bool ModulePlayer::Start()
 
 	texture_player = App->textures->Load(IMG_PLAYER);
 	LoadData();
+	
+	state->enter(*this);
 
 	//todelete
 	position.x = 100;
@@ -46,9 +49,19 @@ update_status ModulePlayer::Update()
 		state->enter(*this);
 	}
 
+	current_frame = &(*current_animation).GetCurrentFrame();
 	position.x += x_speed;
 	position.y += y_speed;
-	App->renderer->Blit(texture_player, (int)position.x, (int)position.y, &((*current_animation).GetCurrentFrame().section), Flip());
+	App->renderer->Blit(texture_player, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+	
+	return UPDATE_CONTINUE;
+}
+
+update_status ModulePlayer::PostUpdate()
+{
+	RefreshColliders();
+	PlaceColliders();
+	previous_frame = current_frame;
 
 	return UPDATE_CONTINUE;
 }
@@ -73,16 +86,16 @@ void ModulePlayer::LoadData()
 		else if (name == "idle") StoreData(info, data, idle, this);
 		else if (name == "lookup") StoreData(info, data, lookup, this);
 		else if (name == "walk") StoreData(info, data, walk, this);
+		else if (name == "normaljump") StoreData(info, data, normaljump, this);
+		else if (name == "superjump") StoreData(info, data, superjump, this);
+		else if (name == "downjump") StoreData(info, data, downjump, this);
+		else if (name == "shotweapon") StoreData(info, data, shotweapon, this);
+		else if (name == "shotcrouch") StoreData(info, data, shotcrouch, this);
+		else if (name == "shotup") StoreData(info, data, shotup, this);
 	}
-}
-
-SDL_RendererFlip ModulePlayer::Flip()
-{
-	if (direction == LEFT) return SDL_FLIP_HORIZONTAL;
-	else return SDL_FLIP_NONE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-
+	state->OnCollision(c1, c2);
 }

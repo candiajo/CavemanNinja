@@ -68,6 +68,8 @@ void Module::OnCollision(Collider* a, Collider* b)
 void Module::StoreData(info_type info, Generic_data& data, Animation& animation, Module* module)
 {
 	Frame_info frame;
+	Point offset;
+	int frame_w;
 
 	switch (info)
 	{
@@ -93,19 +95,21 @@ void Module::StoreData(info_type info, Generic_data& data, Animation& animation,
 		break;
 
 	case FRAME_COLLIDER:
-		data.val1 *= SCREEN_SIZE;
-		data.val2 *= SCREEN_SIZE;
+		offset.x = data.val1 * SCREEN_SIZE;
+		offset.y = data.val2 * SCREEN_SIZE;
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
-		animation.frames.back().colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, data.val1, data.val2, data.type, module));
+		frame_w = animation.frames.back().section.w;
+		animation.frames.back().colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, offset, frame_w, data.type, module));
 		break;
 
 	case ANIMATION_COLLIDER:
-		data.val1 *= SCREEN_SIZE;
-		data.val2 *= SCREEN_SIZE;
+		offset.x = data.val1 * SCREEN_SIZE;
+		offset.y = data.val2 * SCREEN_SIZE;
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
-		animation.colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, data.val1, data.val2, data.type, module));
+		frame_w = animation.frames.back().section.w;
+		animation.colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, offset, frame_w, data.type, module));
 		break;
 	}
 }

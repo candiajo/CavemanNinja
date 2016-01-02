@@ -24,7 +24,7 @@ bool File::GetAnimInfo(info_type& info, std::string& name, Generic_data& data)
 	if (file.is_open())
 	{
 		getline(file, name, '_');	// get the name of the animation
-		if (name != "end")			// there are no more lines
+		if (name != "endfile")			// there are no more lines
 		{
 			getline(file, txt, '_');		// "speed", "loop", "colliderframe", "collideranimation", "frame"
 			getline(file, discard, ':');	// to discard "xxx.png:" o ":"
@@ -93,7 +93,7 @@ bool File::GetMatrixInfo(Generic_data& data)
 	if (file.is_open())
 	{
 		getline(file, txt, ':');	// row
-		if (txt != "end")			// there are no more lines
+		if (txt != "endfile")			// there are no more lines
 		{
 			data.val1 = stoi(txt);
 			getline(file, txt, '-');		// column

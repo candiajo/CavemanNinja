@@ -71,7 +71,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="JumpState.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="LookupState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="ModuleCollisions.cpp" />
@@ -80,11 +82,15 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneDino.cpp" />
     <ClCompile Include="ModuleSceneTitle.cpp" />
+    <ClCompile Include="ModuleSprite.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleBeginLevel.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="CrouchState.cpp" />
     <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="ShotcrouchState.cpp" />
+    <ClCompile Include="ShotupState.cpp" />
+    <ClCompile Include="ShotweaponState.cpp" />
     <ClCompile Include="WalkState.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +99,8 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="JumpState.h" />
+    <ClInclude Include="LookupState.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCollisions.h" />
     <ClInclude Include="ModuleInput.h" />
@@ -100,13 +108,20 @@
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneDino.h" />
     <ClInclude Include="ModuleSceneTitle.h" />
+    <ClInclude Include="ModuleSprite.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleBeginLevel.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="CrouchState.h" />
     <ClInclude Include="IdleState.h" />
+    <ClInclude Include="ShotcrouchState.h" />
+    <ClInclude Include="ShotupState.h" />
+    <ClInclude Include="ShotweaponState.h" />
     <ClInclude Include="WalkState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

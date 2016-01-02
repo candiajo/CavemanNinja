@@ -1,6 +1,9 @@
 #include "WalkState.h"
 #include "IdleState.h"
 #include "CrouchState.h"
+#include "Collider.h"
+#include "JumpState.h"
+#include "ShotweaponState.h"
 
 WalkState::WalkState()
 {}
@@ -8,6 +11,11 @@ WalkState::WalkState()
 PlayerState* WalkState::update(ModulePlayer& player)
 {
 	Direction limit;
+
+	if (event == WALK_OFF_PLATFORM)
+	{
+		return new JumpState(DOWNJUMP);
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP ||
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
@@ -18,17 +26,28 @@ PlayerState* WalkState::update(ModulePlayer& player)
 	{
 		return new CrouchState();
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			return new JumpState(SUPERJUMP);
+		else
+			return new JumpState(NORMALJUMP);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		return new ShotweaponState();
+	}
 	else
 	{
 		limit = ScreenLimitReached(player);
 
 		if (player.direction == LEFT && limit != LEFT)
 		{
-			player.x_speed = -WALK_SPEED;
+			player.x_speed = -DEFAULT_X_SPEED;
 		}
 		else if (player.direction == RIGHT && limit != RIGHT)
 		{
-			player.x_speed = WALK_SPEED;
+			player.x_speed = DEFAULT_X_SPEED;
 		}
 		else player.x_speed = 0;
 	}
@@ -42,8 +61,7 @@ void WalkState::enter(ModulePlayer& player)
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		player.direction = RIGHT;
 
-	player.current_animation = &player.walk;
-	player.current_animation->Reset();
+	player.SetCurrentAnimation(&player.walk);
 }
 
 Direction WalkState::ScreenLimitReached(ModulePlayer& player)
@@ -51,6 +69,16 @@ Direction WalkState::ScreenLimitReached(ModulePlayer& player)
 	if (player.position.x <= LEFT_LIMIT) return LEFT;
 	if (player.position.x >= RIGHT_LIMIT) return RIGHT;
 
-	//LOG("x: %f", player.position.x);
 	return NONE;
+}
+
+void WalkState::OnCollision(Collider* c1, Collider* c2)
+{
+	ModulePlayer* player = dynamic_cast<ModulePlayer*>(c1->callback);
+
+	if (c1->type == COLLIDER_PLAYER_GROUND &&
+		c2->type == COLLIDER_BORDER)
+	{
+		event = WALK_OFF_PLATFORM;
+	}
 }

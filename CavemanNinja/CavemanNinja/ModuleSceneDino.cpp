@@ -30,7 +30,9 @@ bool ModuleSceneDino::Start()
 	LoadData();	// load .ini data
 
 	bgplatform.colliders.front()->SetPos(bgplatform.frames.front().x_offset, bgplatform.frames.front().y_offset);
-	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first (and only) collider
+	bgplatform.colliders.back()->SetPos(bgplatform.frames.back().x_offset, bgplatform.frames.back().y_offset);
+	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first colliders
+	App->collisions->AddCollider(bgplatform.colliders.back());	// adds the second collider
 
 	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().x_offset, bgflowers.frames.front().y_offset);
 	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
@@ -86,6 +88,8 @@ bool ModuleSceneDino::CleanUp()
 	LOG("Unloading Title scene");
 
 	App->textures->Unload(texture_scene_dino);
+
+	App->collisions->CleanUp();
 
 	return true;
 }

@@ -21,7 +21,6 @@ Application::Application()
 	modules.push_back(scene_dino = new ModuleSceneDino(true));
 
 	modules.push_back(player1 = new ModulePlayer(true));
-
 	modules.push_back(renderer = new ModuleRender(true));
 }
 

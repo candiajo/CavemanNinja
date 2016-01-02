@@ -75,6 +75,24 @@
     <ClCompile Include="ModuleCollisions.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleSprite.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="LookupState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotweaponState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotcrouchState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotupState.cpp">
+      <Filter>StatesMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -134,5 +152,26 @@
     <ClInclude Include="ModuleCollisions.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSprite.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="LookupState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotweaponState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotcrouchState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotupState.h">
+      <Filter>StatesMachine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

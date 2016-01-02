@@ -18,7 +18,7 @@ Frame_info& Animation::GetCurrentFrame()
 			if (loop)
 				current_frame = 0.0f;
 			else
-				current_frame = frames.size() - 1;
+				current_frame = (float)frames.size() - 1;
 
 			loops++;
 		}
@@ -41,3 +41,4 @@ void Animation::Reset()
 	current_frame = 0;
 	loops = 0;
 }
+

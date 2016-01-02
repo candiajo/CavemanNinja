@@ -4,21 +4,27 @@
 #include "Globals.h"
 #include "Module.h"
 
+#include <list>
+
 struct SDL_Rect;
 
 class Collider
 {
 public:
-	Collider(SDL_Rect rectangle, int x_offset, int y_offset, collider_type type, Module* callback);
+	Collider(SDL_Rect rectangle, Point& offset, int frame_w, collider_type type, Module* callback);
 
-	void SetPos(int x, int y, bool scaled = true);
+	void SetPos(int x, int y, bool can_flip = false);
 	bool IsColliding(Collider* collider) const;
+	Point GetOffset();
 
 	SDL_Rect rect;
-	int x_offset, y_offset;
 	bool to_delete;
 	collider_type type;
 	Module* callback;
+
+private:
+	Point offset;
+	int frame_w;	// needed for collider flipping
 };
 
 #endif // __MODULECOLLIDER_H__

@@ -17,6 +17,7 @@ public:
 
 	Frame_info& GetCurrentFrame();
 	const Frame_info& PeekCurrentFrame() const;
+	
 	bool Finished();
 	void Reset();
 

@@ -6,15 +6,14 @@
 
 #include "SDL.h"
 
-class IdleState;
-
 class WalkState : public PlayerState
 {
 public:
 	WalkState();
 
 	PlayerState* update(ModulePlayer& player);
-	virtual void enter(ModulePlayer& player);
+	void enter(ModulePlayer& player);
+	void OnCollision(Collider* c1, Collider* c2);
 
 private:
 	Direction ScreenLimitReached(ModulePlayer& player);

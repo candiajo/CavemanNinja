@@ -64,7 +64,29 @@ enum collider_type
 	COLLIDER_PLAYER_SHOT = 6,	// throwable weapon
 	COLLIDER_ENEMY = 7,			// where enemies can get damage and cause damage to the player
 	COLLIDER_DINO = 8,			// for the dinosaur's head
+	COLLIDER_BORDER = 9,		// for detecting platform borders and fall down
 	NUM_COLLIDERS				// 
+};
+
+enum jump_substate
+{
+	NO_FIRE,
+	NORMALJUMP,
+	SUPERJUMP,
+	PRE_DOWNJUMP,
+	DOWNJUMP,
+	PRE_FALLING,
+	FALLING,
+	PRE_SHOT_H,
+	SHOT_H,
+	PRE_SHOT_V,
+	SHOT_V
+};
+
+enum game_events
+{
+	PLAYER_STEP_GROUND,
+	WALK_OFF_PLATFORM
 };
 
 struct Frame_info
@@ -114,7 +136,12 @@ void log(const char file[], int line, const char* format, ...);
 #define	LEFT_LIMIT -20
 #define	RIGHT_LIMIT 200
 
-#define WALK_SPEED 1
+#define DEFAULT_X_SPEED 1
+#define NORMAL_JUMP_SPEED -6
+#define SUPER_JUMP_SPEED -8
+#define DOWN_JUMP_SPEED 0.4
+
+#define CAN_FLIP true
 
 #define RELEASE( x ) \
     { \

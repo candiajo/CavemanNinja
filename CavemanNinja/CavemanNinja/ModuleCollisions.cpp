@@ -29,7 +29,7 @@ update_status ModuleCollisions::PreUpdate()
 	{
 		if ((*it)->to_delete == true)
 		{
-			RELEASE(*it);
+			//RELEASE(*it);
 			it = colliders.erase(it);
 		}
 		else ++it;
@@ -53,15 +53,14 @@ update_status ModuleCollisions::Update()
 
 			if (c1->IsColliding(c2))
 			{
-				if (collision_matrix[c1->type][c2->type] && c1->callback)
+				if (collision_matrix[c1->type][c2->type] && c1->callback != nullptr)
 					c1->callback->OnCollision(c1, c2);
 
-				if (collision_matrix[c2->type][c1->type] && c2->callback)
+				if (collision_matrix[c2->type][c1->type] && c2->callback != nullptr)
 					c2->callback->OnCollision(c2, c1);
 			}
 		}
 	}
-	
 	return UPDATE_CONTINUE;
 }
 
@@ -103,6 +102,9 @@ update_status ModuleCollisions::PostUpdate()
 			case COLLIDER_DINO:
 				App->renderer->DrawQuad(col->rect, 0, 128, 128, alpha);
 				break;
+			case COLLIDER_BORDER:
+				App->renderer->DrawQuad(col->rect, 5, 10, 200, alpha);
+				break;
 			}
 		}
 	}
@@ -114,21 +116,22 @@ bool ModuleCollisions::CleanUp()
 {
 	LOG("Freeing all colliders");
 
-	for (auto& it : colliders) RELEASE(it);
+	//for (auto& it : colliders) RELEASE(it);
 	colliders.clear();
 
 	return true;
 }
 
-Collider* ModuleCollisions::AddCollider(SDL_Rect rect, int x_offset, int y_offset, collider_type type, Module* callback = nullptr)
+Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback = nullptr)
 {
-	Collider* ret = new Collider(rect, x_offset, y_offset, type, callback);
+	Collider* ret = new Collider(rect, offset, frame_w, type, callback);
 	colliders.push_back(ret);
 	return ret;
 }
 
 void ModuleCollisions::AddCollider(Collider* collider)
 {
+	collider->to_delete = false;
 	colliders.push_back(collider);
 }
 

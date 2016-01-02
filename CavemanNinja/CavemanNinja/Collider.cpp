@@ -1,26 +1,29 @@
 #include "Collider.h"
+#include "ModuleSprite.h"
 
-Collider::Collider(SDL_Rect rectangle, int x_offset, int y_offset, collider_type type, Module* callback = nullptr) :
+Collider::Collider(SDL_Rect rectangle, Point& offset, int frame_w, collider_type type, Module* callback = nullptr) :
 rect(rectangle),
-x_offset(x_offset),
-y_offset(y_offset),
+offset(offset),
+frame_w(frame_w),
 type(type),
 callback(callback),
 to_delete(false)
 {}
 
-void Collider::SetPos(int x, int y, bool scaled)
+void Collider::SetPos(int x, int y, bool can_flip)
 {
-	if (scaled)
+	Point temp_offset = offset;
+
+	if (can_flip)
 	{
-		rect.x = (x * SCREEN_SIZE) + x_offset;
-		rect.y = (y * SCREEN_SIZE) + y_offset;
+		if (dynamic_cast<ModuleSprite*>(callback)->direction == LEFT)
+		{
+			temp_offset.x = (frame_w - rect.w / 2 - offset.x / 2 + 1) * 2;
+		}
 	}
-	else
-	{
-		rect.x = x + x_offset;
-		rect.y = y + y_offset;
-	}
+
+	rect.x = (x * SCREEN_SIZE) + temp_offset.x;
+	rect.y = (y * SCREEN_SIZE) + temp_offset.y;
 }
 
 bool Collider::IsColliding(Collider* collider) const
@@ -28,4 +31,15 @@ bool Collider::IsColliding(Collider* collider) const
 	SDL_Rect discard;
 
 	return SDL_IntersectRect(&rect, &(collider->rect), &discard);
+}
+
+Point Collider::GetOffset()
+{
+	Point temp_offset = offset;
+	if (dynamic_cast<ModuleSprite*>(callback)->direction == LEFT)
+	{
+		temp_offset.x = (frame_w - rect.w / 2 - offset.x / 2 + 1) * 2;
+	}
+	
+	return temp_offset;
 }

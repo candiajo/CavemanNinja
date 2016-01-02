@@ -1,18 +1,16 @@
-#ifndef __MODULEIDLESTATE_H__
-#define __MODULEIDLESTATE_H__
+#ifndef __MODULESHOTUPSTATE_H__
+#define __MODULESHOTUPSTATE_H__
 
 #include "PlayerState.h"
 
-class CrouchState;
-
-class IdleState : public PlayerState
+class ShotupState : public PlayerState
 {
 public:
-	IdleState();
+	ShotupState();
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
 	void OnCollision(Collider* c1, Collider* c2){};
 };
 
-#endif //__MODULEIDLESTATE_H__
+#endif //__MODULESHOTUPSTATE_H__

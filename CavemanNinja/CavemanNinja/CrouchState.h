@@ -11,7 +11,8 @@ public:
 	CrouchState();
 
 	PlayerState* update(ModulePlayer& player);
-	virtual void enter(ModulePlayer& player);
+	void enter(ModulePlayer& player);
+	void OnCollision(Collider* c1, Collider* c2){};
 };
 
 #endif //__MODULECROUCHSTATE_H__

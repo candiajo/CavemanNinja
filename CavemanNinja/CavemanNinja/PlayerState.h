@@ -12,6 +12,10 @@ public:
 	virtual ~PlayerState() {};
 	virtual PlayerState* update(ModulePlayer& player) = 0;
 	virtual void enter(ModulePlayer& player) = 0;
+	virtual void OnCollision(Collider* c1, Collider* c2) = 0;
+
+protected:
+	game_events event;
 };
 
 #endif //__MODULEPLAYERSTATE_H__
