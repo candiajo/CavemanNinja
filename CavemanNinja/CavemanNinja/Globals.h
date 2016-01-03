@@ -10,6 +10,15 @@ typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef unsigned __int32 uint32;
 
+enum particle_type
+{
+	AXE_HORZ,
+	AXE_VERT,
+	AXE_CROUCH,
+	SUPER_AXE,
+	STONE,
+	FAST_STONE
+};
 enum main_states
 {
 	MAIN_CREATION,
@@ -89,18 +98,20 @@ enum game_events
 	WALK_OFF_PLATFORM
 };
 
+struct Point
+{
+	float x = 0;
+	float y = 0;
+};
+
 struct Frame_info
 {
 	SDL_Rect section;
-	int x_offset = 0;
-	int y_offset = 0;
+	Point offset;
 	std::list<Collider*> colliders;
 };
 
-struct Point
-{
-	float x, y;
-};
+
 
 struct Generic_data
 {
@@ -129,9 +140,11 @@ void log(const char file[], int line, const char* format, ...);
 #define IMG_SCENE_DINO "Content\\Graphics\\scene_dino.png"
 #define IMG_READY "Content\\Graphics\\ready.png"
 #define IMG_PLAYER "Content\\Graphics\\joe.png"
+#define IMG_PARTICLES "Content\\Graphics\\particles.png"
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
 #define DATA_PLAYER "Content\\Data\\joe.ini"
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
+#define DATA_PARTICLES "Content\\Data\\particles.ini"
 
 #define	LEFT_LIMIT -20
 #define	RIGHT_LIMIT 200

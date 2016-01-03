@@ -5,16 +5,16 @@
 #include "Animation.h"
 #include "File.h"
 #include "PlayerState.h"
-#include "IdleState.h"
+#include "JumpState.h"
 #include "CrouchState.h"
 #include "Collider.h"
 #include "ModuleCollisions.h"
 
 #include "ModuleInput.h"
 
-ModulePlayer::ModulePlayer(bool active) : ModuleSprite(active)
+ModulePlayer::ModulePlayer(bool active) : Sprite(active)
 {
-	state = new IdleState();
+	state = new JumpState(FALLING);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -25,14 +25,13 @@ bool ModulePlayer::Start()
 	direction = RIGHT;
 	LOG("Loading player");
 
-	texture_player = App->textures->Load(IMG_PLAYER);
+	texture_sprite = App->textures->Load(IMG_PLAYER);
 	LoadData();
 	
 	state->enter(*this);
 
-	//todelete
-	position.x = 100;
-	position.y = 215-59;
+	position.x = 50;
+	position.y = 0;
 
 	return true;
 }
@@ -52,15 +51,16 @@ update_status ModulePlayer::Update()
 	current_frame = &(*current_animation).GetCurrentFrame();
 	position.x += x_speed;
 	position.y += y_speed;
-	App->renderer->Blit(texture_player, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+	RefreshColliders();
+	PlaceColliders();
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
 	
 	return UPDATE_CONTINUE;
 }
 
 update_status ModulePlayer::PostUpdate()
 {
-	RefreshColliders();
-	PlaceColliders();
+
 	previous_frame = current_frame;
 
 	return UPDATE_CONTINUE;

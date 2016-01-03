@@ -7,16 +7,21 @@
 #include <vector>
 #include <list>
 
+class Module;
+
 using namespace std;
 
 class Animation
 {
 public:
 	Animation();
+	Animation(Animation& source, Module* new_callback);
 	~Animation();
 
 	Frame_info& GetCurrentFrame();
-	const Frame_info& PeekCurrentFrame() const;
+	Frame_info& PeekFrame(int n);
+
+	void DestroyColliders();	// mark 'to_destroy' all (frame and animation) colliders 
 	
 	bool Finished();
 	void Reset();

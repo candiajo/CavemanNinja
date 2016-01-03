@@ -1,12 +1,17 @@
+#ifndef __SPRITE_H__
+#define __SPRITE_H__
+
 #include "Module.h"
 #include "SDL.h"
 
 class PlayerState;
+class Timer;
 
-class ModuleSprite : public Module
+class Sprite : public Module
 {
 public:
-	ModuleSprite::ModuleSprite(bool active);
+	Sprite();
+	Sprite(bool active);
 	void SetCurrentAnimation(Animation* next_animation);
 
 	Animation* previous_animation = nullptr;
@@ -15,14 +20,17 @@ public:
 	float y_speed = 0;
 	Direction direction;
 	Point position;
+	Frame_info* previous_frame = nullptr;		// the animation frame rendered in the previous game frame
+	Frame_info* current_frame = nullptr;		// the animation frame rendered in the current game frame
 
 protected:
 	SDL_RendererFlip Flip();
 	void RefreshColliders();
 	void PlaceColliders();
 
-	SDL_Texture* texture_player = nullptr;
+	SDL_Texture* texture_sprite = nullptr;
 	PlayerState* state;
-	Frame_info* previous_frame = nullptr;		// the animation frame rendered in the previous game frame
-	Frame_info* current_frame = nullptr;		// the animation frame rendered in the current game frame
+	Timer* timer;
 };
+
+#endif //__SPRITE_H__

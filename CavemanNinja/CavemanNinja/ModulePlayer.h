@@ -1,14 +1,14 @@
 #ifndef __MODULEPLAYER_H__
 #define __MODULEPLAYER_H__
 
-#include "ModuleSprite.h"
+#include "Sprite.h"
 #include "Animation.h"
 #include "Globals.h"
 
-class ModulePlayer : public ModuleSprite
+class ModulePlayer : public Sprite
 {
 public:
-	ModulePlayer(bool start_enabled = true);
+	ModulePlayer(bool active = true);
 	~ModulePlayer();
 
 	bool Start();

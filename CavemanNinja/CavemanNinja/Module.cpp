@@ -90,8 +90,8 @@ void Module::StoreData(info_type info, Generic_data& data, Animation& animation,
 		break;
 
 	case OFFSET_INFO:
-		animation.frames.back().x_offset = data.val1;
-		animation.frames.back().y_offset = data.val2;
+		animation.frames.back().offset.x = data.val1;
+		animation.frames.back().offset.y = data.val2;
 		break;
 
 	case FRAME_COLLIDER:

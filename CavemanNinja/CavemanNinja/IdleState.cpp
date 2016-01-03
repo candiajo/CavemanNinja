@@ -49,5 +49,4 @@ void IdleState::enter(ModulePlayer& player)
 	player.x_speed = 0;
 	player.y_speed = 0;
 	player.SetCurrentAnimation(&player.idle);
-	//player.current_animation = &player.idle;
 }

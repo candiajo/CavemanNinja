@@ -27,14 +27,17 @@ update_status ModuleCollisions::PreUpdate()
 {
 	for (auto it = colliders.begin(); it != colliders.end();)
 	{
-		if ((*it)->to_delete == true)
+		if ((*it)->to_destroy)
 		{
-			//RELEASE(*it);
+			RELEASE(*it);
+			it = colliders.erase(it);
+		}
+		else if ((*it)->to_detach)
+		{
 			it = colliders.erase(it);
 		}
 		else ++it;
 	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -94,7 +97,7 @@ update_status ModuleCollisions::PostUpdate()
 				App->renderer->DrawQuad(col->rect, 255, 0, 255, alpha);
 				break;
 			case COLLIDER_PLAYER_SHOT:
-				App->renderer->DrawQuad(col->rect, 128, 128, 128, alpha);
+				App->renderer->DrawQuad(col->rect, 100, 100, 100, alpha);
 				break;
 			case COLLIDER_ENEMY:
 				App->renderer->DrawQuad(col->rect, 128, 0, 128, alpha);
@@ -114,9 +117,9 @@ update_status ModuleCollisions::PostUpdate()
 
 bool ModuleCollisions::CleanUp()
 {
-	LOG("Freeing all colliders");
+	LOG("Detaching all colliders");
 
-	//for (auto& it : colliders) RELEASE(it);
+	for (auto& it : colliders) RELEASE(it);
 	colliders.clear();
 
 	return true;
@@ -131,7 +134,7 @@ Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Point offset, int frame_w
 
 void ModuleCollisions::AddCollider(Collider* collider)
 {
-	collider->to_delete = false;
+	collider->to_detach = false;
 	colliders.push_back(collider);
 }
 

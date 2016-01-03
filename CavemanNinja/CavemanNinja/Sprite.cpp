@@ -1,60 +1,62 @@
-#include "ModuleSprite.h"
+#include "Sprite.h"
 #include "Animation.h"
 #include "Collider.h"
 #include "Application.h"
 #include "ModuleCollisions.h"
 
-ModuleSprite::ModuleSprite(bool active) : Module(active)
+Sprite::Sprite(bool active) : Module(active)
 {}
 
-void ModuleSprite::SetCurrentAnimation(Animation* next_animation)
+Sprite::Sprite() : Module(true)
+{}
+
+void Sprite::SetCurrentAnimation(Animation* next_animation)
 {
 	previous_animation = current_animation;
 	current_animation = next_animation;
+
+	// delete colliders of the previous animation
+	if (previous_animation != nullptr)
+		for (auto& collider : previous_animation->colliders)
+			collider->to_detach = true;
+
+	// push colliders of the next animation
+	if (current_animation != nullptr)
+		for (auto& collider : current_animation->colliders)
+		{
+			App->collisions->AddCollider(collider);
+		}
+
 	current_animation->Reset();
 }
 
-SDL_RendererFlip ModuleSprite::Flip()
+SDL_RendererFlip Sprite::Flip()
 {
 	if (direction == LEFT) return SDL_FLIP_HORIZONTAL;
 	else return SDL_FLIP_NONE;
 }
 
-void ModuleSprite::RefreshColliders()
+void Sprite::RefreshColliders()
 {
-	// if frame has changed, delete previous frame_colliders and animation_colliders
-	//                       add current frame_colliders and animation_colliders
+	// if frame has changed, delete previous frame_colliders
+	//                       add current frame_colliders
 	if (previous_frame != current_frame)
 	{
 		// delete previous frame_colliders
 		if (previous_frame != nullptr)
 			for (auto& collider : (*previous_frame).colliders)
-				collider->to_delete = true;
+				collider->to_detach = true;
 
 		// add current frame_colliders
 		if (current_frame != nullptr)
 			for (auto& collider : (*current_frame).colliders)
 			{
-				//collider->SetPos((int)position.x, (int)position.y);
-				App->collisions->AddCollider(collider);
-			}
-
-		// delete colliders of the previous animation
-		if (previous_animation != nullptr)
-			for (auto& collider : previous_animation->colliders)
-				collider->to_delete = true;
-
-		// push colliders of the next animation
-		if (current_animation != nullptr)
-			for (auto& collider : current_animation->colliders)
-			{
-				//collider->SetPos((int)position.x, (int)position.y);
 				App->collisions->AddCollider(collider);
 			}
 	}
 }
 
-void ModuleSprite::PlaceColliders()
+void Sprite::PlaceColliders()
 {
 	// moves the frame and animation colliders to the sprite position (+offset)
 

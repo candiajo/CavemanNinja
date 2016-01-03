@@ -29,12 +29,12 @@ bool ModuleSceneDino::Start()
 
 	LoadData();	// load .ini data
 
-	bgplatform.colliders.front()->SetPos(bgplatform.frames.front().x_offset, bgplatform.frames.front().y_offset);
-	bgplatform.colliders.back()->SetPos(bgplatform.frames.back().x_offset, bgplatform.frames.back().y_offset);
+	bgplatform.colliders.front()->SetPos(bgplatform.frames.front().offset.x, bgplatform.frames.front().offset.y);
+	bgplatform.colliders.back()->SetPos(bgplatform.frames.back().offset.x, bgplatform.frames.back().offset.y);
 	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first colliders
 	App->collisions->AddCollider(bgplatform.colliders.back());	// adds the second collider
 
-	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().x_offset, bgflowers.frames.front().y_offset);
+	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().offset.x, bgflowers.frames.front().offset.y);
 	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
 	return (texture_scene_dino != nullptr);
 }
@@ -58,20 +58,20 @@ void ModuleSceneDino::LoadData()
 
 update_status ModuleSceneDino::Update()
 {
-	int x = bgvolcanos.GetCurrentFrame().x_offset;
-	int y = bgvolcanos.GetCurrentFrame().y_offset;
+	int x = bgvolcanos.GetCurrentFrame().offset.x;
+	int y = bgvolcanos.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, &(bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = bgplatform.GetCurrentFrame().x_offset;
-	y = bgplatform.GetCurrentFrame().y_offset;
+	x = bgplatform.GetCurrentFrame().offset.x;
+	y = bgplatform.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, &(bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = bgflowers.GetCurrentFrame().x_offset;
-	y = bgflowers.GetCurrentFrame().y_offset;
+	x = bgflowers.GetCurrentFrame().offset.x;
+	y = bgflowers.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, &(bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = girl.GetCurrentFrame().x_offset;
-	y = girl.GetCurrentFrame().y_offset;
+	x = girl.GetCurrentFrame().offset.x;
+	y = girl.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, &(girl.GetCurrentFrame().section), SDL_FLIP_NONE);
 	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)

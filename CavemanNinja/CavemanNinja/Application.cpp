@@ -8,12 +8,14 @@
 #include "ModuleBeginLevel.h"
 #include "ModulePlayer.h"
 #include "ModuleCollisions.h"
+#include "ModuleParticles.h"
 
 Application::Application()
 {
-	modules.push_back(input = new ModuleInput(true));
-	modules.push_back(window = new ModuleWindow(true));
+	modules.push_back(input = new ModuleInput());
+	modules.push_back(window = new ModuleWindow());
 	modules.push_back(textures = new ModuleTextures(true));
+//	modules.push_back(particles = new ModuleParticles(true));
 	modules.push_back(collisions = new ModuleCollisions(true));
 	modules.push_back(begin_level = new ModuleBeginLevel(true));
 
@@ -21,6 +23,7 @@ Application::Application()
 	modules.push_back(scene_dino = new ModuleSceneDino(true));
 
 	modules.push_back(player1 = new ModulePlayer(true));
+	modules.push_back(particles = new ModuleParticles(true));
 	modules.push_back(renderer = new ModuleRender(true));
 }
 

@@ -14,6 +14,7 @@ class ModuleSceneDino;
 class ModuleBeginLevel;
 class ModulePlayer;
 class ModuleCollisions;
+class ModuleParticles;
 
 class Application
 {
@@ -35,6 +36,11 @@ public:
 	ModuleBeginLevel* begin_level;
 	ModulePlayer* player1;
 	ModuleCollisions* collisions;
+	ModuleParticles* particles;
+
+
+	//debug
+	float var1 = 3, var2 = 1, var3 = 5;
 
 private:
 	std::list<Module*> modules;

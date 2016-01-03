@@ -3,10 +3,13 @@
 #include "SDL_scancode.h"
 #include "SDL.h"
 
+//debug
+#include "Application.h"
+
 #pragma comment( lib, "SDL2.lib" )
 #pragma comment( lib, "SDL2main.lib" )
 
-ModuleInput::ModuleInput(bool active) : Module(active)
+ModuleInput::ModuleInput() : Module(true)
 {
 	keyboard.fill(KEY_IDLE);
 }
@@ -66,7 +69,8 @@ update_status ModuleInput::PreUpdate()
 
 		if (event.type == SDL_QUIT) return UPDATE_STOP;
 	}
-
+	//debug
+	debug();
 	return UPDATE_CONTINUE;
 }
 
@@ -80,4 +84,17 @@ bool ModuleInput::CleanUp()
 key_state ModuleInput::GetKey(int key) const
 {
 	return keyboard[key];
+}
+
+void ModuleInput::debug()
+{
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 0.5f;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 0.5f;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var2 += 0.05f;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var2 -= 0.05f;
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		LOG("var1: %f \n", App->var1);
+		LOG("var2: %f \n", App->var2);
+	}
 }

@@ -12,6 +12,8 @@ JumpState::JumpState(jump_substate substate) : substate(substate)
 
 PlayerState* JumpState::update(ModulePlayer& player)
 {
+	Direction limit = ScreenLimitReached(player);
+
 	if (event == PLAYER_STEP_GROUND)
 		return new IdleState();
 
@@ -31,6 +33,8 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		player.x_speed = 0;
 	}
 
+	if (limit == RIGHT || limit == LEFT) player.x_speed = 0;
+
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT &&
@@ -38,14 +42,18 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			fire = PRE_SHOT_V;
 		else
 			fire = PRE_SHOT_H;
-
 	}
 	
 	switch (fire)
 	{
 		case PRE_SHOT_H:
 			if (substate != SUPERJUMP)
+			{
+				//debug
+				Shot(&player, STONE);
 				player.SetCurrentAnimation(&player.shotweapon);
+			}
+			Shot(&player, AXE_HORZ);
 			fire = SHOT_H;
 			break;
 
@@ -62,6 +70,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 
 		case PRE_SHOT_V:
 			player.SetCurrentAnimation(&player.shotup);
+			Shot(&player, AXE_VERT);
 			fire = SHOT_V;
 			break;
 
@@ -147,8 +156,8 @@ void JumpState::OnCollision(Collider* c1, Collider* c2)
 	{
 		while (c1->IsColliding(c2))
 		{
-			c1->rect.y-=0.25f;
-			player->position.y -= 0.25f * SCREEN_SIZE;
+			c1->rect.y-= 1;
+			player->position.y -= 1.0f / (float)SCREEN_SIZE;
 		}
 
 		event = PLAYER_STEP_GROUND;

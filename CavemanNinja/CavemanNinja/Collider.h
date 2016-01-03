@@ -18,7 +18,8 @@ public:
 	Point GetOffset();
 
 	SDL_Rect rect;
-	bool to_delete;
+	bool to_detach = false;		// only detach from the list
+	bool to_destroy = false;	// destroy the collider from memory
 	collider_type type;
 	Module* callback;
 

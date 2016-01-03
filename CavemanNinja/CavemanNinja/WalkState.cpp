@@ -64,13 +64,7 @@ void WalkState::enter(ModulePlayer& player)
 	player.SetCurrentAnimation(&player.walk);
 }
 
-Direction WalkState::ScreenLimitReached(ModulePlayer& player)
-{
-	if (player.position.x <= LEFT_LIMIT) return LEFT;
-	if (player.position.x >= RIGHT_LIMIT) return RIGHT;
 
-	return NONE;
-}
 
 void WalkState::OnCollision(Collider* c1, Collider* c2)
 {

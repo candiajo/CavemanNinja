@@ -7,13 +7,14 @@
 class ModuleInput : public Module
 {
 public:
-	ModuleInput(bool active);
+	ModuleInput();
 	~ModuleInput();
 
 	bool Init();
 	update_status PreUpdate();
 	bool CleanUp();
 	key_state GetKey(int id) const;
+	void debug();
 
 private:	
 	std::array<key_state, MAX_KEYS> keyboard;

@@ -4,11 +4,11 @@
 #include "ModulePlayer.h"
 #include "ModuleInput.h"
 #include "Application.h"
+#include "ModuleParticles.h"
 
 class PlayerState
 {
 public:
-	//PlayerState() {}
 	virtual ~PlayerState() {};
 	virtual PlayerState* update(ModulePlayer& player) = 0;
 	virtual void enter(ModulePlayer& player) = 0;
@@ -16,6 +16,19 @@ public:
 
 protected:
 	game_events event;
+
+	Direction ScreenLimitReached(ModulePlayer& player)
+	{
+		if (player.position.x <= LEFT_LIMIT) return LEFT;
+		if (player.position.x >= RIGHT_LIMIT) return RIGHT;
+
+		return NONE;
+	}
+
+	void Shot(ModulePlayer* player, particle_type weapon)
+	{
+		App->particles->AddParticle(weapon, dynamic_cast<Module*>(player));
+	}
 };
 
 #endif //__MODULEPLAYERSTATE_H__

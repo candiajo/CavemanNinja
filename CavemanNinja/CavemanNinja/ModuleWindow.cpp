@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-ModuleWindow::ModuleWindow(bool active) : Module(active)
+ModuleWindow::ModuleWindow() : Module(true)
 {}
 
 ModuleWindow::~ModuleWindow()
