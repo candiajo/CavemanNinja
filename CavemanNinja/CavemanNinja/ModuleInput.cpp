@@ -14,9 +14,6 @@ ModuleInput::ModuleInput() : Module(true)
 	keyboard.fill(KEY_IDLE);
 }
 
-ModuleInput::~ModuleInput()
-{}
-
 bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
@@ -78,6 +75,7 @@ bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+
 	return true;
 }
 
@@ -88,13 +86,16 @@ key_state ModuleInput::GetKey(int key) const
 
 void ModuleInput::debug()
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 0.5f;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 0.5f;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 1;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 1;
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var2 += 0.05f;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var2 -= 0.05f;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) App->var3 += 0.05f;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->var3 -= 0.05f;
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		LOG("var1: %f \n", App->var1);
 		LOG("var2: %f \n", App->var2);
+		LOG("var3: %f \n", App->var3);
 	}
 }

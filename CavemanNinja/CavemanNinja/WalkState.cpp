@@ -10,7 +10,7 @@ WalkState::WalkState()
 
 PlayerState* WalkState::update(ModulePlayer& player)
 {
-	Direction limit;
+	type_direction limit;
 
 	if (event == WALK_OFF_PLATFORM)
 	{
@@ -26,14 +26,14 @@ PlayerState* WalkState::update(ModulePlayer& player)
 	{
 		return new CrouchState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			return new JumpState(SUPERJUMP);
 		else
 			return new JumpState(NORMALJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
 		return new ShotweaponState();
 	}

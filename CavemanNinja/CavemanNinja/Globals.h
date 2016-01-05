@@ -12,12 +12,15 @@ typedef unsigned __int32 uint32;
 
 enum particle_type
 {
+	NO_PARTICLE,
 	AXE_HORZ,
 	AXE_VERT,
 	AXE_CROUCH,
 	SUPER_AXE,
-	STONE,
-	FAST_STONE
+	SLOW_STONE,
+	FAST_STONE,
+	ENEMY,
+	FAKE_ATTACK
 };
 enum main_states
 {
@@ -44,7 +47,7 @@ enum key_state
 	KEY_UP
 };
 
-enum Direction
+enum type_direction
 {
 	NONE,
 	LEFT,
@@ -65,6 +68,7 @@ enum info_type
 
 enum collider_type
 {
+	NO_COLLIDER = 0,
 	COLLIDER_GROUND = 1,		// down limit of the screen
 	COLLIDER_PLATFORM = 2,		// the player can walk on it, but can also jump down
 	COLLIDER_PLAYER_BODY = 3,	// where player receives damage
@@ -75,21 +79,6 @@ enum collider_type
 	COLLIDER_DINO = 8,			// for the dinosaur's head
 	COLLIDER_BORDER = 9,		// for detecting platform borders and fall down
 	NUM_COLLIDERS				// 
-};
-
-enum jump_substate
-{
-	NO_FIRE,
-	NORMALJUMP,
-	SUPERJUMP,
-	PRE_DOWNJUMP,
-	DOWNJUMP,
-	PRE_FALLING,
-	FALLING,
-	PRE_SHOT_H,
-	SHOT_H,
-	PRE_SHOT_V,
-	SHOT_V
 };
 
 enum game_events
@@ -104,16 +93,14 @@ struct Point
 	float y = 0;
 };
 
-struct Frame_info
+struct FrameInfo
 {
 	SDL_Rect section;
 	Point offset;
 	std::list<Collider*> colliders;
 };
 
-
-
-struct Generic_data
+struct GenericData
 {
 	int val1, val2, val3, val4;
 	float val5;
@@ -128,6 +115,7 @@ void log(const char file[], int line, const char* format, ...);
 #define EXIT_FAILURE 1
 #define MAX_KEYS 300
 #define PRESSED 1
+#define SAME_STATE nullptr
 
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 240
@@ -140,9 +128,11 @@ void log(const char file[], int line, const char* format, ...);
 #define IMG_SCENE_DINO "Content\\Graphics\\scene_dino.png"
 #define IMG_READY "Content\\Graphics\\ready.png"
 #define IMG_PLAYER "Content\\Graphics\\joe.png"
+#define IMG_DINO "Content\\Graphics\\dino.png"
 #define IMG_PARTICLES "Content\\Graphics\\particles.png"
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
 #define DATA_PLAYER "Content\\Data\\joe.ini"
+#define DATA_DINO "Content\\Data\\dino.ini"
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
 #define DATA_PARTICLES "Content\\Data\\particles.ini"
 

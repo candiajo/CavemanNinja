@@ -2,15 +2,6 @@
 #include "Animation.h"
 #include "Collider.h"
 
-Module::Module()
-{}
-
-Module::Module(bool active = true) : active(active)
-{}
-
-Module::~Module()
-{}
-
 bool Module::IsEnabled() const
 {
 	return active;
@@ -65,9 +56,9 @@ bool Module::CleanUp()
 void Module::OnCollision(Collider* a, Collider* b)
 {}
 
-void Module::StoreData(info_type info, Generic_data& data, Animation& animation, Module* module)
+void Module::StoreData(info_type info, GenericData& data, Animation& animation, Module* module)
 {
-	Frame_info frame;
+	FrameInfo frame;
 	Point offset;
 	int frame_w;
 

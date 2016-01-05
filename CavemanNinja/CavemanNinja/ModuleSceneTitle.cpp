@@ -9,12 +9,6 @@
 
 #include "SDL.h"
 
-ModuleSceneTitle::ModuleSceneTitle(bool active) : Module(active)
-{}
-
-ModuleSceneTitle::~ModuleSceneTitle()
-{}
-
 bool ModuleSceneTitle::Start()
 {
 	LOG("Loading Title assets");

@@ -1,4 +1,4 @@
-#include "ParticleStone.h"
+#include "ParticleEnemy.h"
 #include "Animation.h"
 #include "Application.h"
 #include "ModuleParticles.h"
@@ -9,58 +9,56 @@
 
 #include "ModulePlayer.h"
 
-ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(type, generator)
+ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(type, generator)
 {
-	rollingstone = new Animation(App->particles->rollingstone_animation, this);
-	breakingstone = new Animation(App->particles->breakingstone_animation, this);
+	rollingenemy = new Animation(App->particles->rollingenemy_animation, this);
+	hitenemy = new Animation(App->particles->hitenemy_animation, this);
 
-	life = 2;
-	damage = 5;
+	life = 1;
+	damage = 4;
 
 	offset.x = 40;
 	offset.y = 50;
 
-	SetCurrentAnimation(rollingstone);
+	SetCurrentAnimation(rollingenemy);
 
 	position.x += offset.x;
 	position.y += offset.y;
 
-	if (type == SLOW_STONE) x_speed = 1.5f;
-	else if (type == FAST_STONE) x_speed = 3;
-	y_speed = 2;
+	x_speed = 1.75;
+	y_speed = 1;
 
-	state = STONE_BOUNCING;
+	state = ENEMY_BOUNCING;
 	first_bounce = NO_COLLIDER;
 
 	timer = new Timer(3000);
 	timer->StartTimer();
-
 }
 
-ParticleStone::~ParticleStone()
+ParticleEnemy::~ParticleEnemy()
 {
-	delete rollingstone;
-	delete breakingstone;
+	delete rollingenemy;
+	delete hitenemy;
 	delete timer;
 }
 
-void ParticleStone::ParticleUpdate()
+void ParticleEnemy::ParticleUpdate()
 {
 	if (timer->TimeOver() ||
-		(state == STONE_BREAKING && breakingstone->Finished()))
+		(state == ENEMY_HIT && hitenemy->Finished()))
 		to_destroy = true;
 	else
 	{
-		if (state == STONE_BOUNCING)
+		if (state == ENEMY_BOUNCING)
 		{
 			if (y_speed > -0.5 && y_speed < 0) y_speed = 0.5;
-			if (y_speed < 0) y_speed *= 0.9f;
+			if (y_speed < 0) y_speed *= 0.95f;
 			else y_speed *= 1.05f;
 
 			position.y += y_speed;
 		}
 
-		if (state != STONE_BREAKING) position.x += x_speed;
+		if (state != ENEMY_HIT) position.x += x_speed;
 
 		current_frame = &(*current_animation).GetCurrentFrame();
 		PlaceColliders();
@@ -68,7 +66,7 @@ void ParticleStone::ParticleUpdate()
 	}
 }
 
-void ParticleStone::OnCollision(Collider* c1, Collider* c2)
+void ParticleEnemy::OnCollision(Collider* c1, Collider* c2)
 {
 	if (first_bounce == NO_COLLIDER) first_bounce = c2->type;
 
@@ -78,27 +76,21 @@ void ParticleStone::OnCollision(Collider* c1, Collider* c2)
 	{
 		while (c1->IsColliding(c2))
 		{
-        	c1->rect.y -= 1;
+			c1->rect.y -= 1;
 			position.y -= (1.0f / (float)SCREEN_SIZE);
 		}
 
-		if (y_speed > 1)
-			y_speed /= -4;
-		else
-		{
-			y_speed = 0;
-			state = STONE_ROLLING;
-		}
+		y_speed /= -2.75f;
 	}
 	else if (c2->type == COLLIDER_PLAYER_SHOT)
 	{
 		Particle* weapon = dynamic_cast<Particle*>(c2->callback);
-		
+
 		life -= weapon->damage;
 		if (life <= 0)
 		{
-			state = STONE_BREAKING;
-			SetCurrentAnimation(breakingstone);
+			state = ENEMY_HIT;
+			SetCurrentAnimation(hitenemy);
 		}
 	}
 }

@@ -9,8 +9,8 @@ struct SDL_Texture;
 class ModuleSceneTitle : public Module
 {
 public:
-	ModuleSceneTitle(bool start_enabled = true);
-	~ModuleSceneTitle();
+	ModuleSceneTitle(bool active) : Module(active){};
+	~ModuleSceneTitle(){};
 
 	bool Start();
 	update_status Update();

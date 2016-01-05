@@ -10,8 +10,8 @@ struct SDL_Texture;
 class ModuleSceneDino : public Module
 {
 public:
-	ModuleSceneDino(bool start_enabled = true);
-	~ModuleSceneDino();
+	ModuleSceneDino(bool active) : Module(active) {};
+	~ModuleSceneDino(){};
 
 	bool Start();
 	update_status Update();

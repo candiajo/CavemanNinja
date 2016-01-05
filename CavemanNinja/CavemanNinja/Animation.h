@@ -2,12 +2,14 @@
 #define __ANIMATION_H__
 
 #include "SDL_rect.h"
+#include "Collider.h"
 #include "Globals.h"
 
 #include <vector>
 #include <list>
 
 class Module;
+
 
 using namespace std;
 
@@ -18,8 +20,9 @@ public:
 	Animation(Animation& source, Module* new_callback);
 	~Animation();
 
-	Frame_info& GetCurrentFrame();
-	Frame_info& PeekFrame(int n);
+	FrameInfo& GetCurrentFrame();
+	FrameInfo& PeekFrame(int n);
+	void SetLastFrame();
 
 	void DestroyColliders();	// mark 'to_destroy' all (frame and animation) colliders 
 	
@@ -28,12 +31,13 @@ public:
 
 	float speed = 1.0f;
 	bool loop = true;
-	vector<Frame_info> frames;
+	vector<FrameInfo> frames;
 	list<Collider*> colliders;
-
+	
 private:
 	float current_frame = 0.0f;
 	int loops = 0;
+
 };
 
 #endif // __ANIMATION_H__

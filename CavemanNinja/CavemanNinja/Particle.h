@@ -8,15 +8,18 @@ class Particle : public Sprite
 public:
 	Particle();
 	Particle(particle_type type, Sprite* generator);
-	~Particle();
+	virtual ~Particle();
 
 	virtual void ParticleUpdate() = 0;
 
 	bool to_destroy = false;
 	Point offset;
+	int damage;
 
 protected:
 	particle_type type;
+	int life;
+
 };
 
 #endif //__PARTICLE_H__

@@ -8,8 +8,8 @@
 class ModulePlayer : public Sprite
 {
 public:
-	ModulePlayer(bool active = true);
-	~ModulePlayer();
+	ModulePlayer(bool active) : Sprite(active) {};
+	~ModulePlayer() {};
 
 	bool Start();
 	update_status Update();
@@ -31,7 +31,7 @@ public:
 
 private:
 	void LoadData();
-
+	PlayerState* state;
 };
 
 #endif // __MODULEPLAYER_H__

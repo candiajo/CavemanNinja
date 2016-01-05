@@ -6,12 +6,6 @@
 #include "SDL.h"
 #include "SDL_Timer.h"
 
-ModuleBeginLevel::ModuleBeginLevel(bool active) : Module(active)
-{}
-
-ModuleBeginLevel::~ModuleBeginLevel()
-{}
-
 bool ModuleBeginLevel::Start()
 {
 	int w, h;

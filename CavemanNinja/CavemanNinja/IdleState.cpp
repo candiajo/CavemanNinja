@@ -21,12 +21,12 @@ PlayerState* IdleState::update(ModulePlayer& player)
 	{
 		return new WalkState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN &&
+	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN &&
 		     App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		return new JumpState(SUPERJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
 	{
 		return new JumpState(NORMALJUMP);
 	}
@@ -34,7 +34,7 @@ PlayerState* IdleState::update(ModulePlayer& player)
 	{
 		return new LookupState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
 		return new ShotweaponState();
 	}

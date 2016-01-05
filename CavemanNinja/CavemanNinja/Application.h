@@ -15,6 +15,7 @@ class ModuleBeginLevel;
 class ModulePlayer;
 class ModuleCollisions;
 class ModuleParticles;
+class ModuleDino;
 
 class Application
 {
@@ -37,10 +38,11 @@ public:
 	ModulePlayer* player1;
 	ModuleCollisions* collisions;
 	ModuleParticles* particles;
+	ModuleDino* dino;
 
 
 	//debug
-	float var1 = 3, var2 = 1, var3 = 5;
+	float var1 = 68, var2 = 0.95f, var3 = 1.05f;
 
 private:
 	std::list<Module*> modules;

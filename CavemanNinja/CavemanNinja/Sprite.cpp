@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "ModuleCollisions.h"
 
+
 Sprite::Sprite(bool active) : Module(active)
 {}
 

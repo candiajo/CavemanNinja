@@ -2,12 +2,6 @@
 
 #include "SDL.h"
 
-ModuleWindow::ModuleWindow() : Module(true)
-{}
-
-ModuleWindow::~ModuleWindow()
-{}
-
 bool ModuleWindow::Init()
 {
 	LOG("Init SDL window & surface");

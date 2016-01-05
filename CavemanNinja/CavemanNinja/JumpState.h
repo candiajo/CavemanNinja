@@ -3,6 +3,21 @@
 
 #include "PlayerState.h"
 
+enum jump_substate
+{
+	NO_FIRE,
+	NORMALJUMP,
+	SUPERJUMP,
+	PRE_DOWNJUMP,
+	DOWNJUMP,
+	PRE_FALLING,
+	FALLING,
+	PRE_SHOT_H,
+	SHOT_H,
+	PRE_SHOT_V,
+	SHOT_V
+};
+
 class JumpState : public PlayerState
 {
 public:

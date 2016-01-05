@@ -7,9 +7,8 @@
 class ModuleCollisions : public Module
 {
 public:
-
-	ModuleCollisions(bool active);
-	~ModuleCollisions();
+	ModuleCollisions() : Module(true) {};
+	~ModuleCollisions() {};
 
 	bool Start();
 	update_status PreUpdate();
@@ -17,7 +16,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback);
+	// TODELETE Collider* AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback);
 	void AddCollider(Collider* collider);
 	
 private:

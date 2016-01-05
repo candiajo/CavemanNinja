@@ -13,12 +13,6 @@
 
 #include "SDL.h"
 
-ModuleSceneDino::ModuleSceneDino(bool active) : Module(active)
-{}
-
-ModuleSceneDino::~ModuleSceneDino()
-{}
-
 bool ModuleSceneDino::Start()
 {
 	LOG("Loading Title assets");
@@ -43,7 +37,7 @@ void ModuleSceneDino::LoadData()
 {
 	std::string name;
 	info_type info;
-	Generic_data data;
+	GenericData data;
 
 	File background_data(DATA_SCENE_DINO);
 	

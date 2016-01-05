@@ -12,12 +12,13 @@ struct SDL_Texture;
 class ModuleParticles : public Module
 {
 public:
-	ModuleParticles(bool active);
-	~ModuleParticles();
+	ModuleParticles(bool active) : Module(true) {};
+	~ModuleParticles() {};
 
 	bool Start();
 	update_status Update();
 	update_status PostUpdate();
+	bool CleanUp();
 
 	void AddParticle(particle_type type, Module* generator);
 

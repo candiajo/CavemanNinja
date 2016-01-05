@@ -5,12 +5,7 @@
 #include "Particle.h"
 #include "ParticleAxe.h"
 #include "ParticleStone.h"
-
-ModuleParticles::ModuleParticles(bool active) : Module(active)
-{}
-
-ModuleParticles::~ModuleParticles()
-{}
+#include "ParticleEnemy.h"
 
 bool ModuleParticles::Start()
 {
@@ -52,8 +47,11 @@ void ModuleParticles::AddParticle(particle_type type, Module* generator)
 	case AXE_HORZ: case AXE_VERT: case SUPER_AXE: case AXE_CROUCH:
 		particles.push_back(new ParticleAxe(type, dynamic_cast<Sprite*>(generator)));
 		break;
-	case STONE: case FAST_STONE:
+	case SLOW_STONE: case FAST_STONE:
 		particles.push_back(new ParticleStone(type, dynamic_cast<Sprite*>(generator)));
+		break;
+	case ENEMY:
+		particles.push_back(new ParticleEnemy(type, dynamic_cast<Sprite*>(generator)));
 		break;
 	}
 }
@@ -62,7 +60,7 @@ void ModuleParticles::LoadData()
 {
 	std::string name;
 	info_type info;
-	Generic_data data;
+	GenericData data;
 
 	File player_data(DATA_PARTICLES);
 
@@ -78,4 +76,12 @@ void ModuleParticles::LoadData()
 	}
 }
 
+bool ModuleParticles::CleanUp()
+{
+	for (auto& particle : particles)
+		delete particle;
 
+	particles.clear();
+
+	return true;
+}

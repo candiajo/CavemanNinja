@@ -8,7 +8,7 @@ class ModuleInput : public Module
 {
 public:
 	ModuleInput();
-	~ModuleInput();
+	~ModuleInput() {};
 
 	bool Init();
 	update_status PreUpdate();

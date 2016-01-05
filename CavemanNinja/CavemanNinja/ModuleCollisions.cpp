@@ -10,19 +10,16 @@ using namespace std;
 
 bool ModuleCollisions::Start()
 {
+	debug = false;
 	LoadData();
 
 	return true;
 }
 
-ModuleCollisions::ModuleCollisions(bool active = true) : Module(active)
-{
-	debug = false;
-}
-
-ModuleCollisions::~ModuleCollisions()
-{}
-
+// detach (removes from list)
+// or
+// destroy (removes from list and deletes from memory)
+// the colliders marked as to_detach or to_destroy
 update_status ModuleCollisions::PreUpdate()
 {
 	for (auto it = colliders.begin(); it != colliders.end();)
@@ -34,6 +31,7 @@ update_status ModuleCollisions::PreUpdate()
 		}
 		else if ((*it)->to_detach)
 		{
+			(*it)->OnList = false;
 			it = colliders.erase(it);
 		}
 		else ++it;
@@ -117,30 +115,32 @@ update_status ModuleCollisions::PostUpdate()
 
 bool ModuleCollisions::CleanUp()
 {
-	LOG("Detaching all colliders");
+	LOG("Destroying all colliders");
 
 	for (auto& it : colliders) RELEASE(it);
+	
 	colliders.clear();
 
 	return true;
 }
 
-Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback = nullptr)
-{
-	Collider* ret = new Collider(rect, offset, frame_w, type, callback);
-	colliders.push_back(ret);
-	return ret;
-}
+//Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback = nullptr)
+//{
+//	Collider* ret = new Collider(rect, offset, frame_w, type, callback);
+//	colliders.push_back(ret);
+//	return ret;
+//}
 
 void ModuleCollisions::AddCollider(Collider* collider)
 {
 	collider->to_detach = false;
+	collider->OnList = true;
 	colliders.push_back(collider);
 }
 
 void ModuleCollisions::LoadData()
 {
-	Generic_data data;
+	GenericData data;
 
 	File player_data(DATA_MATRIX);
 

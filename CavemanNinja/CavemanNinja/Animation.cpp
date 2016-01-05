@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "Collider.h"
 
+
 Animation::Animation() : frames(), speed(1.0f), current_frame(0.0f)
 {}
 
@@ -21,7 +22,7 @@ Animation::Animation(Animation& source, Module* new_callback)
 	// copy frames list
 	for (auto& source_frame : source.frames)
 	{
-		Frame_info destination_frame;
+		FrameInfo destination_frame;
 
 		destination_frame.section = source_frame.section;
 		destination_frame.offset = source_frame.offset;
@@ -39,10 +40,12 @@ Animation::Animation(Animation& source, Module* new_callback)
 
 Animation::~Animation()
 {
-	int a;
+	DestroyColliders(); // mark all (frame and animation) colliders to_destroy
+	colliders.clear();
+	frames.clear();
 }
 
-Frame_info& Animation::GetCurrentFrame()
+FrameInfo& Animation::GetCurrentFrame()
 {
 	if (frames.size() == 1)
 		return frames[0];
@@ -62,12 +65,17 @@ Frame_info& Animation::GetCurrentFrame()
 	}
 }
 
-Frame_info& Animation::PeekFrame(int n)
+FrameInfo& Animation::PeekFrame(int n)
 {
 	if (n > frames.size() - 1)
 		return frames[0];		// frame n doesn't exists
 	else
 		return frames[n];		// frame demanded
+}
+
+void Animation::SetLastFrame()
+{
+	current_frame = (float)frames.size() - 1;
 }
 
 bool Animation::Finished()
@@ -81,14 +89,22 @@ void Animation::Reset()
 	loops = 0;
 }
 
+// marks to_destroy the colliders in the game colliders list
+// deletes from memory all colliders that are not in that list
 void Animation::DestroyColliders()
 {
 	// animation colliders
 	for (auto& collider : colliders)
-		collider->to_destroy = true;
+	{
+		if (collider->OnList) collider->to_destroy = true;
+		else delete collider;
+	}
 
 	// colliders in all frames
 	for (auto& frame : frames)
 		for (auto& collider : frame.colliders)
-			collider->to_destroy = true;
+		{
+			if (collider->OnList) collider->to_destroy = true;
+			else delete collider;
+		}
 }

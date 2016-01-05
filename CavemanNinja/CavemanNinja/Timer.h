@@ -11,6 +11,7 @@ public:
 
 	void StartTimer();
 	bool TimeOver();
+	int ElapsedTime();
 
 private:
 	int start_time;

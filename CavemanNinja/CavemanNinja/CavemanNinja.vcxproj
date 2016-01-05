@@ -67,9 +67,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AgressiveAttackState.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="DecideActionState.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="JumpState.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -77,6 +80,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="ModuleCollisions.cpp" />
+    <ClCompile Include="ModuleDino.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleParticles.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
@@ -85,6 +89,7 @@
     <ClCompile Include="ModuleSceneTitle.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleStone.cpp" />
+    <ClCompile Include="ParticleEnemy.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleBeginLevel.cpp" />
@@ -95,19 +100,25 @@
     <ClCompile Include="ShotcrouchState.cpp" />
     <ClCompile Include="ShotupState.cpp" />
     <ClCompile Include="ShotweaponState.cpp" />
+    <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WalkState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AgressiveAttackState.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AttackState.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="DecideActionState.h" />
+    <ClInclude Include="DinoState.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="JumpState.h" />
     <ClInclude Include="LookupState.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCollisions.h" />
+    <ClInclude Include="ModuleDino.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleParticles.h" />
     <ClInclude Include="ModulePlayer.h" />
@@ -116,6 +127,7 @@
     <ClInclude Include="ModuleSceneTitle.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleStone.h" />
+    <ClInclude Include="ParticleEnemy.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleBeginLevel.h" />
@@ -127,6 +139,7 @@
     <ClInclude Include="ShotcrouchState.h" />
     <ClInclude Include="ShotupState.h" />
     <ClInclude Include="ShotweaponState.h" />
+    <ClInclude Include="MoveState.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="WalkState.h" />
   </ItemGroup>

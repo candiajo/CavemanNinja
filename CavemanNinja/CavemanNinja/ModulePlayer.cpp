@@ -9,16 +9,7 @@
 #include "CrouchState.h"
 #include "Collider.h"
 #include "ModuleCollisions.h"
-
 #include "ModuleInput.h"
-
-ModulePlayer::ModulePlayer(bool active) : Sprite(active)
-{
-	state = new JumpState(FALLING);
-}
-
-ModulePlayer::~ModulePlayer()
-{}
 
 bool ModulePlayer::Start()
 {
@@ -28,6 +19,7 @@ bool ModulePlayer::Start()
 	texture_sprite = App->textures->Load(IMG_PLAYER);
 	LoadData();
 	
+	state = new JumpState(FALLING);
 	state->enter(*this);
 
 	position.x = 50;
@@ -76,7 +68,7 @@ void ModulePlayer::LoadData()
 {
 	std::string name;
 	info_type info;
-	Generic_data data;
+	GenericData data;
 
 	File player_data(DATA_PLAYER);
 

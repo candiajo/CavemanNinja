@@ -12,17 +12,19 @@ JumpState::JumpState(jump_substate substate) : substate(substate)
 
 PlayerState* JumpState::update(ModulePlayer& player)
 {
-	Direction limit = ScreenLimitReached(player);
+	type_direction limit = ScreenLimitReached(player);
 
 	if (event == PLAYER_STEP_GROUND)
 		return new IdleState();
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT &&
+		limit != LEFT)
 	{
 		player.direction = LEFT;
 		player.x_speed = -DEFAULT_X_SPEED;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT &&
+		limit != RIGHT)
 	{
 		player.direction = RIGHT;
 		player.x_speed = DEFAULT_X_SPEED;
@@ -33,9 +35,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		player.x_speed = 0;
 	}
 
-	if (limit == RIGHT || limit == LEFT) player.x_speed = 0;
-
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT &&
 			substate != SUPERJUMP)
@@ -44,13 +44,22 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			fire = PRE_SHOT_H;
 	}
 	
+	//debug
+	{
+		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+		{
+			Shot(&player, SLOW_STONE);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		{
+			Shot(&player, ENEMY);
+		}
+	}
 	switch (fire)
 	{
 		case PRE_SHOT_H:
 			if (substate != SUPERJUMP)
 			{
-				//debug
-				Shot(&player, STONE);
 				player.SetCurrentAnimation(&player.shotweapon);
 			}
 			Shot(&player, AXE_HORZ);
@@ -76,13 +85,14 @@ PlayerState* JumpState::update(ModulePlayer& player)
 
 		case SHOT_V:
 			if (player.current_animation->Finished())
+			{
 				fire = NO_FIRE;
-			if (player.y_speed > 0)
-				player.SetCurrentAnimation(&player.downjump);
-			else
-				player.SetCurrentAnimation(&player.normaljump);
+				if (player.y_speed > 0)
+					player.SetCurrentAnimation(&player.downjump);
+				else
+					player.SetCurrentAnimation(&player.normaljump);
+			}
 			break;
-
 	}
 	switch (substate)
 	{

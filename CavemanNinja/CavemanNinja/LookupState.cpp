@@ -15,11 +15,11 @@ PlayerState* LookupState::update(ModulePlayer& player)
 	{
 		return new IdleState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
 	{
 		return new JumpState(SUPERJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
 		return new ShotupState();
 	}

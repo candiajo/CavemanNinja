@@ -9,9 +9,6 @@
 
 using namespace std;
 
-ModuleTextures::ModuleTextures(bool active) : Module(active)
-{}
-
 ModuleTextures::~ModuleTextures()
 {
 	IMG_Quit();

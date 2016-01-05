@@ -5,12 +5,6 @@
 #include "ModuleInput.h"
 #include "SDL.h"
 
-ModuleRender::ModuleRender(bool active) : Module(active)
-{}
-
-ModuleRender::~ModuleRender()
-{}
-
 bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");

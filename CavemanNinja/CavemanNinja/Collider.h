@@ -12,7 +12,6 @@ class Collider
 {
 public:
 	Collider(SDL_Rect rectangle, Point& offset, int frame_w, collider_type type, Module* callback);
-
 	void SetPos(int x, int y, bool can_flip = false);
 	bool IsColliding(Collider* collider) const;
 	Point GetOffset();
@@ -22,6 +21,7 @@ public:
 	bool to_destroy = false;	// destroy the collider from memory
 	collider_type type;
 	Module* callback;
+	bool OnList;		// true if the collider is in the game colliders list (for deletion purposes)
 
 private:
 	Point offset;

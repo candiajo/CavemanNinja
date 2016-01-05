@@ -17,7 +17,7 @@ public:
 protected:
 	game_events event;
 
-	Direction ScreenLimitReached(ModulePlayer& player)
+	type_direction ScreenLimitReached(ModulePlayer& player)
 	{
 		if (player.position.x <= LEFT_LIMIT) return LEFT;
 		if (player.position.x >= RIGHT_LIMIT) return RIGHT;

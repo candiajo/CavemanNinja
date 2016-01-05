@@ -16,7 +16,7 @@ File::~File()
 // it can be frame info
 // or animation speed info
 
-bool File::GetAnimInfo(info_type& info, std::string& name, Generic_data& data)
+bool File::GetAnimInfo(info_type& info, std::string& name, GenericData& data)
 {
 	bool result = false;
 	string txt, discard;
@@ -85,7 +85,7 @@ bool File::GetAnimInfo(info_type& info, std::string& name, Generic_data& data)
 	return result;
 }
 
-bool File::GetMatrixInfo(Generic_data& data)
+bool File::GetMatrixInfo(GenericData& data)
 {
 	bool result = false;
 	string txt;

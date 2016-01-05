@@ -1,7 +1,6 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-//#include "Animation.h"
 #include "Globals.h"
 
 class Animation;
@@ -9,9 +8,9 @@ class Animation;
 class Module
 {
 public:
-	Module();
-	Module(bool active);
-	virtual ~Module();
+	Module() {};
+	Module(bool active) : active(active) {};
+	virtual ~Module() {};
 
 	bool IsEnabled() const;
 
@@ -34,7 +33,7 @@ public:
 	virtual void OnCollision(Collider* a, Collider* b);
 
 protected:
-	void StoreData(info_type info, Generic_data& data, Animation& animation, Module* module);
+	void StoreData(info_type info, GenericData& data, Animation& animation, Module* module);
 
 	bool active;
 

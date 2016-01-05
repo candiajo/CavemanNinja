@@ -6,6 +6,7 @@
 #include "Collider.h"
 #include "Timer.h"
 
+
 ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type, generator)
 {
 	if (type == SUPER_AXE)
@@ -54,12 +55,12 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 
 	position.x += offset.x;
 	position.y += offset.y;
+
+	damage = 1;
 }
 
 ParticleAxe::~ParticleAxe()
 {
-	axe->DestroyColliders();
-	//axe->colliders.front()->to_destroy = true;	// destroy the only collider of axe
 	delete axe;
 	delete timer;
 }

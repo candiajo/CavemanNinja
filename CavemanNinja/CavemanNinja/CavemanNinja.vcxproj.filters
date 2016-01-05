@@ -19,6 +19,12 @@
     <Filter Include="Particles">
       <UniqueIdentifier>{eca908b3-fe8d-4fdd-8b7d-5fe36d8e342a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StatesMachine\Player States">
+      <UniqueIdentifier>{cb494a39-edf0-4876-88d9-5d34ee8ac880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StatesMachine\Dino States">
+      <UniqueIdentifier>{6341cdef-072c-4dea-938a-31d07deeb570}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -63,35 +69,11 @@
     <ClCompile Include="ModulePlayer.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="CrouchState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="IdleState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="WalkState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCollisions.cpp">
       <Filter>Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="LookupState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="ShotweaponState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="ShotcrouchState.cpp">
-      <Filter>StatesMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="ShotupState.cpp">
-      <Filter>StatesMachine</Filter>
     </ClCompile>
     <ClCompile Include="ModuleParticles.cpp">
       <Filter>Core Modules</Filter>
@@ -110,6 +92,48 @@
     </ClCompile>
     <ClCompile Include="ParticleStone.cpp">
       <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleEnemy.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleDino.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="CrouchState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="LookupState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotcrouchState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotupState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotweaponState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="AgressiveAttackState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="DecideActionState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,38 +176,11 @@
     <ClInclude Include="ModulePlayer.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="CrouchState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="IdleState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="WalkState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCollisions.h">
       <Filter>Core Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="LookupState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="ShotweaponState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="ShotcrouchState.h">
-      <Filter>StatesMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="ShotupState.h">
-      <Filter>StatesMachine</Filter>
     </ClInclude>
     <ClInclude Include="ModuleParticles.h">
       <Filter>Core Modules</Filter>
@@ -202,6 +199,54 @@
     </ClInclude>
     <ClInclude Include="ParticleStone.h">
       <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleEnemy.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleDino.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="CrouchState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="LookupState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotcrouchState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotupState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotweaponState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="DinoState.h">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="AgressiveAttackState.h">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveState.h">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="DecideActionState.h">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackState.h">
+      <Filter>StatesMachine\Dino States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

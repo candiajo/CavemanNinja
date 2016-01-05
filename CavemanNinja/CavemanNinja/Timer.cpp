@@ -1,9 +1,7 @@
 #include "Timer.h"
 
-Timer::Timer(int life_time)
-{
-	this->life_time = life_time;
-}
+Timer::Timer(int life_time) : life_time(life_time)
+{}
 
 Timer::~Timer()
 {}
@@ -21,4 +19,9 @@ bool Timer::TimeOver()
 		return true;
 	else
 		return false;
+}
+
+int Timer::ElapsedTime()
+{
+	return (SDL_GetTicks() - start_time);
 }
