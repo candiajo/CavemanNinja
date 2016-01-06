@@ -9,7 +9,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleInput.h"
 #include "AgressiveAttackState.h"
-//#include "MoveState.h"
+#include "SpriteDinoBody.h"
 
 bool ModuleDino::Start()
 {
@@ -23,6 +23,10 @@ bool ModuleDino::Start()
 
 	position.x = -120;
 	position.y = 15;
+
+	spritedinobody = new SpriteDinoBody(texture_sprite, &dinobody);
+
+	spritedinobody->Start();
 
 	return true;
 }
@@ -42,7 +46,10 @@ update_status ModuleDino::Update()
 	current_frame = &(*current_animation).GetCurrentFrame();
 	RefreshColliders();
 	PlaceColliders();
-	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+
+	// draw head over body
+	spritedinobody->Update(position);
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, SDL_FLIP_NONE);
 
 	return UPDATE_CONTINUE;
 }
@@ -54,6 +61,7 @@ update_status ModuleDino::PostUpdate()
 
 bool ModuleDino::CleanUp()
 {
+	delete spritedinobody;
 	return UPDATE_CONTINUE;
 }
 
@@ -73,8 +81,12 @@ void ModuleDino::LoadData()
 		else if (name == "semiclosemouth") StoreData(info, data, semiclosemouth, this);
 		else if (name == "superhit") StoreData(info, data, superhit, this);
 		else if (name == "defeated") StoreData(info, data, defeated, this);
+		else if (name == "dinobody") StoreData(info, data, dinobody, this);
 	}
 }
 
 void ModuleDino::OnCollision(Collider* c1, Collider* c2)
-{}
+{
+	if (c2->type == COLLIDER_PLAYER_BODY) 
+		player_too_near = true;
+}

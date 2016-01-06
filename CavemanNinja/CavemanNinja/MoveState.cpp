@@ -17,7 +17,7 @@ DinoState* MoveState::update(ModuleDino& dino)
 
 		if (dino.position.x <= final_position)
 		{
-			dino.position.x = final_position;	// to ensure that it's placed in the exact pixel
+			dino.position.x = (float)final_position;	// to ensure that it's placed in the exact pixel
 			substate = DINO_STOP;
 		}
 		break;
@@ -29,7 +29,7 @@ DinoState* MoveState::update(ModuleDino& dino)
 		if (dino.position.x >= final_position)
 		{
 			dino.SetCurrentAnimation(&dino.semiclosemouth);
-			dino.position.x = final_position;	// to ensure that it's placed in the exact pixel
+			dino.position.x = (float)final_position;	// to ensure that it's placed in the exact pixel
 			substate = DINO_CLOSING_MOUTH;
 		}
 		break;
@@ -38,6 +38,8 @@ DinoState* MoveState::update(ModuleDino& dino)
 			substate = DINO_STOP;
 		break;
 	case DINO_STOP:
+		dino.dinobody.speed = 0.0f;
+		dino.dinobody.Reset();
 		dino.position.y = y_original;
 		if (projectile != NO_PARTICLE) return new AttackState(projectile);
 		else return new DecideActionState();
@@ -65,6 +67,8 @@ void MoveState::enter(ModuleDino& dino)
 	{
 		substate = DINO_STOP;
 	}
+
+	if (projectile == DINOTAIL) dino.dinobody.speed = 0.15f;
 
 	y_original = dino.position.y;
 }

@@ -35,7 +35,11 @@ DinoState* AttackState::update(ModuleDino& dino)
 		substate = DINO_CLOSING_MOUTH;
 		break;
 	case DINO_CLOSING_MOUTH:
-		if (dino.current_animation->Finished())	return new DecideActionState();
+		if (dino.current_animation->Finished())
+		{
+			dino.player_too_near = false;
+			return new DecideActionState();
+		}
 	}
 	
 	return SAME_STATE;

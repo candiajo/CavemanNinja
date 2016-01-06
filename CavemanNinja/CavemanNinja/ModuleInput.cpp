@@ -86,16 +86,16 @@ key_state ModuleInput::GetKey(int key) const
 
 void ModuleInput::debug()
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 1;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 1;
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var2 += 0.05f;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var2 -= 0.05f;
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) App->var3 += 0.05f;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->var3 -= 0.05f;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var2 += 1;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var2 -= 1;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 5;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 5;
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) App->var1 += 1;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->var1 -= 1;
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		LOG("var1: %f \n", App->var1);
 		LOG("var2: %f \n", App->var2);
-		LOG("var3: %f \n", App->var3);
+		//LOG("var3: %f \n", App->var3);
 	}
 }

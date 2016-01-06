@@ -28,6 +28,7 @@ public:
 	Animation breakingstone_animation;
 	Animation rollingenemy_animation;
 	Animation hitenemy_animation;
+	Animation dinotail_animation;
 	
 	SDL_Texture* texture_particles;
 

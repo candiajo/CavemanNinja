@@ -70,7 +70,11 @@ void ParticleStone::ParticleUpdate()
 
 void ParticleStone::OnCollision(Collider* c1, Collider* c2)
 {
-	if (first_bounce == NO_COLLIDER) first_bounce = c2->type;
+	if (first_bounce == NO_COLLIDER &&
+		(c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM))
+	{
+		first_bounce = c2->type;
+	}
 
 	// enemy can only collide with the first surface contacted
 	if ((c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM) &&

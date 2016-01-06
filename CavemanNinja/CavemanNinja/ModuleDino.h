@@ -5,6 +5,7 @@
 #include "Animation.h"
 
 class DinoState;
+class SpriteDinoBody;
 
 class ModuleDino : public Sprite
 {
@@ -25,6 +26,11 @@ public:
 	Animation semiclosemouth;
 	Animation superhit;
 	Animation defeated;
+	Animation dinobody;
+
+	SpriteDinoBody* spritedinobody;
+
+	bool player_too_near;		// true when the player gets under de head
 
 private:
 	void LoadData();

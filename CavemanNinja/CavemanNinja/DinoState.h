@@ -1,11 +1,12 @@
 #ifndef __MODULEDINOSTATE_H__
 #define __MODULEDINOSTATE_H__
 
-#define FAR_POSITION -2		// dino far from player
-#define MIDDLE_POSITION 30	// dino at middle distance
-#define NEAR_POSITION 68	// dino near player
-#define ATTACK_SPEED 4
-#define MOVE_SPEED 2.5
+#define VERY_FAR_POSITION -20	// dino at the left of the screen
+#define FAR_POSITION -2			// dino far from player
+#define MIDDLE_POSITION 30		// dino at middle distance
+#define NEAR_POSITION 68		// dino near player
+#define ATTACK_SPEED 3
+#define MOVE_SPEED 1.5
 #define OPEN_MOUTH_TIME 800
 
 #include "ModuleDino.h"

@@ -20,7 +20,8 @@ enum particle_type
 	SLOW_STONE,
 	FAST_STONE,
 	ENEMY,
-	FAKE_ATTACK
+	FAKE_ATTACK,
+	DINOTAIL
 };
 enum main_states
 {

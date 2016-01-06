@@ -6,6 +6,7 @@
 #include "ParticleAxe.h"
 #include "ParticleStone.h"
 #include "ParticleEnemy.h"
+#include "ParticleDinoTail.h"
 
 bool ModuleParticles::Start()
 {
@@ -53,6 +54,8 @@ void ModuleParticles::AddParticle(particle_type type, Module* generator)
 	case ENEMY:
 		particles.push_back(new ParticleEnemy(type, dynamic_cast<Sprite*>(generator)));
 		break;
+	case DINOTAIL:
+		particles.push_back(new ParticleDinoTail(type, dynamic_cast<Sprite*>(generator)));
 	}
 }
 
@@ -66,13 +69,14 @@ void ModuleParticles::LoadData()
 
 	while (player_data.GetAnimInfo(info, name, data))
 	{
-		if (name == "axe") 
-			StoreData(info, data, axe_animation, this);
+		if (name == "axe") StoreData(info, data, axe_animation, this);
 		else if (name == "superaxe") StoreData(info, data, superaxe_animation, this);
 		else if (name == "rollingstone") StoreData(info, data, rollingstone_animation, this);
 		else if (name == "breakingstone") StoreData(info, data, breakingstone_animation, this);
 		else if (name == "rollingenemy") StoreData(info, data, rollingenemy_animation, this);
 		else if (name == "hitenemy") StoreData(info, data, hitenemy_animation, this);
+		else if (name == "dinotail") 
+			StoreData(info, data, dinotail_animation, this);
 	}
 }
 

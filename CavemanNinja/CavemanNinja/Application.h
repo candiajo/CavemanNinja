@@ -1,7 +1,7 @@
 #ifndef __APPLICATION_CPP__
 #define __APPLICATION_CPP__
 
-#include<list>
+#include <list>
 #include "Globals.h"
 #include "Module.h"
 
@@ -40,9 +40,8 @@ public:
 	ModuleParticles* particles;
 	ModuleDino* dino;
 
-
 	//debug
-	float var1 = 68, var2 = 0.95f, var3 = 1.05f;
+	float var1 = 200, var2 = 0, var3 = 1.05f;
 
 private:
 	std::list<Module*> modules;

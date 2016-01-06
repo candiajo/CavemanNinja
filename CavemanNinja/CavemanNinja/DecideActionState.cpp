@@ -16,6 +16,9 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 	{
 		timer->StartTimer();
 		
+		if (dino.player_too_near) 
+			return new MoveState(VERY_FAR_POSITION, DINOTAIL);
+
 		int random_number;
 		int destination;
 		
@@ -23,8 +26,8 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 
 		random_number = rand() % 100 + 1;
 
-		if (random_number <= 34) destination = FAR_POSITION;
-		else if (random_number <= 67)  destination = MIDDLE_POSITION;
+		if (random_number <= 45) destination = FAR_POSITION;
+		else if (random_number <= 75)  destination = MIDDLE_POSITION;
 		else destination = NEAR_POSITION;
 		
 		if (random_number <= 5)	// Move 5%
@@ -33,8 +36,7 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 		}
 		else if (random_number <= 10)	// fake shot 5%
 		{
-			LOG("fake shot");
-			return new DecideActionState();
+			return new MoveState(destination, FAKE_ATTACK);
 		}
 		else if (random_number <= 30 && dino.position.x != NEAR_POSITION)	// agressive atack 20% (if not already in NEAR position)
 		{
@@ -51,8 +53,8 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 			}
 			else
 			{
-				if (random_number <= 50) return new MoveState(destination, SLOW_STONE);			// 50%
-				else if (random_number <= 70) return new MoveState(destination, FAST_STONE);	// 20%
+				if (random_number <= 60) return new MoveState(destination, SLOW_STONE);			// 60%
+				else if (random_number <= 70) return new MoveState(destination, FAST_STONE);	// 10%
 				else return new MoveState(destination, ENEMY);									// 30%
 			}
 			return new DecideActionState();

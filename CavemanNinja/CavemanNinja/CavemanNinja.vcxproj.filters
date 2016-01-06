@@ -25,6 +25,9 @@
     <Filter Include="StatesMachine\Dino States">
       <UniqueIdentifier>{6341cdef-072c-4dea-938a-31d07deeb570}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sprites">
+      <UniqueIdentifier>{eaa0df27-b3fb-45b1-a43d-8c62f7f0de59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -81,9 +84,6 @@
     <ClCompile Include="ParticleAxe.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Core Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
@@ -134,6 +134,15 @@
     </ClCompile>
     <ClCompile Include="AttackState.cpp">
       <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleDinoTail.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteDinoBody.cpp">
+      <Filter>Sprites</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="ParticleAxe.h">
       <Filter>Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Particles</Filter>
@@ -247,6 +253,15 @@
     </ClInclude>
     <ClInclude Include="AttackState.h">
       <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleDinoTail.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteDinoBody.h">
+      <Filter>Sprites</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
