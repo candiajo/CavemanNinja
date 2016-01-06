@@ -16,7 +16,6 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	// TODELETE Collider* AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback);
 	void AddCollider(Collider* collider);
 	
 private:

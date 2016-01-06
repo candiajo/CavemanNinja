@@ -41,6 +41,7 @@ Animation::Animation(Animation& source, Module* new_callback)
 Animation::~Animation()
 {
 	DestroyColliders(); // mark all (frame and animation) colliders to_destroy
+
 	colliders.clear();
 	frames.clear();
 }
@@ -107,4 +108,7 @@ void Animation::DestroyColliders()
 			if (collider->OnList) collider->to_destroy = true;
 			else delete collider;
 		}
+
+	colliders.clear();
+	frames.clear();
 }

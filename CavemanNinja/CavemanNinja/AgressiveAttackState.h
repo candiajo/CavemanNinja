@@ -1,5 +1,5 @@
-#ifndef __MODULEAGRESSIVEATTACKSTATE_H__
-#define __MODULEAGRESSIVEATTACKSTATE_H__
+#ifndef __AGRESSIVEATTACKSTATE_H__
+#define __AGRESSIVEATTACKSTATE_H__
 
 #include "DinoState.h"
 
@@ -11,4 +11,4 @@ public:
 	void enter(ModuleDino& dino);
 };
 
-#endif //__MODULEAGRESSIVEATTACKSTATE_H__
+#endif //__AGRESSIVEATTACKSTATE_H__

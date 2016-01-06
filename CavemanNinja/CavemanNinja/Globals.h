@@ -137,7 +137,7 @@ void log(const char file[], int line, const char* format, ...);
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
 #define DATA_PARTICLES "Content\\Data\\particles.ini"
 
-#define	LEFT_LIMIT -20
+#define	DINO_LEFT_LIMIT -20
 #define	RIGHT_LIMIT 200
 
 #define DEFAULT_X_SPEED 1
@@ -146,6 +146,8 @@ void log(const char file[], int line, const char* format, ...);
 #define DOWN_JUMP_SPEED 0.4
 
 #define CAN_FLIP true
+#define DINO_BLINK 200
+#define DINO_HIT 800
 
 #define RELEASE( x ) \
     { \

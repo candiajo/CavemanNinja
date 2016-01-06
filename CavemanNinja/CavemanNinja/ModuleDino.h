@@ -4,6 +4,8 @@
 #include "Sprite.h"
 #include "Animation.h"
 
+#define TIME_BETWEEN_BLINKS 4000
+
 class DinoState;
 class SpriteDinoBody;
 
@@ -11,13 +13,14 @@ class ModuleDino : public Sprite
 {
 public:
 	ModuleDino(bool active) : Sprite(active) {};
-	~ModuleDino() {};
 
 	bool Start();
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void CloseEye(int time);
+	FrameInfo* getClosedEyeFrame();
 	void OnCollision(Collider* c1, Collider* c2);
 
 	Animation openmouth;
@@ -26,7 +29,11 @@ public:
 	Animation semiclosemouth;
 	Animation superhit;
 	Animation defeated;
+	Animation eyeclosed1;
+	Animation eyeclosed2;
+
 	Animation dinobody;
+	Animation dinobodyground;
 
 	SpriteDinoBody* spritedinobody;
 
@@ -34,7 +41,11 @@ public:
 
 private:
 	void LoadData();
+	
 	DinoState* state;
+	bool eyeclosed;
+
+	Timer* timebetweenblinks;
 };
 
 #endif // __MODULEDINO_H__

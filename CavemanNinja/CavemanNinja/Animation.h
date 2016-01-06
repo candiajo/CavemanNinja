@@ -10,7 +10,6 @@
 
 class Module;
 
-
 using namespace std;
 
 class Animation
@@ -25,7 +24,6 @@ public:
 	void SetLastFrame();
 
 	void DestroyColliders();	// mark 'to_destroy' all (frame and animation) colliders 
-	
 	bool Finished();
 	void Reset();
 
@@ -34,8 +32,9 @@ public:
 	vector<FrameInfo> frames;
 	list<Collider*> colliders;
 	
-private:
 	float current_frame = 0.0f;
+
+private:
 	int loops = 0;
 
 };

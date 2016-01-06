@@ -30,7 +30,8 @@ Application::Application()
 
 Application::~Application()
 {
-	for (auto& it : modules) delete(it);
+	for (auto& module : modules) 
+		delete(module);
 }
 
 bool Application::Init()

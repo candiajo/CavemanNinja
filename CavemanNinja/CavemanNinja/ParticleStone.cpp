@@ -6,7 +6,6 @@
 #include "Collider.h"
 #include "Timer.h"
 
-
 #include "ModulePlayer.h"
 
 ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(type, generator)

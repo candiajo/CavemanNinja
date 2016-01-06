@@ -144,6 +144,12 @@
     <ClCompile Include="SpriteDinoBody.cpp">
       <Filter>Sprites</Filter>
     </ClCompile>
+    <ClCompile Include="SuperHitState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="DinoDefeatedState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -262,6 +268,12 @@
     </ClInclude>
     <ClInclude Include="SpriteDinoBody.h">
       <Filter>Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperHitState.h">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClInclude>
+    <ClInclude Include="DinoDefeatedState.h">
+      <Filter>StatesMachine\Dino States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

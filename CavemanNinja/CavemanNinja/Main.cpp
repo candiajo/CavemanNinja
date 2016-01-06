@@ -1,4 +1,4 @@
-//#include <vld.h> 
+#include <vld.h> 
 
 #include "Globals.h"
 #include "Application.h"
@@ -68,6 +68,7 @@ int main()
 				LOG("...........Application CleanUp exits with error...........");
 			}
 			else
+				delete App;
 				return_state = EXIT_SUCCESS;
 
 			state = MAIN_EXIT;

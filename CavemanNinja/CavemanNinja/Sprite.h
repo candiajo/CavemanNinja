@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "SDL.h"
+#include "Animation.h" //debug
 
 class PlayerState;
 class Timer;
@@ -13,7 +14,6 @@ class Sprite : public Module
 public:
 	Sprite();
 	Sprite(bool active);
-	virtual ~Sprite(){};
 
 	void SetCurrentAnimation(Animation* next_animation);
 
@@ -32,7 +32,7 @@ protected:
 	void PlaceColliders();
 
 	SDL_Texture* texture_sprite = nullptr;
-	Timer* timer;
+	Timer* timer = nullptr;
 };
 
 #endif //__SPRITE_H__

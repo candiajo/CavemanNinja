@@ -1,5 +1,5 @@
-#ifndef __MODULEDINOMOVESTATE_H__
-#define __MODULEDINOMOVESTATE_H__
+#ifndef __DINOMOVESTATE_H__
+#define __DINOMOVESTATE_H__
 
 #include "DinoState.h"
 
@@ -16,4 +16,4 @@ private:
 	dino_substate substate;
 };
 
-#endif //__MODULEDINOMOVESTATE_H__
+#endif //__DINOMOVESTATE_H__

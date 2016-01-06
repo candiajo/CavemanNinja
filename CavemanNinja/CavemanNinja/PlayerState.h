@@ -19,7 +19,7 @@ protected:
 
 	type_direction ScreenLimitReached(ModulePlayer& player)
 	{
-		if (player.position.x <= LEFT_LIMIT) return LEFT;
+		if (player.position.x <= DINO_LEFT_LIMIT) return LEFT;
 		if (player.position.x >= RIGHT_LIMIT) return RIGHT;
 
 		return NONE;

@@ -44,17 +44,6 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			fire = PRE_SHOT_H;
 	}
 	
-	//debug
-	{
-		if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-		{
-			Shot(&player, SLOW_STONE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			Shot(&player, ENEMY);
-		}
-	}
 	switch (fire)
 	{
 		case PRE_SHOT_H:

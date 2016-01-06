@@ -41,7 +41,7 @@ public:
 	ModuleDino* dino;
 
 	//debug
-	float var1 = 200, var2 = 0, var3 = 1.05f;
+	float var1 = 200, var2 = 100, var3 = 1.05f;
 
 private:
 	std::list<Module*> modules;

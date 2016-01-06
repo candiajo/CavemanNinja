@@ -1,5 +1,5 @@
-#ifndef __MODULEATTACKSTATE_H__
-#define __MODULEATTACKSTATE_H__
+#ifndef __ATTACKSTATE_H__
+#define __ATTACKSTATE_H__
 
 #include "DinoState.h"
 
@@ -19,4 +19,4 @@ private:
 	Timer* timer;
 };
 
-#endif //__MODULEATTACKSTATE_H__
+#endif //__ATTACKSTATE_H__

@@ -1,5 +1,5 @@
-#ifndef __MODULEDINOSTATE_H__
-#define __MODULEDINOSTATE_H__
+#ifndef __DINOSTATE_H__
+#define __DINOSTATE_H__
 
 #define VERY_FAR_POSITION -20	// dino at the left of the screen
 #define FAR_POSITION -2			// dino far from player
@@ -27,7 +27,12 @@ enum dino_substate
 	DINO_OPENING_MOUTH,
 	DINO_MOUTH_OPEN,
 	PRE_DINO_SHOT,
-	DINO_SHOT
+	DINO_SHOT,
+	DINO_DEFEATED_HIT,
+	DINO_DEFEATED_BACKWARDS,
+	DINO_DEFEATED_FALLING,
+	DINO_DEFEATED_BOUNCE,
+	DINO_DEFEATED_FINAL
 };
 
 class DinoState
@@ -59,4 +64,4 @@ protected:
 	float y_original;
 };
 
-#endif //__MODULEDINOSTATE_H__
+#endif //__DINOSTATE_H__

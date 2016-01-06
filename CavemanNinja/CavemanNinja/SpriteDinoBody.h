@@ -13,7 +13,7 @@ class SpriteDinoBody : public Sprite
 {
 public:
 	SpriteDinoBody(bool active) : Sprite(active) {};
-	SpriteDinoBody(SDL_Texture* sprite_texture, Animation* animation);
+	SpriteDinoBody(SDL_Texture* sprite_texture);
 	~SpriteDinoBody() {};
 
 	bool Start();
@@ -22,6 +22,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	Animation* dinobody_animation;
+	Animation* dinobodyground_animation;
 
 private:
 	ModuleDino* dino;

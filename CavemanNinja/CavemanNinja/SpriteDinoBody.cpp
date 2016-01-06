@@ -3,16 +3,19 @@
 #include "ModuleTextures.h"
 #include "ModuleDino.h"
 #include "ModuleRender.h"
+#include "Application.h"
 
 
-SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture, Animation* animation) : Sprite(active)
+SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture) : Sprite(active)
 {
 	this->texture_sprite = sprite_texture;
-	dinobody_animation = animation;
 }
 
 bool SpriteDinoBody::Start()
 {
+	dinobody_animation = &App->dino->dinobody;
+	dinobodyground_animation = &App->dino->dinobodyground;
+
 	SetCurrentAnimation(dinobody_animation);
 	
 	return true;

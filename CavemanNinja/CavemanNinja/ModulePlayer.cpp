@@ -6,7 +6,7 @@
 #include "File.h"
 #include "PlayerState.h"
 #include "JumpState.h"
-#include "CrouchState.h"
+#include "IdleState.h"
 #include "Collider.h"
 #include "ModuleCollisions.h"
 #include "ModuleInput.h"
@@ -24,6 +24,7 @@ bool ModulePlayer::Start()
 
 	position.x = 50;
 	position.y = 0;
+
 
 	return true;
 }
@@ -52,7 +53,6 @@ update_status ModulePlayer::Update()
 
 update_status ModulePlayer::PostUpdate()
 {
-
 	previous_frame = current_frame;
 
 	return UPDATE_CONTINUE;
@@ -60,6 +60,17 @@ update_status ModulePlayer::PostUpdate()
 
 bool ModulePlayer::CleanUp()
 {
+	idle.DestroyColliders();
+	walk.DestroyColliders();
+	crouch.DestroyColliders();
+	lookup.DestroyColliders();
+	normaljump.DestroyColliders();
+	superjump.DestroyColliders();
+	downjump.DestroyColliders();
+	shotweapon.DestroyColliders();
+	shotcrouch.DestroyColliders();
+	shotup.DestroyColliders();
+
 	if (state != nullptr) delete state;
 	return true;
 }

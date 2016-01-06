@@ -87,5 +87,13 @@ bool ModuleParticles::CleanUp()
 
 	particles.clear();
 
+	axe_animation.DestroyColliders();
+	superaxe_animation.DestroyColliders();
+	rollingstone_animation.DestroyColliders();
+	breakingstone_animation.DestroyColliders();
+	rollingenemy_animation.DestroyColliders();
+	hitenemy_animation.DestroyColliders();
+	dinotail_animation.DestroyColliders();
+
 	return true;
 }

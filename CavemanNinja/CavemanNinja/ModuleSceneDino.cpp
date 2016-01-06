@@ -30,6 +30,7 @@ bool ModuleSceneDino::Start()
 
 	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().offset.x, bgflowers.frames.front().offset.y);
 	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
+
 	return (texture_scene_dino != nullptr);
 }
 
@@ -82,6 +83,10 @@ bool ModuleSceneDino::CleanUp()
 	LOG("Unloading Title scene");
 
 	App->textures->Unload(texture_scene_dino);
+
+	bgflowers.DestroyColliders();
+	bgvolcanos.DestroyColliders();
+	bgplatform.DestroyColliders();
 
 	App->collisions->CleanUp();
 

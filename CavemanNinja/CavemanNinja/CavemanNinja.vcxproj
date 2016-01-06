@@ -73,6 +73,7 @@
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DecideActionState.cpp" />
+    <ClCompile Include="DinoDefeatedState.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="JumpState.cpp" />
     <ClCompile Include="Log.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="ShotweaponState.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="SpriteDinoBody.cpp" />
+    <ClCompile Include="SuperHitState.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WalkState.cpp" />
   </ItemGroup>
@@ -113,6 +115,7 @@
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DecideActionState.h" />
+    <ClInclude Include="DinoDefeatedState.h" />
     <ClInclude Include="DinoState.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Globals.h" />
@@ -144,6 +147,7 @@
     <ClInclude Include="ShotweaponState.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="SpriteDinoBody.h" />
+    <ClInclude Include="SuperHitState.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="WalkState.h" />
   </ItemGroup>

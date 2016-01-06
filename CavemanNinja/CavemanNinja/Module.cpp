@@ -81,13 +81,13 @@ void Module::StoreData(info_type info, GenericData& data, Animation& animation, 
 		break;
 
 	case OFFSET_INFO:
-		animation.frames.back().offset.x = data.val1;
-		animation.frames.back().offset.y = data.val2;
+		animation.frames.back().offset.x = (float)data.val1;
+		animation.frames.back().offset.y = (float)data.val2;
 		break;
 
 	case FRAME_COLLIDER:
-		offset.x = data.val1 * SCREEN_SIZE;
-		offset.y = data.val2 * SCREEN_SIZE;
+		offset.x = (float)(data.val1 * SCREEN_SIZE);
+		offset.y = (float)(data.val2 * SCREEN_SIZE);
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
 		frame_w = animation.frames.back().section.w;

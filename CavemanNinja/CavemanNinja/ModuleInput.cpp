@@ -86,7 +86,8 @@ key_state ModuleInput::GetKey(int key) const
 
 void ModuleInput::debug()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var2 += 1;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var1 = 0;
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_UP) App->var1 = 100;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var2 -= 1;
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 5;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 5;

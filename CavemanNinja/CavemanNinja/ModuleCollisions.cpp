@@ -117,19 +117,13 @@ bool ModuleCollisions::CleanUp()
 {
 	LOG("Destroying all colliders");
 
-	for (auto& it : colliders) RELEASE(it);
+	for (auto& collider : colliders) 
+		RELEASE(collider);
 	
 	colliders.clear();
 
 	return true;
 }
-
-//Collider* ModuleCollisions::AddCollider(SDL_Rect rect, Point offset, int frame_w, collider_type type, Module* callback = nullptr)
-//{
-//	Collider* ret = new Collider(rect, offset, frame_w, type, callback);
-//	colliders.push_back(ret);
-//	return ret;
-//}
 
 void ModuleCollisions::AddCollider(Collider* collider)
 {
