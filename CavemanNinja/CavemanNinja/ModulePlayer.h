@@ -32,6 +32,22 @@ public:
 	Animation backattack;
 	Animation frontdying;
 	Animation backdying;
+	Animation salute;
+	Animation tired;
+	Animation supershot;
+
+	Animation ch_idle;
+	Animation ch_walk;
+	Animation ch_crouch;
+	Animation ch_lookup;
+	Animation ch_normaljump;
+	Animation ch_downjump;
+
+	bool rolling_arm = false;
+	bool is_crouch = false;
+	bool is_jumping = false;
+	bool is_tired = false;
+	bool charge_enough = false;
 
 private:
 	void LoadData();

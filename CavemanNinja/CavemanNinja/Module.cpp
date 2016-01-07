@@ -7,10 +7,19 @@ bool Module::IsEnabled() const
 	return active;
 }
 
+bool Module::HasStarted() const
+{
+	return started;
+}
+
 bool Module::Enable()
 {
 	if (active == false)
-		return active = Start();
+	{
+		started = Start();
+		active = started;
+		return active;
+	}
 
 	return true;
 }
@@ -19,6 +28,8 @@ bool Module::Disable()
 {
 	if (active == true)
 		return active = !CleanUp();
+
+	started = false;
 
 	return true;
 }
@@ -65,10 +76,11 @@ void Module::StoreData(info_type info, GenericData& data, Animation& animation, 
 	switch (info)
 	{
 	case FRAME_INFO:
-		frame.section.x = data.val1;
-		frame.section.y = data.val2;
-		frame.section.w = data.val3;
-		frame.section.h = data.val4;
+		frame.original.x = data.val1;
+		frame.original.y = data.val2;
+		frame.original.w = data.val3;
+		frame.original.h = data.val4;
+		frame.section = &frame.original;
 		animation.frames.push_back(frame);
 		break;
 
@@ -90,7 +102,7 @@ void Module::StoreData(info_type info, GenericData& data, Animation& animation, 
 		offset.y = (float)(data.val2 * SCREEN_SIZE);
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
-		frame_w = animation.frames.back().section.w;
+		frame_w = animation.frames.back().original.w;
 		animation.frames.back().colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, offset, frame_w, data.type, module));
 		break;
 
@@ -99,7 +111,7 @@ void Module::StoreData(info_type info, GenericData& data, Animation& animation, 
 		offset.y = data.val2 * SCREEN_SIZE;
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
-		frame_w = animation.frames.back().section.w;
+		frame_w = animation.frames.back().original.w;
 		animation.colliders.push_back(new Collider({ 0, 0, data.val3, data.val4 }, offset, frame_w, data.type, module));
 		break;
 	}

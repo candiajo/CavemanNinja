@@ -1,14 +1,11 @@
-#include "ShotweaponState.h"
+#include "ShotWeaponState.h"
 #include "IdleState.h"
 #include "JumpState.h"
 #include "ModuleParticles.h"
 
 #include "SDL.h"
 
-ShotweaponState::ShotweaponState()
-{}
-
-PlayerState* ShotweaponState::update(ModulePlayer& player)
+PlayerState* ShotWeaponState::update(ModulePlayer& player)
 {
 	if (player.current_animation->Finished())
 	{
@@ -20,9 +17,11 @@ PlayerState* ShotweaponState::update(ModulePlayer& player)
 	}
 }
 
-void ShotweaponState::enter(ModulePlayer& player)
+void ShotWeaponState::enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
-	player.SetCurrentAnimation(&player.shotweapon);
-	Shot(&player, AXE_HORZ);
+
+	if (weapon == SUPER_AXE) player.SetCurrentAnimation(&player.supershot);
+	else player.SetCurrentAnimation(&player.shotweapon);
+	Shot(&player, weapon);
 }

@@ -9,7 +9,7 @@ public:
 	Timer(int life_time);
 	~Timer();
 
-	void StartTimer();
+	void StartTimer(int time = 0);
 	bool TimeOver();
 	int ElapsedTime();
 

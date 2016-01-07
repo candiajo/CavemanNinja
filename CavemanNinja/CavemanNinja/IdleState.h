@@ -3,16 +3,20 @@
 
 #include "PlayerState.h"
 
-class CrouchState;
+class Timer;
 
 class IdleState : public PlayerState
 {
 public:
 	IdleState();
+	~IdleState();
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
 	void OnCollision(Collider* c1, Collider* c2){};
+
+private:
+	Timer* timer;
 };
 
 #endif //__IDLESTATE_H__

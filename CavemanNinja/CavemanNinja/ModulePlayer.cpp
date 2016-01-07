@@ -53,7 +53,7 @@ update_status ModulePlayer::Update()
 	if (direction == LEFT) temp_position.x -= current_frame->offset.x;
 	else temp_position.x += current_frame->offset.x;
 
-	App->renderer->Blit(texture_sprite, (int)temp_position.x, (int)temp_position.y, &(*current_frame).section, Flip());
+	App->renderer->Blit(texture_sprite, (int)temp_position.x, (int)temp_position.y, current_frame->section, Flip());
 	
 	return UPDATE_CONTINUE;
 }
@@ -81,6 +81,8 @@ bool ModulePlayer::CleanUp()
 	backattack.DestroyColliders();
 	frontdying.DestroyColliders();
 	backdying.DestroyColliders();
+	salute.DestroyColliders();
+	tired.DestroyColliders();
 
 	if (state != nullptr) delete state;
 	return true;
@@ -110,7 +112,23 @@ void ModulePlayer::LoadData()
 		else if (name == "backattack") StoreData(info, data, backattack, this);
 		else if (name == "frontdying") StoreData(info, data, frontdying, this);
 		else if (name == "backdying") StoreData(info, data, backdying, this);
+		else if (name == "ch.idle") StoreData(info, data, ch_idle, this);
+		else if (name == "ch.walk") StoreData(info, data, ch_walk, this);
+		else if (name == "ch.crouch") StoreData(info, data, ch_crouch, this);
+		else if (name == "ch.lookup") StoreData(info, data, ch_lookup, this);
+		else if (name == "ch.normaljump") StoreData(info, data, ch_normaljump, this);
+		else if (name == "ch.downjump") StoreData(info, data, ch_downjump, this);
+		else if (name == "salute") StoreData(info, data, salute, this);
+		else if (name == "tired") StoreData(info, data, tired, this);
+		else if (name == "supershot") StoreData(info, data, supershot, this);
 	}
+
+	idle.SetAlternateVersion(&ch_idle);
+	walk.SetAlternateVersion(&ch_walk);
+	crouch.SetAlternateVersion(&ch_crouch);
+	lookup.SetAlternateVersion(&ch_lookup);
+	normaljump.SetAlternateVersion(&ch_normaljump);
+	downjump.SetAlternateVersion(&ch_downjump);
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)

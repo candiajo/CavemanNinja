@@ -16,14 +16,10 @@
 
 #include "SDL.h"
 
-bool ModuleSceneDino::Init()
-{
-	return true;
-}
-
 bool ModuleSceneDino::Start()
 {
 	App->player1->Enable();
+	App->particles->Enable();
 	App->dino->Enable();
 
 	player_defeated = false;
@@ -68,19 +64,19 @@ update_status ModuleSceneDino::Update()
 {
 	int x = bgvolcanos.GetCurrentFrame().offset.x;
 	int y = bgvolcanos.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, &(bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
+	App->renderer->Blit(texture_scene_dino, x, y, (bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
 
 	x = bgplatform.GetCurrentFrame().offset.x;
 	y = bgplatform.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, &(bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
+	App->renderer->Blit(texture_scene_dino, x, y, (bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
 
 	x = bgflowers.GetCurrentFrame().offset.x;
 	y = bgflowers.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, &(bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
+	App->renderer->Blit(texture_scene_dino, x, y, (bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
 
 	x = girl.GetCurrentFrame().offset.x;
 	y = girl.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, &(girl.GetCurrentFrame().section), SDL_FLIP_NONE);
+	App->renderer->Blit(texture_scene_dino, x, y, (girl.GetCurrentFrame().section), SDL_FLIP_NONE);
 	
 	if (player_defeated) NextScene(this);
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
@@ -110,6 +106,7 @@ void ModuleSceneDino::NextScene(Module* scene)
 {
 	App->begin_level->Transition(scene, this, 1);
 	App->player1->Disable();
+	App->particles->Disable();
 	App->dino->Disable();
 	App->collisions->CleanUp();
 }

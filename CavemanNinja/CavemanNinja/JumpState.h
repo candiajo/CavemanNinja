@@ -28,6 +28,7 @@ public:
 	void enter(ModulePlayer& player);
 	void OnCollision(Collider* c1, Collider* c2);
 
+private:
 	jump_substate substate;
 	jump_substate fire;
 };

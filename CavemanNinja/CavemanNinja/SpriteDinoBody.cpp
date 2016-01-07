@@ -31,7 +31,7 @@ update_status SpriteDinoBody::Update(Point head_position)
 
 	PlaceColliders();
 	position = head_position;
-	App->renderer->Blit(texture_sprite, (int)position.x + BODY_X_OFFSET, (int)position.y + BODY_Y_OFFSET, &(*current_frame).section, SDL_FLIP_NONE);
+	App->renderer->Blit(texture_sprite, (int)position.x + BODY_X_OFFSET, (int)position.y + BODY_Y_OFFSET, (*current_frame).section, SDL_FLIP_NONE);
 
 	return UPDATE_CONTINUE;
 }

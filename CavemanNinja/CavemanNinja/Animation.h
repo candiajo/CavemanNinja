@@ -22,21 +22,22 @@ public:
 	FrameInfo& GetCurrentFrame();
 	FrameInfo& PeekFrame(int n);
 	void SetLastFrame();
-
 	void DestroyColliders();	// mark 'to_destroy' all (frame and animation) colliders 
 	bool Finished();
 	void Reset();
+	void SetAlternateVersion(Animation* alternate_version);
 
 	float speed = 1.0f;
 	bool loop = true;
 	vector<FrameInfo> frames;
 	list<Collider*> colliders;
 	
+	bool alternate;
 	float current_frame = 0.0f;
 
 private:
 	int loops = 0;
-
+	Animation* alternate_version;
 };
 
 #endif // __ANIMATION_H__

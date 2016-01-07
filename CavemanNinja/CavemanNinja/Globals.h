@@ -21,7 +21,8 @@ enum particle_type
 	FAST_STONE,
 	ENEMY,
 	FAKE_ATTACK,
-	DINOTAIL
+	DINO_TAIL,
+	ARM
 };
 enum main_states
 {
@@ -102,7 +103,8 @@ struct Point
 
 struct FrameInfo
 {
-	SDL_Rect section;
+	SDL_Rect original, alternate;
+	SDL_Rect* section;
 	Point offset;
 	std::list<Collider*> colliders;
 };
@@ -145,6 +147,8 @@ void log(const char file[], int line, const char* format, ...);
 
 #define	LEFT_LIMIT -25
 #define	RIGHT_LIMIT 200
+#define DINO_BLINK 200
+#define DINO_HIT 800
 
 #define DEFAULT_X_SPEED 1
 #define NORMAL_JUMP_SPEED -6
@@ -152,8 +156,9 @@ void log(const char file[], int line, const char* format, ...);
 #define DOWN_JUMP_SPEED 0.4
 
 #define CAN_FLIP true
-#define DINO_BLINK 200
-#define DINO_HIT 800
+#define ANGRY_VERSION true
+#define CLOSED_EYE_VERSION true
+
 
 #define RELEASE( x ) \
     { \

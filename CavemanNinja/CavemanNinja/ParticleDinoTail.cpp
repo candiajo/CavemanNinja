@@ -47,7 +47,7 @@ void ParticleDinoTail::ParticleUpdate()
 
 	current_frame = &(*current_animation).GetCurrentFrame();
 	PlaceColliders();
-	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, (*current_frame).section, Flip());
 }
 
 void ParticleDinoTail::OnCollision(Collider* c1, Collider* c2)

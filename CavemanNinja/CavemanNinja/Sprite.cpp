@@ -11,24 +11,29 @@ Sprite::Sprite(bool active) : Module(active)
 Sprite::Sprite() : Module(true)
 {}
 
-void Sprite::SetCurrentAnimation(Animation* next_animation)
+void Sprite::SetCurrentAnimation(Animation* next_animation, bool alternate)
 {
 	previous_animation = current_animation;
 	current_animation = next_animation;
+	current_animation->alternate = alternate;
 
-	// delete colliders of the previous animation
-	if (previous_animation != nullptr)
-		for (auto& collider : previous_animation->colliders)
-			collider->to_detach = true;
+	if (next_animation != previous_animation) 
+	{
+		// delete colliders of the previous animation
+		if (previous_animation != nullptr)
+			for (auto& collider : previous_animation->colliders)
+				collider->to_detach = true;
 
-	// push colliders of the next animation
-	if (current_animation != nullptr)
-		for (auto& collider : current_animation->colliders)
-		{
-			App->collisions->AddCollider(collider);
-		}
+		// push colliders of the next animation
+		if (current_animation != nullptr)
+			for (auto& collider : current_animation->colliders)
+			{
+				App->collisions->AddCollider(collider);
+			}
 
-	current_animation->Reset();
+		current_animation->Reset();
+	}
+	// else, the player is just alternating it's animation version, no need to refresh colliders neither reseting animation
 }
 
 SDL_RendererFlip Sprite::Flip()

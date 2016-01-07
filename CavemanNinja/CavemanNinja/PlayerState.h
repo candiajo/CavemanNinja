@@ -29,6 +29,12 @@ protected:
 	{
 		App->particles->AddParticle(weapon, dynamic_cast<Module*>(player));
 	}
+
+	void RollArm(ModulePlayer* player)
+	{
+		if (player->rolling_arm == false)
+			App->particles->AddParticle(ARM, dynamic_cast<Module*>(player));
+	}
 };
 
 #endif //__PLAYERSTATE_H__

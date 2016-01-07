@@ -9,7 +9,7 @@ struct SDL_Texture;
 class ModuleBeginLevel : public Module
 {
 public:
-	ModuleBeginLevel(bool active) : Module(active) {};
+	ModuleBeginLevel() : Module(true) {};
 	~ModuleBeginLevel() {};
 
 	bool Start();

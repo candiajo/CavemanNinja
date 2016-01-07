@@ -68,7 +68,7 @@ void MoveState::enter(ModuleDino& dino)
 		substate = DINO_STOP;
 	}
 
-	if (projectile == DINOTAIL) dino.dinobody.speed = 0.15f;
+	if (projectile == DINO_TAIL) dino.dinobody.speed = 0.15f;
 
 	y_original = dino.position.y;
 }

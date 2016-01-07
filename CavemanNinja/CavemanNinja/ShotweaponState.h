@@ -3,14 +3,18 @@
 
 #include "PlayerState.h"
 
-class ShotweaponState : public PlayerState
+class ShotWeaponState : public PlayerState
 {
 public:
-	ShotweaponState();
+	ShotWeaponState() {};
+	ShotWeaponState::ShotWeaponState(particle_type weapon) : weapon(weapon) {}
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
 	void OnCollision(Collider* c1, Collider* c2){};
+
+private:
+	particle_type weapon;
 };
 
 #endif //__SHOTWEAPONSTATE_H__

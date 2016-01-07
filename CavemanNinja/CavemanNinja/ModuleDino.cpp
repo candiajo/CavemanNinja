@@ -38,7 +38,7 @@ bool ModuleDino::Start()
 
 update_status ModuleDino::Update()
 {
-	SDL_Rect frame_section;
+	SDL_Rect* frame_section;
 	DinoState* temp_state = state->update(*this);
 
 	if (temp_state != nullptr)
@@ -59,7 +59,7 @@ update_status ModuleDino::Update()
 		frame_section = getClosedEyeFrame()->section;
 		if (timer->TimeOver())
 		{
-			delete timer;
+			RELEASE(timer);
 			eyeclosed = false;
 			timebetweenblinks->StartTimer();
 		}
@@ -68,7 +68,7 @@ update_status ModuleDino::Update()
 	
 	// draw head over body
 	spritedinobody->Update(position);
-	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &frame_section, SDL_FLIP_NONE);
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, frame_section, SDL_FLIP_NONE);
 
 	return UPDATE_CONTINUE;
 }
@@ -95,8 +95,9 @@ bool ModuleDino::CleanUp()
 
 	if (spritedinobody != nullptr) delete spritedinobody;
 	
-	if (timebetweenblinks != nullptr) delete timebetweenblinks;
-	if (state != nullptr) delete state;
+	RELEASE(timebetweenblinks);
+	RELEASE(timer);
+	RELEASE(state);
 
 	return true;
 }

@@ -1,9 +1,11 @@
+#include "TiredState.h"
+#include "Timer.h"
 #include "IdleState.h"
 #include "CrouchState.h"
 #include "WalkState.h"
 #include "JumpState.h"
 #include "LookupState.h"
-#include "ShotweaponState.h"
+#include "ShotWeaponState.h"
 #include "AttackedState.h"
 
 #include "SDL.h"
@@ -11,16 +13,35 @@
 IdleState::IdleState() : PlayerState()
 {}
 
+IdleState::~IdleState()
+{
+	delete timer;
+}
+
 PlayerState* IdleState::update(ModulePlayer& player)
 {
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) // debug
+	if (player.is_tired) return new TiredState();
+
+	if (player.rolling_arm) timer->StartTimer();
+
+	if (timer->TimeOver())
 	{
-		return new AttackedState(ATTACKED_FROM_FRONT);
+		if (player.current_animation == &player.salute)
+			player.SetCurrentAnimation(&player.idle);
+		else
+			player.SetCurrentAnimation(&player.salute);
+
+		timer->StartTimer(3000);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) // debug
+
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP && player.rolling_arm)
 	{
-		return new AttackedState(ATTACKED_FROM_BEHIND);
+		if (player.charge_enough)
+			return new ShotWeaponState(SUPER_AXE);
+		else
+			player.SetCurrentAnimation(&player.idle);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		return new CrouchState();
@@ -45,17 +66,23 @@ PlayerState* IdleState::update(ModulePlayer& player)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
-		return new ShotweaponState();
+		return new ShotWeaponState();
 	}
-	else
-	{
-		return nullptr;
-	}
+
+	return SAME_STATE;
 }
 
 void IdleState::enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.y_speed = 0;
-	player.SetCurrentAnimation(&player.idle);
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		player.SetCurrentAnimation(&player.idle, ANGRY_VERSION);
+		RollArm(&player);
+	}
+	else player.SetCurrentAnimation(&player.idle);
+
+	timer = new Timer(3000);
+	timer->StartTimer();
 }

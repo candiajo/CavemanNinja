@@ -6,7 +6,6 @@
 #include "Collider.h"
 #include "Timer.h"
 
-
 #include "ModulePlayer.h"
 
 ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(type, generator)
@@ -62,7 +61,7 @@ void ParticleEnemy::ParticleUpdate()
 
 		current_frame = &(*current_animation).GetCurrentFrame();
 		PlaceColliders();
-		App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+		App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, Flip());
 	}
 }
 

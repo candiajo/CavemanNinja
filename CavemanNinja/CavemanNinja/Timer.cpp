@@ -6,8 +6,9 @@ Timer::Timer(int life_time) : life_time(life_time)
 Timer::~Timer()
 {}
 
-void Timer::StartTimer()
+void Timer::StartTimer(int time)
 {
+	if (time > 0) life_time = time;		// restarts the timer with a new time
 	start_time = SDL_GetTicks();
 }
 

@@ -19,7 +19,7 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 		timer->StartTimer();
 		
 		if (dino.player_too_near) 
-			return new MoveState(VERY_FAR_POSITION, DINOTAIL);
+			return new MoveState(VERY_FAR_POSITION, DINO_TAIL);
 
 		int random_number;
 		int destination;

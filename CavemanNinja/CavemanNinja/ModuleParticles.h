@@ -29,6 +29,8 @@ public:
 	Animation rollingenemy_animation;
 	Animation hitenemy_animation;
 	Animation dinotail_animation;
+	Animation armslow;
+	Animation armfast;
 	
 	SDL_Texture* texture_particles;
 

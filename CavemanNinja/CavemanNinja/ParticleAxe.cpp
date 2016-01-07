@@ -12,8 +12,8 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 	if (type == SUPER_AXE)
 	{
 		offset.x = 55;
-		offset.y = 0;
-		distance_straight = 100;
+		offset.y = -15;
+		distance_straight = 40;
 		axe = new Animation(App->particles->superaxe_animation, this);
 	}
 	else
@@ -50,8 +50,10 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 	else if (direction == RIGHT)
 		x_speed = 1.5f;
 
+	if (type == SUPER_AXE) x_speed *= 2;
+
 	if (direction == LEFT)
-		offset.x = (generator->current_frame->section.w - axe->frames.front().section.w - offset.x);
+		offset.x = (generator->current_frame->section->w - axe->frames.front().section->w - offset.x);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -113,7 +115,7 @@ void ParticleAxe::ParticleUpdate()
 		PlaceColliders();
 	}
 
-	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, Flip());
 
 	previous_frame = current_frame;
 }

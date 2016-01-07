@@ -3,7 +3,8 @@
 #include "CrouchState.h"
 #include "Collider.h"
 #include "JumpState.h"
-#include "ShotweaponState.h"
+#include "ShotWeaponState.h"
+#include "TiredState.h"
 
 WalkState::WalkState()
 {}
@@ -11,6 +12,12 @@ WalkState::WalkState()
 PlayerState* WalkState::update(ModulePlayer& player)
 {
 	type_direction limit;
+
+	if (player.is_tired)
+	{
+		player.x_speed = 0;
+		return new TiredState();
+	}
 
 	if (event == WALK_OFF_PLATFORM)
 	{
@@ -35,7 +42,11 @@ PlayerState* WalkState::update(ModulePlayer& player)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
 	{
-		return new ShotweaponState();
+		return new ShotWeaponState();
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	{
+		player.SetCurrentAnimation(&player.walk);
 	}
 	else
 	{
@@ -51,7 +62,7 @@ PlayerState* WalkState::update(ModulePlayer& player)
 		}
 		else player.x_speed = 0;
 	}
-	return nullptr;
+	return SAME_STATE;
 }
 
 void WalkState::enter(ModulePlayer& player)
@@ -61,10 +72,14 @@ void WalkState::enter(ModulePlayer& player)
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		player.direction = RIGHT;
 
-	player.SetCurrentAnimation(&player.walk);
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		player.SetCurrentAnimation(&player.walk, ANGRY_VERSION);
+		RollArm(&player);
+	}
+	else
+		player.SetCurrentAnimation(&player.walk);
 }
-
-
 
 void WalkState::OnCollision(Collider* c1, Collider* c2)
 {

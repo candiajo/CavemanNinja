@@ -14,7 +14,7 @@ public:
 	Sprite();
 	Sprite(bool active);
 
-	void SetCurrentAnimation(Animation* next_animation);
+	void SetCurrentAnimation(Animation* next_animation, bool alternate = false);
 
 	Animation* previous_animation = nullptr;
 	Animation* current_animation = nullptr;

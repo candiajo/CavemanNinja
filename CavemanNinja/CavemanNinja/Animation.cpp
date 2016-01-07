@@ -2,7 +2,12 @@
 #include "Collider.h"
 
 
-Animation::Animation() : frames(), speed(1.0f), current_frame(0.0f)
+Animation::Animation() : 
+frames(), 
+speed(1.0f), 
+current_frame(0.0f), 
+alternate(false), 
+alternate_version(nullptr)
 {}
 
 Animation::Animation(Animation& source, Module* new_callback)
@@ -11,6 +16,7 @@ Animation::Animation(Animation& source, Module* new_callback)
 	loop = source.loop;
 	current_frame = source.current_frame;
 	loops = source.loops;
+	alternate = false;
 
 	// copy animation colliders list
 	for (auto& source_collider : source.colliders)
@@ -24,7 +30,9 @@ Animation::Animation(Animation& source, Module* new_callback)
 	{
 		FrameInfo destination_frame;
 
-		destination_frame.section = source_frame.section;
+		destination_frame.original = source_frame.original;
+		destination_frame.alternate= source_frame.alternate;
+		destination_frame.section = &(source_frame.original);
 		destination_frame.offset = source_frame.offset;
 
 		// copy frame collider list
@@ -48,26 +56,31 @@ Animation::~Animation()
 
 FrameInfo& Animation::GetCurrentFrame()
 {
-	if (frames.size() == 1)
-		return frames[0];
-	else
+	current_frame += speed;
+	if (current_frame >= frames.size())
 	{
-		current_frame += speed;
-		if (current_frame >= frames.size())
-		{
-			if (loop)
-				current_frame = 0.0f;
-			else
-				current_frame = (float)frames.size() - 1;
+		if (loop)
+			current_frame = 0.0f;
+		else
+			current_frame = (float)frames.size() - 1;
 
-			loops++;
-		}
-		return frames[(int)current_frame];
+		loops++;
 	}
+	if (alternate && alternate_version != nullptr)
+		frames[(int)current_frame].section = &frames[(int)current_frame].alternate;
+	else
+		frames[(int)current_frame].section = &frames[(int)current_frame].original;
+
+	return frames[(int)current_frame];
 }
 
 FrameInfo& Animation::PeekFrame(int n)
 {
+	if (alternate && alternate_version != nullptr)
+		frames[n].section = &frames[n].alternate;
+	else
+		frames[n].section = &frames[n].original;
+
 	if (n > frames.size() - 1)
 		return frames[0];		// frame n doesn't exists
 	else
@@ -111,4 +124,13 @@ void Animation::DestroyColliders()
 
 	colliders.clear();
 	frames.clear();
+}
+
+void Animation::SetAlternateVersion(Animation* alternate_version)
+{
+	for (int i = 0; i < frames.size(); i++)
+		frames[i].alternate = alternate_version->frames[i].original;
+
+	//debug alternate_version->speed = this->speed;
+	this->alternate_version = alternate_version;
 }

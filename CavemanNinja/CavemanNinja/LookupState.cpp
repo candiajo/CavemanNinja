@@ -3,6 +3,7 @@
 #include "JumpState.h"
 #include "ShotupState.h"
 #include "WalkState.h"
+#include "TiredState.h"
 
 #include "SDL.h"
 
@@ -11,6 +12,8 @@ LookupState::LookupState()
 
 PlayerState* LookupState::update(ModulePlayer& player)
 {
+	if (player.is_tired) return new TiredState();
+
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
 	{
 		return new IdleState();
@@ -28,14 +31,21 @@ PlayerState* LookupState::update(ModulePlayer& player)
 	{
 		return new WalkState();
 	}
-	else
+	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
 	{
-		return nullptr;
+		player.SetCurrentAnimation(&player.lookup);
 	}
+		return SAME_STATE;
 }
 
 void LookupState::enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
-	player.SetCurrentAnimation(&player.lookup);
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		RollArm(&player);
+		player.SetCurrentAnimation(&player.lookup, ANGRY_VERSION);
+	}
+	else
+		player.SetCurrentAnimation(&player.lookup);
 }

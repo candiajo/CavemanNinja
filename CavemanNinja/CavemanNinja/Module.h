@@ -9,10 +9,12 @@ class Module
 {
 public:
 	Module() {};
-	Module(bool active) : active(active) {};
+	Module(bool active) : active(active) { started = false; };
 	virtual ~Module() {};
 
 	bool IsEnabled() const;
+	
+	bool HasStarted() const;
 
 	bool Enable();
 
@@ -32,11 +34,12 @@ public:
 
 	virtual void OnCollision(Collider* a, Collider* b);
 
+	bool started;
+
 protected:
 	void StoreData(info_type info, GenericData& data, Animation& animation, Module* module);
 
 	bool active;
-
 };
 
 #endif // __MODULE_H__

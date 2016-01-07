@@ -2,6 +2,7 @@
 #include "IdleState.h"
 #include "Collider.h"
 #include "AttackedState.h"
+#include "TiredState.h"
 
 #include "SDL.h"
 
@@ -13,13 +14,14 @@ JumpState::JumpState(jump_substate substate) : substate(substate)
 
 PlayerState* JumpState::update(ModulePlayer& player)
 {
+	if (player.is_tired)
+	{
+		player.x_speed = 0;
+		return new TiredState();
+	}
+
 	type_direction limit = ScreenLimitReached(player);
 
-	// debug
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		return new AttackedState(ATTACKED_FROM_BEHIND);
-	}
 	if (event == PLAYER_STEP_GROUND)
 		return new IdleState();
 
@@ -68,6 +70,12 @@ PlayerState* JumpState::update(ModulePlayer& player)
 					player.SetCurrentAnimation(&player.downjump);
 				else if (substate != SUPERJUMP)
 					player.SetCurrentAnimation(&player.normaljump);
+
+				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+				{
+					RollArm(&player);
+					player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
+				}
 				fire = NO_FIRE;
 			}
 			break;
@@ -86,9 +94,16 @@ PlayerState* JumpState::update(ModulePlayer& player)
 					player.SetCurrentAnimation(&player.downjump);
 				else
 					player.SetCurrentAnimation(&player.normaljump);
+
+				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+				{
+					RollArm(&player);
+					player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
+				}
 			}
 			break;
 	}
+
 	switch (substate)
 	{
 		case NORMALJUMP:
@@ -112,7 +127,10 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		case PRE_FALLING:
 		case PRE_DOWNJUMP:
 			if (fire == NO_FIRE)
-				player.SetCurrentAnimation(&player.downjump);
+				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+					player.SetCurrentAnimation(&player.downjump, ANGRY_VERSION);
+				else
+					player.SetCurrentAnimation(&player.downjump);
 			substate = FALLING;
 			break;
 
@@ -122,13 +140,19 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			break;
 	}
 		
-	return nullptr;
-
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	{
+		player.SetCurrentAnimation(player.current_animation);
+	}
+	return SAME_STATE;
 }
 
 void JumpState::enter(ModulePlayer& player)
 {
 	fire = NO_FIRE;
+	player.is_jumping = true;
+
+	if (substate == SUPERJUMP && player.rolling_arm) substate = NORMALJUMP;
 
 	switch (substate)
 	{
@@ -145,6 +169,12 @@ void JumpState::enter(ModulePlayer& player)
 		player.y_speed = 0.4f;// DOWN_JUMP_SPEED;
 		player.SetCurrentAnimation(&player.downjump);
 		break;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		RollArm(&player);
+		player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
 	}
 }
 
@@ -165,6 +195,7 @@ void JumpState::OnCollision(Collider* c1, Collider* c2)
 			player->position.y -= 1.0f / (float)SCREEN_SIZE;
 		}
 
+		player->is_jumping = false;
 		event = PLAYER_STEP_GROUND;
 	}
 }

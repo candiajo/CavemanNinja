@@ -120,9 +120,6 @@
     <ClCompile Include="ShotupState.cpp">
       <Filter>StatesMachine\Player States</Filter>
     </ClCompile>
-    <ClCompile Include="ShotweaponState.cpp">
-      <Filter>StatesMachine\Player States</Filter>
-    </ClCompile>
     <ClCompile Include="AgressiveAttackState.cpp">
       <Filter>StatesMachine\Dino States</Filter>
     </ClCompile>
@@ -154,6 +151,15 @@
       <Filter>StatesMachine\Player States</Filter>
     </ClCompile>
     <ClCompile Include="PlayerDefeatedState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleArm.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="TiredState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
+    <ClCompile Include="ShotWeaponState.cpp">
       <Filter>StatesMachine\Player States</Filter>
     </ClCompile>
   </ItemGroup>
@@ -245,9 +251,6 @@
     <ClInclude Include="ShotupState.h">
       <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
-    <ClInclude Include="ShotweaponState.h">
-      <Filter>StatesMachine\Player States</Filter>
-    </ClInclude>
     <ClInclude Include="WalkState.h">
       <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
@@ -285,6 +288,15 @@
       <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDefeatedState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleArm.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="TiredState.h">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotWeaponState.h">
       <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
   </ItemGroup>

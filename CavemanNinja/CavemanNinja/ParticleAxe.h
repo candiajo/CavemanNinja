@@ -1,5 +1,5 @@
-#ifndef __PARTICLEAXE_HORZ__
-#define __PARTICLEAXE_HORZ__
+#ifndef __PARTICLEAXE_H__
+#define __PARTICLEAXE_H__
 
 #include "Particle.h"
 
@@ -29,4 +29,4 @@ private:
 	int distance_straight = 0;	// distance that the axe goes straight (then falls)
 };
 
-#endif //__PARTICLEAXE_HORZ_
+#endif //__PARTICLEAXE_H_
