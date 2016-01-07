@@ -9,10 +9,7 @@ class ModulePlayer : public Sprite
 {
 public:
 	ModulePlayer(bool active) : Sprite(active) {};
-	~ModulePlayer() 
-	{
-		int a;
-	};
+	~ModulePlayer() {};
 
 	bool Start();
 	update_status Update();
@@ -31,7 +28,10 @@ public:
 	Animation shotweapon;
 	Animation shotcrouch;
 	Animation shotup;
-	Animation debug1;
+	Animation frontattack;
+	Animation backattack;
+	Animation frontdying;
+	Animation backdying;
 
 private:
 	void LoadData();

@@ -19,12 +19,12 @@ Application::Application()
 	modules.push_back(collisions = new ModuleCollisions());
 	modules.push_back(begin_level = new ModuleBeginLevel(true));
 
-	modules.push_back(scene_title = new ModuleSceneTitle(false));
-	modules.push_back(scene_dino = new ModuleSceneDino(true));
+	modules.push_back(scene_title = new ModuleSceneTitle(true));
+	modules.push_back(scene_dino = new ModuleSceneDino(false));
 
-	modules.push_back(player1 = new ModulePlayer(true));
+	modules.push_back(player1 = new ModulePlayer(false));
 	modules.push_back(particles = new ModuleParticles(true));
-	modules.push_back(dino = new ModuleDino(true));
+	modules.push_back(dino = new ModuleDino(false));
 	modules.push_back(renderer = new ModuleRender());
 }
 
@@ -79,7 +79,7 @@ bool Application::CleanUp()
 	bool ret = true;
 
 	for (auto it = modules.rbegin(); it != modules.rend() && ret; ++it)
-		ret = (*it)->CleanUp();
+		if ((*it)->IsEnabled()) ret = (*it)->CleanUp();
 
 	return ret;
 }

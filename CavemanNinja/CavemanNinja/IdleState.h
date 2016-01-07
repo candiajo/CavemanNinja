@@ -1,5 +1,5 @@
-#ifndef __MODULEIDLESTATE_H__
-#define __MODULEIDLESTATE_H__
+#ifndef __IDLESTATE_H__
+#define __IDLESTATE_H__
 
 #include "PlayerState.h"
 
@@ -15,4 +15,4 @@ public:
 	void OnCollision(Collider* c1, Collider* c2){};
 };
 
-#endif //__MODULEIDLESTATE_H__
+#endif //__IDLESTATE_H__

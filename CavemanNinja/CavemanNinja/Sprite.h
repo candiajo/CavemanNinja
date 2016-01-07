@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "SDL.h"
-#include "Animation.h" //debug
 
 class PlayerState;
 class Timer;
@@ -24,7 +23,8 @@ public:
 	type_direction direction;
 	Point position;
 	FrameInfo* previous_frame = nullptr;		// the animation frame rendered in the previous game frame
-	FrameInfo* current_frame = nullptr;		// the animation frame rendered in the current game frame
+	FrameInfo* current_frame = nullptr;			// the animation frame rendered in the current game frame
+	int energy;
 
 protected:
 	SDL_RendererFlip Flip();

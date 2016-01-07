@@ -1,7 +1,6 @@
 #include "DinoDefeatedState.h"
 #include "Timer.h"
 #include "SpriteDinoBody.h"
-#include "DecideActionState.h" //debug
 
 DinoDefeatedState::~DinoDefeatedState()
 {

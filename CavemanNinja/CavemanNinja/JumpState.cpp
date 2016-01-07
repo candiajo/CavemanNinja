@@ -1,6 +1,7 @@
 #include "JumpState.h"
 #include "IdleState.h"
 #include "Collider.h"
+#include "AttackedState.h"
 
 #include "SDL.h"
 
@@ -14,6 +15,11 @@ PlayerState* JumpState::update(ModulePlayer& player)
 {
 	type_direction limit = ScreenLimitReached(player);
 
+	// debug
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		return new AttackedState(ATTACKED_FROM_BEHIND);
+	}
 	if (event == PLAYER_STEP_GROUND)
 		return new IdleState();
 

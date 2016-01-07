@@ -88,6 +88,12 @@ enum game_events
 	WALK_OFF_PLATFORM
 };
 
+enum attack_direction
+{
+	ATTACKED_FROM_FRONT,
+	ATTACKED_FROM_BEHIND
+};
+
 struct Point
 {
 	float x = 0;
@@ -137,7 +143,7 @@ void log(const char file[], int line, const char* format, ...);
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
 #define DATA_PARTICLES "Content\\Data\\particles.ini"
 
-#define	DINO_LEFT_LIMIT -20
+#define	LEFT_LIMIT -25
 #define	RIGHT_LIMIT 200
 
 #define DEFAULT_X_SPEED 1

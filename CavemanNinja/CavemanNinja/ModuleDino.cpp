@@ -93,7 +93,7 @@ bool ModuleDino::CleanUp()
 	dinobody.DestroyColliders();
 	dinobodyground.DestroyColliders();
 
-	delete spritedinobody;
+	if (spritedinobody != nullptr) delete spritedinobody;
 	
 	if (timebetweenblinks != nullptr) delete timebetweenblinks;
 	if (state != nullptr) delete state;
@@ -132,9 +132,12 @@ void ModuleDino::OnCollision(Collider* c1, Collider* c2)
 
 void ModuleDino::CloseEye(int time)
 {
-	timer = new Timer(time);
-	timer->StartTimer();
-	eyeclosed = true;
+	if (!eyeclosed)
+	{
+		timer = new Timer(time);
+		timer->StartTimer();
+		eyeclosed = true;
+	}
 }
 
 // returns the "closedeye" frame equivalent to the current frame

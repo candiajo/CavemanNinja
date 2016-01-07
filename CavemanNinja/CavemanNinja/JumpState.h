@@ -1,5 +1,5 @@
-#ifndef __MODULEJUMPSTATE_H__
-#define __MODULEJUMPSTATE_H__
+#ifndef __JUMPSTATE_H__
+#define __JUMPSTATE_H__
 
 #include "PlayerState.h"
 
@@ -32,4 +32,4 @@ public:
 	jump_substate fire;
 };
 
-#endif //__MODULEJUMPSTATE_H__
+#endif //__JUMPSTATE_H__

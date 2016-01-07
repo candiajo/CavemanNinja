@@ -13,10 +13,13 @@ public:
 	ModuleSceneDino(bool active) : Module(active) {};
 	~ModuleSceneDino(){};
 
+	bool Init();
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void NextScene(Module* scene);
 
+	bool player_defeated = false;
 	SDL_Texture* texture_scene_dino = nullptr;
 
 private:

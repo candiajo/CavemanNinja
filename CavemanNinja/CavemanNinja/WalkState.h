@@ -1,5 +1,5 @@
-#ifndef __MODULEWALKSTATE_H__
-#define __MODULEWALKSTATE_H__
+#ifndef __WALKSTATE_H__
+#define __WALKSTATE_H__
 
 #include "Globals.h"
 #include "PlayerState.h"
@@ -16,4 +16,4 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 };
 
-#endif //__MODULEWALKSTATE_H__
+#endif //__WALKSTATE_H__

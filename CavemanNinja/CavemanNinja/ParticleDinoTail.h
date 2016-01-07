@@ -26,7 +26,6 @@ public:
 
 	void ParticleUpdate();
 	void OnCollision(Collider* c1, Collider* c2);
-	Animation debug1;
 
 private:
 	Animation* dinotail;

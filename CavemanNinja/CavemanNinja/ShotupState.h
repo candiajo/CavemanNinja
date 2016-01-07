@@ -1,5 +1,5 @@
-#ifndef __MODULESHOTUPSTATE_H__
-#define __MODULESHOTUPSTATE_H__
+#ifndef __SHOTUPSTATE_H__
+#define __SHOTUPSTATE_H__
 
 #include "PlayerState.h"
 
@@ -13,4 +13,4 @@ public:
 	void OnCollision(Collider* c1, Collider* c2){};
 };
 
-#endif //__MODULESHOTUPSTATE_H__
+#endif //__SHOTUPSTATE_H__

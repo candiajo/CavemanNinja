@@ -70,6 +70,7 @@
     <ClCompile Include="AgressiveAttackState.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AttackedState.cpp" />
     <ClCompile Include="AttackState.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DecideActionState.cpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="ParticleDinoTail.cpp" />
     <ClCompile Include="ParticleStone.cpp" />
     <ClCompile Include="ParticleEnemy.cpp" />
+    <ClCompile Include="PlayerDefeatedState.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleBeginLevel.cpp" />
@@ -112,6 +114,7 @@
     <ClInclude Include="AgressiveAttackState.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AttackedState.h" />
     <ClInclude Include="AttackState.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DecideActionState.h" />
@@ -134,6 +137,7 @@
     <ClInclude Include="ParticleDinoTail.h" />
     <ClInclude Include="ParticleStone.h" />
     <ClInclude Include="ParticleEnemy.h" />
+    <ClInclude Include="PlayerDefeatedState.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleBeginLevel.h" />

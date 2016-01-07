@@ -14,8 +14,6 @@ DecideActionState::~DecideActionState()
 // decide next move (slow stone, fast stone, enemy, open mouth only, agressive attack or move
 DinoState* DecideActionState::update(ModuleDino& dino)
 {
-	//debug
-	if (App->var1 == 0) return new DinoDefeatedState();
 	if (timer->TimeOver())
 	{
 		timer->StartTimer();

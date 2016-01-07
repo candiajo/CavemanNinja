@@ -10,11 +10,24 @@
 #include "File.h"
 #include "ModuleCollisions.h"
 #include "Collider.h"
+#include "ModulePlayer.h"
+#include "ModuleDino.h"
+#include "ModuleParticles.h"
 
 #include "SDL.h"
 
+bool ModuleSceneDino::Init()
+{
+	return true;
+}
+
 bool ModuleSceneDino::Start()
 {
+	App->player1->Enable();
+	App->dino->Enable();
+
+	player_defeated = false;
+
 	LOG("Loading Title assets");
 
 	texture_scene_dino = App->textures->Load(IMG_SCENE_DINO);
@@ -69,9 +82,11 @@ update_status ModuleSceneDino::Update()
 	y = girl.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, &(girl.GetCurrentFrame().section), SDL_FLIP_NONE);
 	
+	if (player_defeated) NextScene(this);
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		App->begin_level->Transition(App->scene_title, this, 1);
+		//App->begin_level->Transition(App->scene_title, this, 1);
+		NextScene(App->scene_title);
 		//App->audio->PlayFx(fx);
 	}
 
@@ -88,7 +103,13 @@ bool ModuleSceneDino::CleanUp()
 	bgvolcanos.DestroyColliders();
 	bgplatform.DestroyColliders();
 
-	App->collisions->CleanUp();
-
 	return true;
+}
+
+void ModuleSceneDino::NextScene(Module* scene)
+{
+	App->begin_level->Transition(scene, this, 1);
+	App->player1->Disable();
+	App->dino->Disable();
+	App->collisions->CleanUp();
 }

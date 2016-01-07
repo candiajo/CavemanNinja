@@ -1,5 +1,5 @@
-#ifndef __MODULELOOKUPSTATE_H__
-#define __MODULELOOKUPSTATE_H__
+#ifndef __LOOKUPSTATE_H__
+#define __LOOKUPSTATE_H__
 
 #include "PlayerState.h"
 
@@ -13,4 +13,4 @@ public:
 	void OnCollision(Collider* c1, Collider* c2){};
 };
 
-#endif //__MODULELOOKUPSTATE_H__
+#endif //__LOOKUPSTATE_H__

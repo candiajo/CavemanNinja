@@ -25,6 +25,7 @@ bool ModulePlayer::Start()
 	position.x = 50;
 	position.y = 0;
 
+	energy = 18;
 
 	return true;
 }
@@ -46,7 +47,13 @@ update_status ModulePlayer::Update()
 	position.y += y_speed;
 	RefreshColliders();
 	PlaceColliders();
-	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, &(*current_frame).section, Flip());
+	
+	Point temp_position = position;
+	temp_position.y += current_frame->offset.y;
+	if (direction == LEFT) temp_position.x -= current_frame->offset.x;
+	else temp_position.x += current_frame->offset.x;
+
+	App->renderer->Blit(texture_sprite, (int)temp_position.x, (int)temp_position.y, &(*current_frame).section, Flip());
 	
 	return UPDATE_CONTINUE;
 }
@@ -70,6 +77,10 @@ bool ModulePlayer::CleanUp()
 	shotweapon.DestroyColliders();
 	shotcrouch.DestroyColliders();
 	shotup.DestroyColliders();
+	frontattack.DestroyColliders();
+	backattack.DestroyColliders();
+	frontdying.DestroyColliders();
+	backdying.DestroyColliders();
 
 	if (state != nullptr) delete state;
 	return true;
@@ -95,6 +106,10 @@ void ModulePlayer::LoadData()
 		else if (name == "shotweapon") StoreData(info, data, shotweapon, this);
 		else if (name == "shotcrouch") StoreData(info, data, shotcrouch, this);
 		else if (name == "shotup") StoreData(info, data, shotup, this);
+		else if (name == "frontattack") StoreData(info, data, frontattack, this);
+		else if (name == "backattack") StoreData(info, data, backattack, this);
+		else if (name == "frontdying") StoreData(info, data, frontdying, this);
+		else if (name == "backdying") StoreData(info, data, backdying, this);
 	}
 }
 

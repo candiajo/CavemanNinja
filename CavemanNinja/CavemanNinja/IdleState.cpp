@@ -4,6 +4,7 @@
 #include "JumpState.h"
 #include "LookupState.h"
 #include "ShotweaponState.h"
+#include "AttackedState.h"
 
 #include "SDL.h"
 
@@ -12,6 +13,14 @@ IdleState::IdleState() : PlayerState()
 
 PlayerState* IdleState::update(ModulePlayer& player)
 {
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) // debug
+	{
+		return new AttackedState(ATTACKED_FROM_FRONT);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) // debug
+	{
+		return new AttackedState(ATTACKED_FROM_BEHIND);
+	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		return new CrouchState();
