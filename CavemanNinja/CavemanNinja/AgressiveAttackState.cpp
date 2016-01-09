@@ -1,10 +1,16 @@
 #include "AgressiveAttackState.h"
 #include "MoveState.h"
+#include "DinoDefeatedState.h"
+#include "SuperHitState.h"
 
-#include "SDL.h"
+//#include "SDL.h"
 
 DinoState* AgressiveAttackState::update(ModuleDino& dino)
 {
+	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
+	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
+	else if (event == DINO_GET_HIT) dino.CloseEye(1000);
+
 	switch (substate)
 	{
 	case DINO_MOVING_FORWARD:
@@ -34,4 +40,9 @@ void AgressiveAttackState::enter(ModuleDino& dino)
 	dino.openmouth.SetLastFrame();	// set dino open mouth (last frame of the animation)
 	substate = DINO_MOVING_FORWARD;
 	y_original = dino.position.y;
+}
+
+void AgressiveAttackState::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	DinoState::OnCollision(my_collider, other_collider);
 }

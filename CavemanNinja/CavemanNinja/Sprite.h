@@ -7,7 +7,6 @@
 class PlayerState;
 class Timer;
 
-
 class Sprite : public Module
 {
 public:
@@ -15,6 +14,7 @@ public:
 	Sprite(bool active);
 
 	void SetCurrentAnimation(Animation* next_animation, bool alternate = false);
+	void SetInvulnerable(int time);
 
 	Animation* previous_animation = nullptr;
 	Animation* current_animation = nullptr;
@@ -24,12 +24,17 @@ public:
 	Point position;
 	FrameInfo* previous_frame = nullptr;		// the animation frame rendered in the previous game frame
 	FrameInfo* current_frame = nullptr;			// the animation frame rendered in the current game frame
+	
 	int energy;
+	int damage;
+	bool invulnerable = false;
+
 
 protected:
 	SDL_RendererFlip Flip();
 	void RefreshColliders();
 	void PlaceColliders();
+	Timer* invulnerable_time;
 
 	SDL_Texture* texture_sprite = nullptr;
 	Timer* timer = nullptr;

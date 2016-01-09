@@ -18,7 +18,7 @@ SuperHitState::~SuperHitState()
 void SuperHitState::enter(ModuleDino& dino)
 {
 	dino.SetCurrentAnimation(&dino.superhit);
-	timer = new Timer(750);
+	timer = new Timer(1000);
 	timer->StartTimer();
-	dino.spritedinobody->current_animation->speed = 0.2;
+	dino.spritedinobody->current_animation->speed = 0.2f;
 }

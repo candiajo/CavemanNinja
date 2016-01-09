@@ -14,6 +14,10 @@ DecideActionState::~DecideActionState()
 // decide next move (slow stone, fast stone, enemy, open mouth only, agressive attack or move
 DinoState* DecideActionState::update(ModuleDino& dino)
 {
+	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
+	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
+	else if (event == DINO_GET_HIT) dino.CloseEye(1000);
+
 	if (timer->TimeOver())
 	{
 		timer->StartTimer();
@@ -74,3 +78,7 @@ void DecideActionState::enter(ModuleDino& dino)
 	timer->StartTimer();
 }
 
+void DecideActionState::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	DinoState::OnCollision(my_collider, other_collider);
+}

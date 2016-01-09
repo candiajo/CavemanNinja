@@ -19,7 +19,7 @@ public:
 	~ParticleStone();
 
 	void ParticleUpdate();
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	Animation* rollingstone;

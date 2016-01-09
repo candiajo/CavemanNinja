@@ -6,6 +6,7 @@
 class Timer
 {
 public:
+	Timer();
 	Timer(int life_time);
 	~Timer();
 

@@ -23,8 +23,8 @@ void Collider::SetPos(int x, int y, bool can_flip)
 		}
 	}
 
-	rect.x = (x * SCREEN_SIZE) + (float)temp_offset.x;
-	rect.y = (y * SCREEN_SIZE) + (float)temp_offset.y;
+	rect.x = (x * SCREEN_SIZE) + (int)temp_offset.x;
+	rect.y = (y * SCREEN_SIZE) + (int)temp_offset.y;
 }
 
 bool Collider::IsColliding(Collider* collider) const

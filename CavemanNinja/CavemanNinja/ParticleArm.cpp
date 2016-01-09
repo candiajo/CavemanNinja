@@ -1,3 +1,4 @@
+#include "ModuleAudio.h"
 #include "Module.h"
 #include "Application.h"
 #include "ModuleRender.h"
@@ -14,6 +15,8 @@ ParticleArm::ParticleArm(particle_type type, Sprite* generator) : Particle(type,
 	timer = new Timer(500);
 	timer->StartTimer();
 
+	fx_charging = dynamic_cast<ModulePlayer*>(generator)->fx_charging;
+
 	player = dynamic_cast<ModulePlayer*>(generator);
 
 	player->rolling_arm = true;
@@ -21,6 +24,7 @@ ParticleArm::ParticleArm(particle_type type, Sprite* generator) : Particle(type,
 	arm_slow = new Animation(App->particles->armslow, this);
 	arm_fast = new Animation(App->particles->armfast, this);
 
+	channel = App->audio->PlayFx(fx_charging, NO_REPEAT);
 	SetCurrentAnimation(arm_slow);
 }
 
@@ -55,7 +59,7 @@ void ParticleArm::ParticleUpdate()
 	case ARM_FAST_1:
 		if (timer->TimeOver())
 		{
-			timer->StartTimer(2500);
+			timer->StartTimer(2200);
 			arm_fast->speed *= 2;
 			state = ARM_FAST_2;
 		}
@@ -65,14 +69,20 @@ void ParticleArm::ParticleUpdate()
 		break;
 	case TIRED:
 		player->is_tired = true;
-		player->charge_enough = false;
+	case ARM_STOP:
 		to_destroy = true;
 		break;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP) to_destroy = true;
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP) to_destroy = true;
 	
-	if (to_destroy) player->rolling_arm = false;
+	if (to_destroy)
+	{
+		player->charge_enough = false;
+		player->rolling_arm = false;
+		App->audio->StopFxChannel(channel);
+		player->arm = nullptr;
+	}
 
 	direction = player->direction;
 

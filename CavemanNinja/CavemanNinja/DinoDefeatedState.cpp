@@ -19,7 +19,7 @@ DinoState* DinoDefeatedState::update(ModuleDino& dino)
 		}
 		break;
 	case DINO_DEFEATED_BACKWARDS:
-		dino.position.x -= 0.8;
+		dino.position.x -= 0.8f;
 		dino.position.y += Y_variation();
 		if (dino.position.x <= DINO_LEFT_LIMIT)
 		{
@@ -49,6 +49,6 @@ void DinoDefeatedState::enter(ModuleDino& dino)
 	dino.SetCurrentAnimation(&dino.superhit);
 	timer = new Timer(1000);
 	timer->StartTimer();
-	dino.spritedinobody->current_animation->speed = 0.2;
+	dino.spritedinobody->current_animation->speed = 0.2f;
 	substate = DINO_DEFEATED_HIT;
 }

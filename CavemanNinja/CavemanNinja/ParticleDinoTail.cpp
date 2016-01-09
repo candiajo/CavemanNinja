@@ -10,6 +10,8 @@ ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Part
 	 position.x = TAIL_LIMIT_LEFT;
 	 position.y = TAIL_Y;
 
+	 damage = 5;
+
 	 SetCurrentAnimation(dinotail);
 
 	 state = TAIL_FORWARD;
@@ -50,5 +52,5 @@ void ParticleDinoTail::ParticleUpdate()
 	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, (*current_frame).section, Flip());
 }
 
-void ParticleDinoTail::OnCollision(Collider* c1, Collider* c2)
+void ParticleDinoTail::OnCollision(Collider* my_collider, Collider* other_collider)
 {}

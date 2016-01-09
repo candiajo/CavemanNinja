@@ -28,15 +28,15 @@ void TiredState::enter(ModulePlayer& player)
 	this->player = &player;
 }
 
-void TiredState::OnCollision(Collider* c1, Collider* c2)
+void TiredState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	if (c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM)
+	if (other_collider->type == COLLIDER_GROUND || other_collider->type == COLLIDER_PLATFORM)
 	{
 		player->y_speed = 0.0f;
 
-		while (c1->IsColliding(c2))
+		while (my_collider->IsColliding(other_collider))
 		{
-			c1->rect.y -= 1;
+			my_collider->rect.y -= 1;
 			player->position.y -= 1.0f / (float)SCREEN_SIZE;
 		}
 	}

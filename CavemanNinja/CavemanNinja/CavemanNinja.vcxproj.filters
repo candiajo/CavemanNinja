@@ -162,6 +162,15 @@
     <ClCompile Include="ShotWeaponState.cpp">
       <Filter>StatesMachine\Player States</Filter>
     </ClCompile>
+    <ClCompile Include="DinoState.cpp">
+      <Filter>StatesMachine\Dino States</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -298,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="ShotWeaponState.h">
       <Filter>StatesMachine\Player States</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleAudio.h">
+      <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,12 @@
 
 #include "Sprite.h"
 
+enum particle_flag
+{
+	NORMAL,
+	INNOCUOUS
+};
+
 class Particle : public Sprite
 {
 public:
@@ -14,12 +20,8 @@ public:
 
 	bool to_destroy = false;
 	Point offset;
-	int damage;
-
-protected:
 	particle_type type;
-	int life;
-
+	particle_flag particle_flag;
 };
 
 #endif //__PARTICLE_H__

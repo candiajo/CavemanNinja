@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Animation.h"
 
+class Timer;
 struct SDL_Texture;
 
 class ModuleSceneDino : public Module
@@ -27,6 +28,7 @@ private:
 	Animation bgflowers;
 	Animation bgplatform;
 	Animation girl;
+	Timer* timer;
 };
 
 #endif //__MODULESCENEDINO_H__

@@ -5,6 +5,7 @@
 Particle::Particle()
 {
 	texture_sprite = App->particles->texture_particles;
+	particle_flag = NORMAL;
 }
 
 Particle::Particle(particle_type type, Sprite* generator) : Particle()

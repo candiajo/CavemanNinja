@@ -17,6 +17,9 @@ bool ModuleDino::Start()
 	LOG("Loading dino");
 
 	texture_sprite = App->textures->Load(IMG_DINO);
+
+	spritedinobody = new SpriteDinoBody(texture_sprite);
+
 	LoadData();
 
 	state = new AgressiveAttackState();
@@ -25,12 +28,15 @@ bool ModuleDino::Start()
 	position.x = -120;
 	position.y = 15;
 
+	energy = 13;
+	damage = 4;
+
 	eyeclosed = false;
 	
-	timebetweenblinks = new Timer(TIME_BETWEEN_BLINKS);
-	timebetweenblinks->StartTimer();
+	invulnerable_time = new Timer();
+	time_between_blinks = new Timer(TIME_BETWEEN_BLINKS);
+	time_between_blinks->StartTimer();
 
-	spritedinobody = new SpriteDinoBody(texture_sprite);
 	spritedinobody->Start();
 
 	return true;
@@ -61,10 +67,10 @@ update_status ModuleDino::Update()
 		{
 			RELEASE(timer);
 			eyeclosed = false;
-			timebetweenblinks->StartTimer();
+			time_between_blinks->StartTimer();
 		}
 	}
-	else if (timebetweenblinks->TimeOver()) CloseEye(DINO_BLINK);
+	else if (time_between_blinks->TimeOver()) CloseEye(DINO_BLINK);
 	
 	// draw head over body
 	spritedinobody->Update(position);
@@ -76,6 +82,7 @@ update_status ModuleDino::Update()
 update_status ModuleDino::PostUpdate()
 {
 	previous_frame = current_frame;
+	if (invulnerable_time->TimeOver()) invulnerable= false;
 
 	return UPDATE_CONTINUE;
 }
@@ -95,7 +102,8 @@ bool ModuleDino::CleanUp()
 
 	if (spritedinobody != nullptr) delete spritedinobody;
 	
-	RELEASE(timebetweenblinks);
+	RELEASE(invulnerable_time);
+	RELEASE(time_between_blinks);
 	RELEASE(timer);
 	RELEASE(state);
 
@@ -120,15 +128,15 @@ void ModuleDino::LoadData()
 		else if (name == "defeated") StoreData(info, data, defeated, this);
 		else if (name == "eyeclosed1") StoreData(info, data, eyeclosed1, this);
 		else if (name == "eyeclosed2") StoreData(info, data, eyeclosed2, this);
-		else if (name == "dinobody") StoreData(info, data, dinobody, this);
-		else if (name == "dinobodyground") StoreData(info, data, dinobodyground, this);
+
+		else if (name == "dinobody") StoreData(info, data, dinobody, spritedinobody);
+		else if (name == "dinobodyground") StoreData(info, data, dinobodyground, spritedinobody);
 	}
 }
 
-void ModuleDino::OnCollision(Collider* c1, Collider* c2)
+void ModuleDino::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	if (c2->type == COLLIDER_PLAYER_BODY) 
-		player_too_near = true;
+	state->OnCollision(my_collider,other_collider);
 }
 
 void ModuleDino::CloseEye(int time)
@@ -154,3 +162,4 @@ FrameInfo* ModuleDino::getClosedEyeFrame()
 		return &(eyeclosed2.PeekFrame(n+2));
 	else return current_frame;
 }
+

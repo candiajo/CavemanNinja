@@ -5,13 +5,15 @@
 #include "JumpState.h"
 #include "ShotWeaponState.h"
 #include "TiredState.h"
+#include "AttackedState.h"
 
 WalkState::WalkState()
 {}
 
 PlayerState* WalkState::update(ModulePlayer& player)
 {
-	type_direction limit;
+	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
+	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
 
 	if (player.is_tired)
 	{
@@ -24,6 +26,14 @@ PlayerState* WalkState::update(ModulePlayer& player)
 		return new JumpState(DOWNJUMP);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	{
+		if (player.charge_enough)
+			return new ShotWeaponState(SUPER_AXE);
+		else
+			player.SetCurrentAnimation(player.current_animation);
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP ||
 		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 	{
@@ -33,34 +43,25 @@ PlayerState* WalkState::update(ModulePlayer& player)
 	{
 		return new CrouchState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 			return new JumpState(SUPERJUMP);
 		else
 			return new JumpState(NORMALJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
-		return new ShotWeaponState();
+		return new ShotWeaponState(AXE_HORZ);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
 	{
 		player.SetCurrentAnimation(&player.walk);
 	}
 	else
 	{
-		limit = ScreenLimitReached(player);
-
-		if (player.direction == LEFT && limit != LEFT)
-		{
-			player.x_speed = -DEFAULT_X_SPEED;
-		}
-		else if (player.direction == RIGHT && limit != RIGHT)
-		{
-			player.x_speed = DEFAULT_X_SPEED;
-		}
-		else player.x_speed = 0;
+		if (player.direction == LEFT) player.x_speed = -DEFAULT_X_SPEED;
+		else if (player.direction == RIGHT)	player.x_speed = DEFAULT_X_SPEED;
 	}
 	return SAME_STATE;
 }
@@ -72,7 +73,7 @@ void WalkState::enter(ModulePlayer& player)
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		player.direction = RIGHT;
 
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 	{
 		player.SetCurrentAnimation(&player.walk, ANGRY_VERSION);
 		RollArm(&player);
@@ -81,12 +82,14 @@ void WalkState::enter(ModulePlayer& player)
 		player.SetCurrentAnimation(&player.walk);
 }
 
-void WalkState::OnCollision(Collider* c1, Collider* c2)
+void WalkState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	ModulePlayer* player = dynamic_cast<ModulePlayer*>(c1->callback);
+	PlayerState::OnCollision(my_collider, other_collider);
 
-	if (c1->type == COLLIDER_PLAYER_GROUND &&
-		c2->type == COLLIDER_BORDER)
+	ModulePlayer* player = dynamic_cast<ModulePlayer*>(my_collider->callback);
+
+	if (my_collider->type == COLLIDER_DETECT_GROUND &&
+		other_collider->type == COLLIDER_BORDER)
 	{
 		event = WALK_OFF_PLATFORM;
 	}

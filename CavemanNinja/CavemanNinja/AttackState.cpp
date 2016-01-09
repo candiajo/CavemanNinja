@@ -1,9 +1,15 @@
 #include "AttackState.h"
 #include "DecideActionState.h"
 #include "Timer.h"
+#include "DinoDefeatedState.h"
+#include "SuperHitState.h"
 
 DinoState* AttackState::update(ModuleDino& dino)
 {
+	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
+	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
+	else if (event == DINO_GET_HIT) dino.CloseEye(1000);
+
 	switch (substate)
 	{
 	case PRE_DINO_OPENING_MOUTH:
@@ -53,4 +59,9 @@ AttackState::~AttackState()
 void AttackState::enter(ModuleDino& dino)
 {
 	substate = PRE_DINO_OPENING_MOUTH;
+}
+
+void AttackState::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	DinoState::OnCollision(my_collider, other_collider);
 }

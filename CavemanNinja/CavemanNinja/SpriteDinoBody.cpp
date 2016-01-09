@@ -13,6 +13,8 @@ SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture) : Sprite(active)
 
 bool SpriteDinoBody::Start()
 {
+	damage = 4;
+
 	dinobody_animation = &App->dino->dinobody;
 	dinobodyground_animation = &App->dino->dinobodyground;
 
@@ -36,5 +38,8 @@ update_status SpriteDinoBody::Update(Point head_position)
 	return UPDATE_CONTINUE;
 }
 
-void SpriteDinoBody::OnCollision(Collider* c1, Collider* c2)
-{}
+void SpriteDinoBody::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	if (my_collider->type == COLLIDER_PROXIMITY && other_collider->type == COLLIDER_PLAYER_BODY)
+		App->dino->player_too_near = true;
+}

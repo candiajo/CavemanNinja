@@ -9,6 +9,7 @@ public:
 	AgressiveAttackState() {};
 	DinoState* update(ModuleDino& dino);
 	void enter(ModuleDino& dino);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 };
 
 #endif //__AGRESSIVEATTACKSTATE_H__

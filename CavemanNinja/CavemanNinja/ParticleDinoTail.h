@@ -3,7 +3,7 @@
 
 #include "Particle.h"
 
-#define TAIL_SPEED_FORWARD 3.5
+#define TAIL_SPEED_FORWARD 4
 #define TAIL_SPEED_BACKWARDS 2
 #define TAIL_LIMIT_RIGHT 0
 #define TAIL_LIMIT_LEFT -136
@@ -25,7 +25,7 @@ public:
 	~ParticleDinoTail();
 
 	void ParticleUpdate();
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	Animation* dinotail;

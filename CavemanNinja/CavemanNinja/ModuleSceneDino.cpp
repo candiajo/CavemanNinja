@@ -13,32 +13,34 @@
 #include "ModulePlayer.h"
 #include "ModuleDino.h"
 #include "ModuleParticles.h"
-
+#include "Timer.h"
 #include "SDL.h"
+#include "ModuleAudio.h"
 
 bool ModuleSceneDino::Start()
 {
 	App->player1->Enable();
 	App->particles->Enable();
-	App->dino->Enable();
 
 	player_defeated = false;
 
 	LOG("Loading Title assets");
 
 	texture_scene_dino = App->textures->Load(IMG_SCENE_DINO);
-	//App->audio->PlayMusic("intro.ogg", 0.0f);
-	//fx = App->audio->LoadFx("starting.wav");
+	//App->audio->PlayMusic(MUSIC_BOSS_LEVEL);
 
-	LoadData();	// load .ini data
+	LoadData();
 
-	bgplatform.colliders.front()->SetPos(bgplatform.frames.front().offset.x, bgplatform.frames.front().offset.y);
-	bgplatform.colliders.back()->SetPos(bgplatform.frames.back().offset.x, bgplatform.frames.back().offset.y);
+	bgplatform.colliders.front()->SetPos((int)bgplatform.frames.front().offset.x, (int)bgplatform.frames.front().offset.y);
+	bgplatform.colliders.back()->SetPos((int)bgplatform.frames.back().offset.x, (int)bgplatform.frames.back().offset.y);
 	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first colliders
 	App->collisions->AddCollider(bgplatform.colliders.back());	// adds the second collider
 
-	bgflowers.colliders.front()->SetPos(bgflowers.frames.front().offset.x, bgflowers.frames.front().offset.y);
+	bgflowers.colliders.front()->SetPos((int)bgflowers.frames.front().offset.x, (int)bgflowers.frames.front().offset.y);
 	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
+
+	timer = new Timer(2000);
+	timer->StartTimer();
 
 	return (texture_scene_dino != nullptr);
 }
@@ -62,26 +64,27 @@ void ModuleSceneDino::LoadData()
 
 update_status ModuleSceneDino::Update()
 {
-	int x = bgvolcanos.GetCurrentFrame().offset.x;
-	int y = bgvolcanos.GetCurrentFrame().offset.y;
+	if (timer->TimeOver() && !App->dino->IsEnabled()) App->dino->Enable();
+
+	int x = (int)bgvolcanos.GetCurrentFrame().offset.x;
+	int y = (int)bgvolcanos.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = bgplatform.GetCurrentFrame().offset.x;
-	y = bgplatform.GetCurrentFrame().offset.y;
+	x = (int)bgplatform.GetCurrentFrame().offset.x;
+	y = (int)bgplatform.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = bgflowers.GetCurrentFrame().offset.x;
-	y = bgflowers.GetCurrentFrame().offset.y;
+	x = (int)bgflowers.GetCurrentFrame().offset.x;
+	y = (int)bgflowers.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = girl.GetCurrentFrame().offset.x;
-	y = girl.GetCurrentFrame().offset.y;
+	x = (int)girl.GetCurrentFrame().offset.x;
+	y = (int)girl.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (girl.GetCurrentFrame().section), SDL_FLIP_NONE);
 	
 	if (player_defeated) NextScene(this);
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
 	{
-		//App->begin_level->Transition(App->scene_title, this, 1);
 		NextScene(App->scene_title);
 		//App->audio->PlayFx(fx);
 	}
@@ -99,6 +102,7 @@ bool ModuleSceneDino::CleanUp()
 	bgvolcanos.DestroyColliders();
 	bgplatform.DestroyColliders();
 
+	RELEASE(timer);
 	return true;
 }
 

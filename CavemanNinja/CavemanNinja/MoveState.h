@@ -9,6 +9,7 @@ public:
 	MoveState(int final_position, particle_type projectile = NO_PARTICLE);
 	DinoState* update(ModuleDino& dino);
 	void enter(ModuleDino& dino);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	int final_position;

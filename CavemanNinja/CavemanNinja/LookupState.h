@@ -3,14 +3,14 @@
 
 #include "PlayerState.h"
 
-class LookupState : public PlayerState
+class LookUpState : public PlayerState
 {
 public:
-	LookupState();
+	LookUpState();
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
-	void OnCollision(Collider* c1, Collider* c2){};
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 };
 
 #endif //__LOOKUPSTATE_H__

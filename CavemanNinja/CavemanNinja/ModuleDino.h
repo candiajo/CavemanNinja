@@ -21,7 +21,9 @@ public:
 
 	void CloseEye(int time);
 	FrameInfo* getClosedEyeFrame();
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
+
+	void SetInvulnerable(int time);
 
 	Animation openmouth;
 	Animation closemouth;
@@ -45,7 +47,7 @@ private:
 	DinoState* state;
 	bool eyeclosed;
 
-	Timer* timebetweenblinks;
+	Timer* time_between_blinks;
 };
 
 #endif // __MODULEDINO_H__

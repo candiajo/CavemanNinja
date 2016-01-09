@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "Globals.h"
 
+class ParticleArm;
+
 class ModulePlayer : public Sprite
 {
 public:
@@ -16,7 +18,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void OnCollision(Collider* c1, Collider* c2);
+	void SetArm(ParticleArm* arm);
+	void StopArm();
+
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 	Animation idle;
 	Animation walk;
@@ -35,7 +40,6 @@ public:
 	Animation salute;
 	Animation tired;
 	Animation supershot;
-
 	Animation ch_idle;
 	Animation ch_walk;
 	Animation ch_crouch;
@@ -43,15 +47,22 @@ public:
 	Animation ch_normaljump;
 	Animation ch_downjump;
 
+	unsigned int fx_player_attack;
+	unsigned int fx_player_superattack;
+	unsigned int fx_charging;
+
 	bool rolling_arm = false;
 	bool is_crouch = false;
 	bool is_jumping = false;
 	bool is_tired = false;
 	bool charge_enough = false;
 
+	ParticleArm* arm = nullptr;
+
 private:
 	void LoadData();
 	PlayerState* state;
+	
 };
 
 #endif // __MODULEPLAYER_H__

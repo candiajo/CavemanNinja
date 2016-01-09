@@ -4,19 +4,22 @@
 #include "PlayerState.h"
 
 class IdleState;
+class Timer;
 
 class PlayerDefeatedState : public PlayerState
 {
 public:
 	PlayerDefeatedState() {};
-	PlayerDefeatedState::PlayerDefeatedState(attack_direction attacked_from) : attacked_from(attacked_from) {}
+	PlayerDefeatedState(attack_direction attacked_from) : attacked_from(attacked_from) {}
+	~PlayerDefeatedState();
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
-	void OnCollision(Collider* c1, Collider* c2){};
+	void OnCollision(Collider* my_collider, Collider* other_collider){};
 
 private:
 	attack_direction attacked_from;
+	Timer* timer;
 };
 
 #endif //__PLAYERDEFEATEDSTATE_H__

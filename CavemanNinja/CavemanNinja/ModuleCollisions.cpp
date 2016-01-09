@@ -91,11 +91,11 @@ update_status ModuleCollisions::PostUpdate()
 			case COLLIDER_PLAYER_ATTACK:
 				App->renderer->DrawQuad(col->rect, 255, 255, 0, alpha);
 				break;
-			case COLLIDER_PLAYER_GROUND:
+			case COLLIDER_DETECT_GROUND:
 				App->renderer->DrawQuad(col->rect, 255, 0, 255, alpha);
 				break;
 			case COLLIDER_PLAYER_SHOT:
-				App->renderer->DrawQuad(col->rect, 100, 100, 100, alpha);
+				App->renderer->DrawQuad(col->rect, 0, 200, 50, alpha);
 				break;
 			case COLLIDER_ENEMY:
 				App->renderer->DrawQuad(col->rect, 128, 0, 128, alpha);
@@ -105,6 +105,9 @@ update_status ModuleCollisions::PostUpdate()
 				break;
 			case COLLIDER_BORDER:
 				App->renderer->DrawQuad(col->rect, 5, 10, 200, alpha);
+				break;
+			case COLLIDER_PROXIMITY:
+				App->renderer->DrawQuad(col->rect, 225, 70, 30, alpha);
 				break;
 			}
 		}

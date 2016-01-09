@@ -10,12 +10,14 @@
 #include "ModuleCollisions.h"
 #include "ModuleParticles.h"
 #include "ModuleDino.h"
+#include "ModuleAudio.h"
 
 Application::Application()
 {
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(textures = new ModuleTextures());
+	modules.push_back(audio = new ModuleAudio());
 	modules.push_back(collisions = new ModuleCollisions());
 	modules.push_back(begin_level = new ModuleBeginLevel());
 

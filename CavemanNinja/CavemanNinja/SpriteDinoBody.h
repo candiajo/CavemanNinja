@@ -19,7 +19,7 @@ public:
 	bool Start();
 	update_status Update(Point head_position);
 
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 	Animation* dinobody_animation;
 	Animation* dinobodyground_animation;

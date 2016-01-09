@@ -13,7 +13,7 @@ ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(t
 	rollingstone = new Animation(App->particles->rollingstone_animation, this);
 	breakingstone = new Animation(App->particles->breakingstone_animation, this);
 
-	life = 2;
+	energy = 2;
 	damage = 5;
 
 	offset.x = 40;
@@ -23,6 +23,8 @@ ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(t
 
 	position.x += offset.x;
 	position.y += offset.y;
+
+	PlaceColliders();
 
 	if (type == SLOW_STONE) x_speed = 1.5f;
 	else if (type == FAST_STONE) x_speed = 3;
@@ -67,21 +69,21 @@ void ParticleStone::ParticleUpdate()
 	}
 }
 
-void ParticleStone::OnCollision(Collider* c1, Collider* c2)
+void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 {
 	if (first_bounce == NO_COLLIDER &&
-		(c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM))
+		(other_collider->type == COLLIDER_GROUND || other_collider->type == COLLIDER_PLATFORM))
 	{
-		first_bounce = c2->type;
+		first_bounce = other_collider->type;
 	}
 
 	// enemy can only collide with the first surface contacted
-	if ((c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM) &&
-		(c2->type == first_bounce || first_bounce == NO_COLLIDER))
+	if ((other_collider->type == COLLIDER_GROUND || other_collider->type == COLLIDER_PLATFORM) &&
+		(other_collider->type == first_bounce || first_bounce == NO_COLLIDER))
 	{
-		while (c1->IsColliding(c2))
+		while (my_collider->IsColliding(other_collider))
 		{
-        	c1->rect.y -= 1;
+        	my_collider->rect.y -= 1;
 			position.y -= (1.0f / (float)SCREEN_SIZE);
 		}
 
@@ -93,15 +95,23 @@ void ParticleStone::OnCollision(Collider* c1, Collider* c2)
 			state = STONE_ROLLING;
 		}
 	}
-	else if (c2->type == COLLIDER_PLAYER_SHOT)
+	else if (other_collider->type == COLLIDER_PLAYER_SHOT)
 	{
-		Particle* weapon = dynamic_cast<Particle*>(c2->callback);
+		Particle* weapon = dynamic_cast<Particle*>(other_collider->callback);
 		
-		life -= weapon->damage;
-		if (life <= 0)
+		if (weapon->particle_flag != INNOCUOUS)
 		{
-			state = STONE_BREAKING;
-			SetCurrentAnimation(breakingstone);
+			energy -= weapon->damage;
+			if (energy <= 0)
+			{
+				state = STONE_BREAKING;
+				SetCurrentAnimation(breakingstone);
+			}
 		}
+	}
+	else if (other_collider->type == COLLIDER_PLAYER_ATTACK)
+	{
+		state = STONE_BREAKING;
+		SetCurrentAnimation(breakingstone);
 	}
 }

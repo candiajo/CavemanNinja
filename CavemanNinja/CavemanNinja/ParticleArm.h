@@ -8,6 +8,7 @@
 #define CROUCH_OFFSET_Y 11
 
 class Animation;
+class ModulePlayer;
 
 enum arm_state
 {
@@ -15,7 +16,8 @@ enum arm_state
 	ARM_SLOW_2,
 	ARM_FAST_1,
 	ARM_FAST_2,
-	TIRED
+	TIRED,
+	ARM_STOP
 };
 
 class ParticleArm : public Particle
@@ -25,11 +27,13 @@ public:
 	~ParticleArm();
 
 	void ParticleUpdate();
+	arm_state state;
 
 private:
+	unsigned int fx_charging;
+	int channel;				// of the sound played, for stopping it
 	Animation* arm_slow;
 	Animation* arm_fast;
-	arm_state state;
 	ModulePlayer* player;
 };
 

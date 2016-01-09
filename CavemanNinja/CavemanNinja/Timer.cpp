@@ -1,5 +1,8 @@
 #include "Timer.h"
 
+Timer::Timer() : life_time(0), start_time(0)
+{}
+
 Timer::Timer(int life_time) : life_time(life_time)
 {}
 

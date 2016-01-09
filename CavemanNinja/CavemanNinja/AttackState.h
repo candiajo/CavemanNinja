@@ -12,6 +12,7 @@ public:
 	~AttackState();
 	DinoState* update(ModuleDino& dino);
 	void enter(ModuleDino& dino);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	particle_type projectile;

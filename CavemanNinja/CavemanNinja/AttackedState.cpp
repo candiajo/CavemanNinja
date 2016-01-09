@@ -2,6 +2,7 @@
 #include "IdleState.h"
 #include "PlayerDefeatedState.h"
 #include "Timer.h"
+#include "ModulePlayer.h"
 
 AttackedState::~AttackedState()
 {
@@ -12,42 +13,37 @@ PlayerState* AttackedState::update(ModulePlayer& player)
 {
 	switch (substate)
 	{
-	case MOVE_UP:
-		player.position.y -= 1;
-		if (player.position.y <= initial_y - 10) substate = MOVE_DOWN;
-		break;
-	case MOVE_DOWN:
-		player.position.y *= 1.02f;
-		//if (player.position.y >= initial_y) substate = ON_GROUND;
+	case BOUNCE:
+		player.y_speed += 0.1f;
+		player.position.y += player.y_speed;
 		break;
 	case ON_GROUND:
-		//if (timer->TimeOver()) return new IdleState();
-		//debug
-		if (timer->TimeOver()) // OR energía == 0
+		player.y_speed = 0;
+		if (player.energy <= 0)
 		{
 			if (attacked_from == ATTACKED_FROM_BEHIND) return new PlayerDefeatedState(ATTACKED_FROM_BEHIND);
 			else return new PlayerDefeatedState(ATTACKED_FROM_FRONT);
 		}
+		else return new IdleState();
 	}
 
 	if (substate != ON_GROUND)
 	{
 		player.position.x += move;
-		if (ScreenLimitReached(player) == LEFT || ScreenLimitReached(player) == RIGHT) player.position.x -= move;
 	}
-	return nullptr;
+	return SAME_STATE;
 }
 
 void AttackedState::enter(ModulePlayer& player)
 {
 	timer = new Timer(600);
 	timer->StartTimer();
-	initial_y = player.position.y;
+	initial_y = (int)player.position.y;
 
 	player.x_speed = 0;
-	player.y_speed = 0;
+	player.y_speed = -1.2f;
 	
-	substate = MOVE_UP;
+	substate = BOUNCE;
 	if (attacked_from == ATTACKED_FROM_FRONT)
 	{
 		player.SetCurrentAnimation(&player.frontattack);
@@ -60,19 +56,20 @@ void AttackedState::enter(ModulePlayer& player)
 		if (player.direction == LEFT) move = -1;
 		else move = +1;
 	}
+
+	player.StopArm();
 }
 
-void AttackedState::OnCollision(Collider* c1, Collider* c2)
+void AttackedState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	if (substate == MOVE_DOWN)
+	ModulePlayer* player = dynamic_cast<ModulePlayer*>(my_collider->callback);
+	if (player->y_speed > 0)
 	{
-		ModulePlayer* player = dynamic_cast<ModulePlayer*>(c1->callback);
-
-		if (c2->type == COLLIDER_GROUND || c2->type == COLLIDER_PLATFORM)
+		if (other_collider->type == COLLIDER_GROUND || other_collider->type == COLLIDER_PLATFORM)
 		{
-			while (c1->IsColliding(c2))
+			while (my_collider->IsColliding(other_collider))
 			{
-				c1->rect.y -= 1;
+				my_collider->rect.y -= 1;
 				player->position.y -= 1.0f / (float)SCREEN_SIZE;
 			}
 			substate = ON_GROUND;

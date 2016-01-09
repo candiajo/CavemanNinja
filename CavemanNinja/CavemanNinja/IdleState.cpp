@@ -4,11 +4,11 @@
 #include "CrouchState.h"
 #include "WalkState.h"
 #include "JumpState.h"
-#include "LookupState.h"
+#include "LookUpState.h"
 #include "ShotWeaponState.h"
 #include "AttackedState.h"
-
-#include "SDL.h"
+#include "Globals.h"
+//#include "SDL.h"
 
 IdleState::IdleState() : PlayerState()
 {}
@@ -20,6 +20,9 @@ IdleState::~IdleState()
 
 PlayerState* IdleState::update(ModulePlayer& player)
 {
+	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
+	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+
 	if (player.is_tired) return new TiredState();
 
 	if (player.rolling_arm) timer->StartTimer();
@@ -34,12 +37,12 @@ PlayerState* IdleState::update(ModulePlayer& player)
 		timer->StartTimer(3000);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough)
 			return new ShotWeaponState(SUPER_AXE);
 		else
-			player.SetCurrentAnimation(&player.idle);
+			player.SetCurrentAnimation(player.current_animation);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -51,22 +54,22 @@ PlayerState* IdleState::update(ModulePlayer& player)
 	{
 		return new WalkState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN &&
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN &&
 		     App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		return new JumpState(SUPERJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 	{
 		return new JumpState(NORMALJUMP);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		return new LookupState();
+		return new LookUpState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
-		return new ShotWeaponState();
+		return new ShotWeaponState(AXE_HORZ);
 	}
 
 	return SAME_STATE;
@@ -76,7 +79,7 @@ void IdleState::enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.y_speed = 0;
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 	{
 		player.SetCurrentAnimation(&player.idle, ANGRY_VERSION);
 		RollArm(&player);
@@ -85,4 +88,9 @@ void IdleState::enter(ModulePlayer& player)
 
 	timer = new Timer(3000);
 	timer->StartTimer();
+}
+
+void IdleState::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	PlayerState::OnCollision(my_collider, other_collider);
 }

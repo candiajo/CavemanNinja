@@ -14,25 +14,36 @@ JumpState::JumpState(jump_substate substate) : substate(substate)
 
 PlayerState* JumpState::update(ModulePlayer& player)
 {
+	if (event == PLAYER_HIT_BACK) 
+		return new AttackedState(ATTACKED_FROM_BEHIND);
+	else if (event == PLAYER_HIT_FRONT) 
+		return new AttackedState(ATTACKED_FROM_FRONT);
+
 	if (player.is_tired)
 	{
 		player.x_speed = 0;
 		return new TiredState();
 	}
 
-	type_direction limit = ScreenLimitReached(player);
-
 	if (event == PLAYER_STEP_GROUND)
 		return new IdleState();
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT &&
-		limit != LEFT)
+	if (event == PLAYER_STEP_ENEMY)
+		return new JumpState(MICROJUMP);
+
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	{
+		if (player.charge_enough) fire = PRE_SHOT_SUPER;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		//todelete &&		limit != LEFT)
 	{
 		player.direction = LEFT;
 		player.x_speed = -DEFAULT_X_SPEED;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT &&
-		limit != RIGHT)
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		// todelete &&		limit != RIGHT)
 	{
 		player.direction = RIGHT;
 		player.x_speed = DEFAULT_X_SPEED;
@@ -43,7 +54,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		player.x_speed = 0;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT &&
 			substate != SUPERJUMP)
@@ -54,6 +65,11 @@ PlayerState* JumpState::update(ModulePlayer& player)
 	
 	switch (fire)
 	{
+		case PRE_SHOT_SUPER:
+			player.SetCurrentAnimation(&player.supershot);
+			Shot(&player, SUPER_AXE);
+			fire = SHOT_H;
+			break;
 		case PRE_SHOT_H:
 			if (substate != SUPERJUMP)
 			{
@@ -71,7 +87,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 				else if (substate != SUPERJUMP)
 					player.SetCurrentAnimation(&player.normaljump);
 
-				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+				if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 				{
 					RollArm(&player);
 					player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
@@ -95,7 +111,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 				else
 					player.SetCurrentAnimation(&player.normaljump);
 
-				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+				if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 				{
 					RollArm(&player);
 					player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
@@ -119,7 +135,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			player.y_speed *= 0.92f;
 			if (player.y_speed > -0.25)
 			{
-				player.y_speed = 0.45;
+				player.y_speed = 0.45f;
 				substate = PRE_FALLING;
 			}
 			break;
@@ -127,7 +143,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		case PRE_FALLING:
 		case PRE_DOWNJUMP:
 			if (fire == NO_FIRE)
-				if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+				if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 					player.SetCurrentAnimation(&player.downjump, ANGRY_VERSION);
 				else
 					player.SetCurrentAnimation(&player.downjump);
@@ -140,7 +156,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			break;
 	}
 		
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
 	{
 		player.SetCurrentAnimation(player.current_animation);
 	}
@@ -156,6 +172,12 @@ void JumpState::enter(ModulePlayer& player)
 
 	switch (substate)
 	{
+	case MICROJUMP:
+		player.y_speed = -1;
+		player.SetCurrentAnimation(&player.normaljump);
+		player.current_animation->SetLastFrame();
+		substate = NORMALJUMP;
+		break;
 	case NORMALJUMP:
 		player.y_speed = NORMAL_JUMP_SPEED;
 		player.SetCurrentAnimation(&player.normaljump);
@@ -171,31 +193,39 @@ void JumpState::enter(ModulePlayer& player)
 		break;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
 	{
 		RollArm(&player);
 		player.SetCurrentAnimation(player.current_animation, ANGRY_VERSION);
 	}
 }
 
-void JumpState::OnCollision(Collider* c1, Collider* c2)
+void JumpState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	ModulePlayer* player = dynamic_cast<ModulePlayer*>(c1->callback);
+	PlayerState::OnCollision(my_collider, other_collider);
 
-	if (substate == DOWNJUMP && c2->type == COLLIDER_PLATFORM)
+	ModulePlayer* player = dynamic_cast<ModulePlayer*>(my_collider->callback);
+
+	if (substate == DOWNJUMP && other_collider->type == COLLIDER_PLATFORM)
 	{
 		// jumping down the platform, nothing to do
 	}
-	else if (c1->type == COLLIDER_PLAYER_GROUND &&
-		     c2->type != COLLIDER_BORDER)
+	else if (my_collider->type == COLLIDER_DETECT_GROUND &&
+		     other_collider->type != COLLIDER_BORDER)
 	{
-		while (c1->IsColliding(c2))
+		while (my_collider->IsColliding(other_collider))
 		{
-			c1->rect.y-= 1;
+			my_collider->rect.y-= 1;
 			player->position.y -= 1.0f / (float)SCREEN_SIZE;
 		}
 
 		player->is_jumping = false;
 		event = PLAYER_STEP_GROUND;
 	}
+	if ((substate == DOWNJUMP || substate == FALLING) &&
+		(my_collider->type == COLLIDER_DETECT_GROUND && other_collider->type == COLLIDER_ENEMY))
+	{
+		event = PLAYER_STEP_ENEMY;
+	}
+
 }

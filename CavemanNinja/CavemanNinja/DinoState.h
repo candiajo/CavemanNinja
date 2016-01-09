@@ -41,23 +41,14 @@ public:
 	virtual ~DinoState() {};
 	virtual DinoState* update(ModuleDino& dino) = 0;
 	virtual void enter(ModuleDino& dino) = 0;
-	virtual void OnCollision(Collider* c1, Collider* c2) {};
+	virtual void OnCollision(Collider* my_collider, Collider* other_collider);
 
 protected:
-	game_events event;
+	game_events event = NO_EVENT;
 	dino_substate substate;
 
-	void Shot(ModuleDino* dino, particle_type projectile)
-	{
-		App->particles->AddParticle(projectile, dynamic_cast<Module*>(dino));
-	}
-
-	float Y_variation()
-	{
-		if (abs(total_y_variation) >= 0.5f) y_variation *= -1.0f;
-		total_y_variation += y_variation;
-		return total_y_variation;
-	}
+	void Shot(ModuleDino* dino, particle_type projectile);
+	float Y_variation();
 
 	float total_y_variation = 0.0f;
 	float y_variation = 0.1f;

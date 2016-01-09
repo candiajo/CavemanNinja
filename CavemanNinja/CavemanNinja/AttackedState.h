@@ -5,8 +5,7 @@
 
 enum attacked_substate
 {
-	MOVE_UP,
-	MOVE_DOWN,
+	BOUNCE,
 	ON_GROUND
 };
 
@@ -21,7 +20,7 @@ public:
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	Timer* timer;

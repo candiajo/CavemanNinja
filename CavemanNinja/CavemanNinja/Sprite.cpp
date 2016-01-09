@@ -3,7 +3,7 @@
 #include "Collider.h"
 #include "Application.h"
 #include "ModuleCollisions.h"
-
+#include "Timer.h"
 
 Sprite::Sprite(bool active) : Module(active)
 {}
@@ -73,4 +73,10 @@ void Sprite::PlaceColliders()
 	if (current_animation != nullptr)
 		for (auto& collider : current_animation->colliders)
 			collider->SetPos((int)position.x, (int)position.y, CAN_FLIP);
+}
+
+void Sprite::SetInvulnerable(int time)
+{
+	invulnerable = true;
+	invulnerable_time->StartTimer(time);
 }

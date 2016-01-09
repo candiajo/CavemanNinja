@@ -75,18 +75,26 @@ enum collider_type
 	COLLIDER_PLATFORM = 2,		// the player can walk on it, but can also jump down
 	COLLIDER_PLAYER_BODY = 3,	// where player receives damage
 	COLLIDER_PLAYER_ATTACK = 4,	// hand weapon and feet (on jump)
-	COLLIDER_PLAYER_GROUND = 5,	// for detecting contact with the ground (collider on the feet)
+	COLLIDER_DETECT_GROUND = 5,	// for detecting contact with the ground (collider on the feet)
 	COLLIDER_PLAYER_SHOT = 6,	// throwable weapon
 	COLLIDER_ENEMY = 7,			// where enemies can get damage and cause damage to the player
 	COLLIDER_DINO = 8,			// for the dinosaur's head
 	COLLIDER_BORDER = 9,		// for detecting platform borders and fall down
+	COLLIDER_PROXIMITY = 10,	// for detecting if the player is too near from dino (in that case, the dino attacks with it's tail)
 	NUM_COLLIDERS				// 
 };
 
 enum game_events
 {
+	NO_EVENT,
 	PLAYER_STEP_GROUND,
-	WALK_OFF_PLATFORM
+	PLAYER_STEP_ENEMY,
+	WALK_OFF_PLATFORM,
+	DINO_GET_HIT,
+	DINO_GET_SUPERHIT,
+	DINO_IS_DEFEATED,
+	PLAYER_HIT_FRONT,
+	PLAYER_HIT_BACK
 };
 
 enum attack_direction
@@ -139,14 +147,20 @@ void log(const char file[], int line, const char* format, ...);
 #define IMG_PLAYER "Content\\Graphics\\joe.png"
 #define IMG_DINO "Content\\Graphics\\dino.png"
 #define IMG_PARTICLES "Content\\Graphics\\particles.png"
+
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
 #define DATA_PLAYER "Content\\Data\\joe.ini"
 #define DATA_DINO "Content\\Data\\dino.ini"
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
 #define DATA_PARTICLES "Content\\Data\\particles.ini"
 
+#define MUSIC_BOSS_LEVEL "Content\\Audio\\boss theme.ogg"
+#define FX_PLAYER_ATTACK "Content\\Audio\\player attack.wav"
+#define FX_PLAYER_SUPERATTACK "Content\\Audio\\player superattack.wav"
+#define FX_PLAYER_CHARGING "Content\\Audio\\charging.wav"
+
 #define	LEFT_LIMIT -25
-#define	RIGHT_LIMIT 200
+#define	RIGHT_LIMIT 195
 #define DINO_BLINK 200
 #define DINO_HIT 800
 
@@ -158,7 +172,7 @@ void log(const char file[], int line, const char* format, ...);
 #define CAN_FLIP true
 #define ANGRY_VERSION true
 #define CLOSED_EYE_VERSION true
-
+#define NO_REPEAT 0
 
 #define RELEASE( x ) \
     { \

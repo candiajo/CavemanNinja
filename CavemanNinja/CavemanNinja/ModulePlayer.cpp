@@ -1,3 +1,6 @@
+#include "ParticleArm.h"
+#include "ModuleAudio.h"
+#include "Timer.h"
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "ModuleTextures.h"
@@ -27,6 +30,8 @@ bool ModulePlayer::Start()
 
 	energy = 18;
 
+	invulnerable_time = new Timer();
+
 	return true;
 }
 
@@ -45,6 +50,10 @@ update_status ModulePlayer::Update()
 	current_frame = &(*current_animation).GetCurrentFrame();
 	position.x += x_speed;
 	position.y += y_speed;
+
+	if (position.x < LEFT_LIMIT) position.x = LEFT_LIMIT;
+	if (position.x > RIGHT_LIMIT) position.x = RIGHT_LIMIT;
+
 	RefreshColliders();
 	PlaceColliders();
 	
@@ -61,6 +70,7 @@ update_status ModulePlayer::Update()
 update_status ModulePlayer::PostUpdate()
 {
 	previous_frame = current_frame;
+	if (invulnerable_time->TimeOver()) invulnerable = false;
 
 	return UPDATE_CONTINUE;
 }
@@ -84,7 +94,8 @@ bool ModulePlayer::CleanUp()
 	salute.DestroyColliders();
 	tired.DestroyColliders();
 
-	if (state != nullptr) delete state;
+	RELEASE(state);
+	RELEASE(invulnerable_time);
 	return true;
 }
 
@@ -129,9 +140,23 @@ void ModulePlayer::LoadData()
 	lookup.SetAlternateVersion(&ch_lookup);
 	normaljump.SetAlternateVersion(&ch_normaljump);
 	downjump.SetAlternateVersion(&ch_downjump);
+
+	fx_player_attack = App->audio->LoadFx(FX_PLAYER_ATTACK);
+	fx_player_superattack = App->audio->LoadFx(FX_PLAYER_SUPERATTACK);
+	fx_charging = App->audio->LoadFx(FX_PLAYER_CHARGING);
 }
 
-void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
+void ModulePlayer::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	state->OnCollision(c1, c2);
+	state->OnCollision(my_collider, other_collider);
+}
+
+void ModulePlayer::SetArm(ParticleArm* arm)
+{
+	this->arm = arm;
+}
+
+void ModulePlayer::StopArm()
+{
+	if (arm != nullptr) arm->state = ARM_STOP;
 }

@@ -28,6 +28,7 @@ public:
 	Animation breakingstone_animation;
 	Animation rollingenemy_animation;
 	Animation hitenemy_animation;
+	Animation defeatedenemy_animation;
 	Animation dinotail_animation;
 	Animation armslow;
 	Animation armfast;

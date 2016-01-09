@@ -1,6 +1,8 @@
 #include "MoveState.h"
 #include "DecideActionState.h"
 #include "AttackState.h"
+#include "DinoDefeatedState.h"
+#include "SuperHitState.h"
 
 MoveState::MoveState(int final_position, particle_type projectile) : 
 final_position(final_position), 
@@ -9,6 +11,10 @@ projectile(projectile)
 
 DinoState* MoveState::update(ModuleDino& dino)
 {
+	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
+	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
+	else if (event == DINO_GET_HIT) dino.CloseEye(1000);
+
 	switch (substate)
 	{
 	case DINO_MOVING_BACK:
@@ -71,4 +77,9 @@ void MoveState::enter(ModuleDino& dino)
 	if (projectile == DINO_TAIL) dino.dinobody.speed = 0.15f;
 
 	y_original = dino.position.y;
+}
+
+void MoveState::OnCollision(Collider* my_collider, Collider* other_collider)
+{
+	DinoState::OnCollision(my_collider, other_collider);
 }

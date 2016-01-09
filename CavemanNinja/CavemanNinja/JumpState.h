@@ -6,12 +6,14 @@
 enum jump_substate
 {
 	NO_FIRE,
+	MICROJUMP,
 	NORMALJUMP,
 	SUPERJUMP,
 	PRE_DOWNJUMP,
 	DOWNJUMP,
 	PRE_FALLING,
 	FALLING,
+	PRE_SHOT_SUPER,
 	PRE_SHOT_H,
 	SHOT_H,
 	PRE_SHOT_V,
@@ -26,7 +28,7 @@ public:
 
 	PlayerState* update(ModulePlayer& player);
 	void enter(ModulePlayer& player);
-	void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	jump_substate substate;

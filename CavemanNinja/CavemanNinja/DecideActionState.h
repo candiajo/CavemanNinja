@@ -12,6 +12,7 @@ public:
 	DecideActionState::DecideActionState() {};
 	DinoState* update(ModuleDino& dino);
 	void enter(ModuleDino& dino);
+	void DecideActionState::OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
 	Timer* timer;
