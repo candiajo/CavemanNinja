@@ -126,10 +126,6 @@ void ParticleAxe::ParticleUpdate()
 		y_speed *= 1.08f;
 		break;
 
-	//case AXE_ON_GROUND:
-	//	if (timer->TimeOver())
-	//		to_destroy = true;
-
 	case AXE_LAST_MOMENT:
 		if (timer->TimeOver()) to_destroy = true;
 	}
@@ -177,10 +173,8 @@ void ParticleAxe::OnCollision(Collider* my_collider, Collider* other_collider)
 		else if (my_collider->type == COLLIDER_PLAYER_SHOT &&
 			(other_collider->type == COLLIDER_ENEMY || other_collider->type == COLLIDER_DINO))
 		{
-			particle_flag = INNOCUOUS;
 			timer->StartTimer(40);
-			LOG("20")
-				current_frame = &(*current_animation).PeekFrame(6 - 1);
+			current_frame = &(*current_animation).PeekFrame(6 - 1);
 			state = AXE_LAST_MOMENT;
 		}
 	}

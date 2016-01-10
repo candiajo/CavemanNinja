@@ -1,3 +1,4 @@
+#include "ModuleAudio.h"
 #include "JumpState.h"
 #include "IdleState.h"
 #include "Collider.h"
@@ -14,10 +15,16 @@ JumpState::JumpState(jump_substate substate) : substate(substate)
 
 PlayerState* JumpState::update(ModulePlayer& player)
 {
-	if (event == PLAYER_HIT_BACK) 
-		return new AttackedState(ATTACKED_FROM_BEHIND);
-	else if (event == PLAYER_HIT_FRONT) 
-		return new AttackedState(ATTACKED_FROM_FRONT);
+	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
+	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+
+	if (event == PLAYER_STEP_GROUND)
+	{
+		App->audio->PlayFx(player.fx_player_land);
+		return new IdleState();
+	}
+
+	if (event == PLAYER_STEP_ENEMY)	return new JumpState(MICROJUMP);
 
 	if (player.is_tired)
 	{
@@ -25,25 +32,17 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		return new TiredState();
 	}
 
-	if (event == PLAYER_STEP_GROUND)
-		return new IdleState();
-
-	if (event == PLAYER_STEP_ENEMY)
-		return new JumpState(MICROJUMP);
-
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough) fire = PRE_SHOT_SUPER;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		//todelete &&		limit != LEFT)
 	{
 		player.direction = LEFT;
 		player.x_speed = -DEFAULT_X_SPEED;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		// todelete &&		limit != RIGHT)
 	{
 		player.direction = RIGHT;
 		player.x_speed = DEFAULT_X_SPEED;
@@ -181,10 +180,12 @@ void JumpState::enter(ModulePlayer& player)
 	case NORMALJUMP:
 		player.y_speed = NORMAL_JUMP_SPEED;
 		player.SetCurrentAnimation(&player.normaljump);
+		App->audio->PlayFx(player.fx_player_jump);
 		break;
 	case SUPERJUMP:
 		player.y_speed = -8;// SUPER_JUMP_SPEED;
 		player.SetCurrentAnimation(&player.superjump);
+		App->audio->PlayFx(player.fx_super_jump);
 		break;
 	case DOWNJUMP:
 	case FALLING:
@@ -225,6 +226,7 @@ void JumpState::OnCollision(Collider* my_collider, Collider* other_collider)
 	if ((substate == DOWNJUMP || substate == FALLING) &&
 		(my_collider->type == COLLIDER_DETECT_GROUND && other_collider->type == COLLIDER_ENEMY))
 	{
+		player->hit_received_energy = 0;	// to prevent same frame hit with the enemy stepped
 		event = PLAYER_STEP_ENEMY;
 	}
 

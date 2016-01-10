@@ -50,12 +50,24 @@ public:
 	unsigned int fx_player_attack;
 	unsigned int fx_player_superattack;
 	unsigned int fx_charging;
+	unsigned int fx_player_hurt;
+	unsigned int fx_player_tired;
+	unsigned int fx_player_jump;
+	unsigned int fx_player_land;
+	unsigned int fx_super_jump;
 
-	bool rolling_arm = false;
-	bool is_crouch = false;
-	bool is_jumping = false;
-	bool is_tired = false;
-	bool charge_enough = false;
+	bool rolling_arm;
+	bool is_crouch;
+	bool is_jumping;
+	bool is_tired;
+	bool charge_enough;
+	bool player_end;
+	bool is_defeated;
+	bool is_hit;
+
+	int hit_received_energy;
+
+	int score;
 
 	ParticleArm* arm = nullptr;
 

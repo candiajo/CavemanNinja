@@ -30,6 +30,7 @@ public:
 private:
 	Animation* dinotail;
 	dinotail_state state;
+	unsigned int fx_dino_tail;
 };
 
 #endif //__PARTICLEDINOTAIL_H__

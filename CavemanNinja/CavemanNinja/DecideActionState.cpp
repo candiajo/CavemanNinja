@@ -22,8 +22,7 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 	{
 		timer->StartTimer();
 		
-		if (dino.player_too_near) 
-			return new MoveState(VERY_FAR_POSITION, DINO_TAIL);
+		if (dino.player_too_near) return new MoveState(VERY_FAR_POSITION, DINO_TAIL);
 
 		int random_number;
 		int destination;
@@ -40,11 +39,11 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 		{
 			return new MoveState(destination);
 		}
-		else if (random_number <= 10)	// fake shot 5%
+		else if (random_number <= 8)	// fake shot 3%
 		{
 			return new MoveState(destination, FAKE_ATTACK);
 		}
-		else if (random_number <= 30 && dino.position.x != NEAR_POSITION)	// agressive atack 20% (if not already in NEAR position)
+		else if (random_number <= 30 && dino.position.x != NEAR_POSITION)	// agressive atack 22% (if not already in NEAR position)
 		{
 			return new AgressiveAttackState();
 		}

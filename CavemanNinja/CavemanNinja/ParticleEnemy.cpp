@@ -5,7 +5,8 @@
 #include "ModuleRender.h"
 #include "Collider.h"
 #include "Timer.h"
-
+#include "ModuleAudio.h"
+#include "ModuleDino.h"
 #include "ModulePlayer.h"
 
 ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(type, generator)
@@ -13,6 +14,9 @@ ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(t
 	rollingenemy = new Animation(App->particles->rollingenemy_animation, this);
 	hitenemy = new Animation(App->particles->hitenemy_animation, this);
 	defeatedenemy = new Animation(App->particles->defeatedenemy_animation, this);
+
+	fx_enemy_hurt = dynamic_cast<ModuleDino*>(generator)->fx_enemy_hurt;
+	fx_weapon_hit= dynamic_cast<ModuleDino*>(generator)->fx_weapon_hit;
 
 	energy = 1;
 	damage = 5;
@@ -72,9 +76,6 @@ void ParticleEnemy::ParticleUpdate()
 				state = ENEMY_DEFEATED;
 			}
 			break;
-		case ENEMY_DEFEATED:
-			int a = 5;
-			break;
 		}
 
 		position.x += x_speed;
@@ -82,8 +83,6 @@ void ParticleEnemy::ParticleUpdate()
 		current_frame = &(*current_animation).GetCurrentFrame();
 		PlaceColliders();
 		App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, Flip());
-		// debug
-		{if (position.y > 250) to_destroy = true; }
 	}
 }
 
@@ -129,6 +128,8 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 			y_speed = -2.5f;
 
 			state = ENEMY_HIT;
+			App->player1->score += 300;
+			App->audio->PlayFx(fx_enemy_hurt, NO_REPEAT);
 			SetCurrentAnimation(hitenemy);
 		}
 		else if (other_collider->type == COLLIDER_PLAYER_SHOT)
@@ -157,6 +158,10 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 					y_speed *= 1.5f;
 				}
 				state = ENEMY_HIT;
+				App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
+				App->audio->PlayFx(fx_enemy_hurt, NO_REPEAT);
+				weapon->particle_flag = INNOCUOUS;
+				App->player1->score += 300;
 				SetCurrentAnimation(hitenemy);
 			}
 		}

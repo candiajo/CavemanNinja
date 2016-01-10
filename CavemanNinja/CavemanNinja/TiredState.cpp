@@ -1,6 +1,8 @@
+#include "ModulePlayer.h"
 #include "TiredState.h"
 #include "Timer.h"
 #include "IdleState.h"
+#include "ModuleAudio.h"
 
 TiredState::~TiredState()
 {
@@ -26,6 +28,7 @@ void TiredState::enter(ModulePlayer& player)
 	if (player.y_speed < 0.45) player.y_speed = 0.45f;
 
 	this->player = &player;
+	App->audio->PlayFx(player.fx_player_tired);
 }
 
 void TiredState::OnCollision(Collider* my_collider, Collider* other_collider)

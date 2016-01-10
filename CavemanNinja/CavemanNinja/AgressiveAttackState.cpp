@@ -2,8 +2,7 @@
 #include "MoveState.h"
 #include "DinoDefeatedState.h"
 #include "SuperHitState.h"
-
-//#include "SDL.h"
+#include "ModuleAudio.h"
 
 DinoState* AgressiveAttackState::update(ModuleDino& dino)
 {
@@ -40,6 +39,7 @@ void AgressiveAttackState::enter(ModuleDino& dino)
 	dino.openmouth.SetLastFrame();	// set dino open mouth (last frame of the animation)
 	substate = DINO_MOVING_FORWARD;
 	y_original = dino.position.y;
+	App->audio->PlayFx(dino.fx_dino_roar);
 }
 
 void AgressiveAttackState::OnCollision(Collider* my_collider, Collider* other_collider)

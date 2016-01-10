@@ -19,7 +19,6 @@ bool ModulePlayer::Start()
 	direction = RIGHT;
 	LOG("Loading player");
 
-	texture_sprite = App->textures->Load(IMG_PLAYER);
 	LoadData();
 	
 	state = new JumpState(FALLING);
@@ -28,9 +27,20 @@ bool ModulePlayer::Start()
 	position.x = 50;
 	position.y = 0;
 
-	energy = 18;
+	energy = PLAYER_MAX_ENERGY;
 
 	invulnerable_time = new Timer();
+	
+	player_end = false;
+	rolling_arm = false;
+	is_crouch = false;
+	is_tired = false;
+	charge_enough = false;
+	is_hit = false;
+	is_defeated = false;
+
+	hit_received_energy = 0;
+	score = 0;
 
 	return true;
 }
@@ -94,6 +104,8 @@ bool ModulePlayer::CleanUp()
 	salute.DestroyColliders();
 	tired.DestroyColliders();
 
+	App->textures->Unload(texture_sprite);
+
 	RELEASE(state);
 	RELEASE(invulnerable_time);
 	return true;
@@ -104,6 +116,8 @@ void ModulePlayer::LoadData()
 	std::string name;
 	info_type info;
 	GenericData data;
+
+	texture_sprite = App->textures->Load(IMG_PLAYER);
 
 	File player_data(DATA_PLAYER);
 
@@ -144,6 +158,11 @@ void ModulePlayer::LoadData()
 	fx_player_attack = App->audio->LoadFx(FX_PLAYER_ATTACK);
 	fx_player_superattack = App->audio->LoadFx(FX_PLAYER_SUPERATTACK);
 	fx_charging = App->audio->LoadFx(FX_PLAYER_CHARGING);
+	fx_player_hurt = App->audio->LoadFx(FX_PLAYER_HURT);
+	fx_player_tired = App->audio->LoadFx(FX_PLAYER_TIRED);
+	fx_player_jump = App->audio->LoadFx(FX_PLAYER_JUMP);
+	fx_player_land = App->audio->LoadFx(FX_PLAYER_LAND);
+	fx_super_jump = App->audio->LoadFx(FX_SUPER_JUMP);
 }
 
 void ModulePlayer::OnCollision(Collider* my_collider, Collider* other_collider)

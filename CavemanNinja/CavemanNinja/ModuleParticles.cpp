@@ -12,9 +12,6 @@
 
 bool ModuleParticles::Start()
 {
-	LOG("Loading particles");
-
-	texture_particles = App->textures->Load(IMG_PARTICLES);
 	LoadData();
 	return true;
 }
@@ -73,6 +70,10 @@ void ModuleParticles::LoadData()
 	std::string name;
 	info_type info;
 	GenericData data;
+
+	LOG("Loading particles");
+
+	texture_particles = App->textures->Load(IMG_PARTICLES);
 
 	File player_data(DATA_PARTICLES);
 

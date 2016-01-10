@@ -17,6 +17,7 @@ class ModuleCollisions;
 class ModuleParticles;
 class ModuleDino;
 class ModuleAudio;
+class ModuleHud;
 
 class Application
 {
@@ -41,9 +42,13 @@ public:
 	ModuleParticles* particles;
 	ModuleDino* dino;
 	ModuleAudio* audio;
+	ModuleHud* hud;
+
+	// debug int lives = 2;
+	int lives = 0;
 
 	//debug
-	float var1 = 70, var2 = 100, var3 = 1.05f;
+	float var1 = 20, var2 = 100, var3 = 1.05f;
 
 private:
 	std::list<Module*> modules;

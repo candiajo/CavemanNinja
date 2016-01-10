@@ -171,6 +171,9 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>StatesMachine\Player States</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleHud.cpp">
+      <Filter>Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -309,6 +312,9 @@
       <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
     <ClInclude Include="ModuleAudio.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleHud.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
   </ItemGroup>

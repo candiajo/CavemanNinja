@@ -143,21 +143,37 @@ void log(const char file[], int line, const char* format, ...);
 
 #define IMG_TITLE_SCREEN "Content\\Graphics\\title_screen.png"
 #define IMG_SCENE_DINO "Content\\Graphics\\scene_dino.png"
-#define IMG_READY "Content\\Graphics\\ready.png"
+#define IMG_TRANSITION "Content\\Graphics\\transition.png"
 #define IMG_PLAYER "Content\\Graphics\\joe.png"
 #define IMG_DINO "Content\\Graphics\\dino.png"
 #define IMG_PARTICLES "Content\\Graphics\\particles.png"
+#define IMG_HUD "Content\\Graphics\\hud.png"
 
 #define DATA_SCENE_DINO "Content\\Data\\scene_dino.ini"
 #define DATA_PLAYER "Content\\Data\\joe.ini"
 #define DATA_DINO "Content\\Data\\dino.ini"
 #define DATA_MATRIX "Content\\Data\\collision matrix.ini"
 #define DATA_PARTICLES "Content\\Data\\particles.ini"
+#define DATA_TRANSITION "Content\\Data\\transition.ini"
+#define DATA_HUD "Content\\Data\\hud.ini"						// hud.ini... ja! :D
 
 #define MUSIC_BOSS_LEVEL "Content\\Audio\\boss theme.ogg"
+#define MUSIC_WIN "Content\\Audio\\win theme.ogg"
 #define FX_PLAYER_ATTACK "Content\\Audio\\player attack.wav"
 #define FX_PLAYER_SUPERATTACK "Content\\Audio\\player superattack.wav"
 #define FX_PLAYER_CHARGING "Content\\Audio\\charging.wav"
+#define FX_PLAYER_HURT "Content\\Audio\\player hurt.wav"
+#define FX_DINO_DEFEATED "Content\\Audio\\dino defeated.wav"
+#define FX_DINO_ROAR "Content\\Audio\\dino roar.wav"
+#define FX_ENEMY_HURT "Content\\Audio\\enemy hurt.wav"
+#define FX_WEAPON_HIT "Content\\Audio\\weapon hit.wav"
+#define FX_PLAYER_TIRED "Content\\Audio\\player tired.wav"
+#define FX_PLAYER_JUMP "Content\\Audio\\player jump.wav"
+#define FX_PLAYER_LAND "Content\\Audio\\player land.wav"
+#define FX_SUPER_JUMP "Content\\Audio\\super jump.wav"
+#define FX_DINO_ROAR "Content\\Audio\\dino roar.wav"
+#define FX_DINO_STOPMS "Content\\Audio\\dino stomps.wav"
+#define FX_DINO_TAIL "Content\\Audio\\dino tail.wav"
 
 #define	LEFT_LIMIT -25
 #define	RIGHT_LIMIT 195
@@ -168,6 +184,8 @@ void log(const char file[], int line, const char* format, ...);
 #define NORMAL_JUMP_SPEED -6
 #define SUPER_JUMP_SPEED -8
 #define DOWN_JUMP_SPEED 0.4
+#define PLAYER_MAX_ENERGY 18
+#define DINO_MAX_ENERGY 13
 
 #define CAN_FLIP true
 #define ANGRY_VERSION true

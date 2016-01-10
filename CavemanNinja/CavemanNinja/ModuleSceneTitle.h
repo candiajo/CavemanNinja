@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -10,7 +11,7 @@ class ModuleSceneTitle : public Module
 {
 public:
 	ModuleSceneTitle(bool active) : Module(active){};
-	~ModuleSceneTitle(){};
+	~ModuleSceneTitle() {};
 
 	bool Start();
 	update_status Update();

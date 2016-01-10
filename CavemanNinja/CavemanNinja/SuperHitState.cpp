@@ -1,3 +1,5 @@
+#include "ModuleAudio.h"
+#include "ModuleDino.h"
 #include "SuperHitState.h"
 #include "Timer.h"
 #include "DecideActionState.h"
@@ -21,4 +23,5 @@ void SuperHitState::enter(ModuleDino& dino)
 	timer = new Timer(1000);
 	timer->StartTimer();
 	dino.spritedinobody->current_animation->speed = 0.2f;
+	App->audio->PlayFx(App->dino->fx_dino_roar);
 }

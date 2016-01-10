@@ -1,3 +1,4 @@
+#include "ModuleAudio.h"
 #include "Application.h"
 #include "ModuleDino.h"
 #include "DinoState.h"
@@ -28,7 +29,7 @@ bool ModuleDino::Start()
 	position.x = -120;
 	position.y = 15;
 
-	energy = 13;
+	energy = DINO_MAX_ENERGY;
 	damage = 4;
 
 	eyeclosed = false;
@@ -132,6 +133,14 @@ void ModuleDino::LoadData()
 		else if (name == "dinobody") StoreData(info, data, dinobody, spritedinobody);
 		else if (name == "dinobodyground") StoreData(info, data, dinobodyground, spritedinobody);
 	}
+
+	fx_dino_defeated = App->audio->LoadFx(FX_DINO_DEFEATED);
+	fx_dino_roar= App->audio->LoadFx(FX_DINO_ROAR);
+	fx_enemy_hurt= App->audio->LoadFx(FX_ENEMY_HURT);
+	fx_weapon_hit = App->audio->LoadFx(FX_WEAPON_HIT);
+	fx_dino_roar = App->audio->LoadFx(FX_DINO_ROAR);
+	fx_dino_stomps = App->audio->LoadFx(FX_DINO_STOPMS);
+	fx_dino_tail = App->audio->LoadFx(FX_DINO_TAIL);
 }
 
 void ModuleDino::OnCollision(Collider* my_collider, Collider* other_collider)

@@ -5,13 +5,16 @@
 #include "ModuleRender.h"
 #include "Collider.h"
 #include "Timer.h"
-
+#include "ModuleDino.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
 
 ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(type, generator)
 {
 	rollingstone = new Animation(App->particles->rollingstone_animation, this);
 	breakingstone = new Animation(App->particles->breakingstone_animation, this);
+
+	fx_weapon_hit = dynamic_cast<ModuleDino*>(generator)->fx_weapon_hit;
 
 	energy = 2;
 	damage = 5;
@@ -102,9 +105,12 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 		if (weapon->particle_flag != INNOCUOUS)
 		{
 			energy -= weapon->damage;
+			weapon->particle_flag = INNOCUOUS;
+			App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
 			if (energy <= 0)
 			{
 				state = STONE_BREAKING;
+				App->player1->score += 200;
 				SetCurrentAnimation(breakingstone);
 			}
 		}
@@ -112,6 +118,8 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 	else if (other_collider->type == COLLIDER_PLAYER_ATTACK)
 	{
 		state = STONE_BREAKING;
+		App->player1->score += 200;
+		App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
 		SetCurrentAnimation(breakingstone);
 	}
 }

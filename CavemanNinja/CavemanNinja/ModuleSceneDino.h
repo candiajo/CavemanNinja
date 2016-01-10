@@ -8,6 +8,14 @@
 class Timer;
 struct SDL_Texture;
 
+enum scene_state
+{
+	PLAY,
+	GAMEOVER,
+	PRE_CONGRATULATIONS,
+	CONGRATULATIONS
+};
+
 class ModuleSceneDino : public Module
 {
 public:
@@ -16,10 +24,13 @@ public:
 
 	bool Start();
 	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
 	void NextScene(Module* scene);
+	void DrawScenario();
 
-	bool player_defeated = false;
+	bool dino_defeated;
+	//debug bool player_defeated = false;
 	SDL_Texture* texture_scene_dino = nullptr;
 
 private:
@@ -28,6 +39,10 @@ private:
 	Animation bgflowers;
 	Animation bgplatform;
 	Animation girl;
+	Animation gameover;
+	Animation congratulations;
+	scene_state state;
+
 	Timer* timer;
 };
 

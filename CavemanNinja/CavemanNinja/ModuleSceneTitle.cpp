@@ -9,6 +9,7 @@
 
 #include "SDL.h"
 
+
 bool ModuleSceneTitle::Start()
 {
 	LOG("Loading Title assets");
@@ -16,6 +17,8 @@ bool ModuleSceneTitle::Start()
 	texture_title = App->textures->Load(IMG_TITLE_SCREEN);
 	//App->audio->PlayMusic("intro.ogg", 0.0f);
 	//fx = App->audio->LoadFx("starting.wav");
+	
+	App->lives = 2;
 
 	return (texture_title != nullptr);
 }

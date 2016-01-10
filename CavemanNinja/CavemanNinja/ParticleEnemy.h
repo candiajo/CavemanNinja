@@ -28,6 +28,8 @@ private:
 	enemy_state state;
 	collider_type first_bounce;
 	int bounces = 0;
+	unsigned int fx_enemy_hurt;
+	unsigned int fx_weapon_hit;
 };
 
 #endif //__PARTICLEENEMY_H__

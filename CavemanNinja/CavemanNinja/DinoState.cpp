@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "DinoDefeatedState.h"
 #include "SuperHitState.h"
+#include "ModuleAudio.h"
+#include "ModuleDino.h"
 
 void DinoState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
@@ -13,12 +15,13 @@ void DinoState::OnCollision(Collider* my_collider, Collider* other_collider)
 
 		if (weapon->particle_flag != INNOCUOUS && !dino->invulnerable)
 		{
+			App->audio->PlayFx(App->dino->fx_weapon_hit);
 			dino->energy -= weapon->damage;
 			LOG("dino energy: %d", dino->energy);
 			if (dino->energy <= 0) event = DINO_IS_DEFEATED;
 			else if (weapon->type == SUPER_AXE) event = DINO_GET_SUPERHIT;
 			else event = DINO_GET_HIT;
-			dino->SetInvulnerable(1000);
+			dino->SetInvulnerable(1500);
 			weapon->particle_flag = INNOCUOUS;	// for not colliding with any other collider in the same frame
 		}
 	}

@@ -3,26 +3,31 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "Animation.h"
 
 struct SDL_Texture;
+class Timer;
 
 class ModuleBeginLevel : public Module
 {
 public:
 	ModuleBeginLevel() : Module(true) {};
-	~ModuleBeginLevel() {};
+	~ModuleBeginLevel();
 
 	bool Start();
 	update_status Update();
 	void Transition(Module* next_scene, Module* previous_scene = nullptr, Uint32 time = 0);
+	void LoadData();
 
 private:
-	SDL_Texture* texture_ready;
+	Timer* timer;
+	Animation ready;
+	Animation scoretable;
+	Animation *current;
+	SDL_Texture* texture_transition;
 	int center_x;
 	int center_y;
 	bool transition_running = false;
-	Uint32 start_time = 0;
-	Uint32 total_time = 0;
 	Module* next_scene = nullptr;
 };
 

@@ -107,8 +107,8 @@ void Module::StoreData(info_type info, GenericData& data, Animation& animation, 
 		break;
 
 	case ANIMATION_COLLIDER:
-		offset.x = data.val1 * SCREEN_SIZE;
-		offset.y = data.val2 * SCREEN_SIZE;
+		offset.x = (float)data.val1 * (float)SCREEN_SIZE;
+		offset.y = (float)data.val2 * (float)SCREEN_SIZE;
 		data.val3 *= SCREEN_SIZE;
 		data.val4 *= SCREEN_SIZE;
 		frame_w = animation.frames.back().original.w;

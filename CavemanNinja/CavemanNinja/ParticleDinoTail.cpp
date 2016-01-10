@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleParticles.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
+#include "ModuleDino.h"
 
 ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Particle(type, generator)
 {
@@ -9,6 +11,8 @@ ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Part
 
 	 position.x = TAIL_LIMIT_LEFT;
 	 position.y = TAIL_Y;
+
+	 fx_dino_tail = dynamic_cast<ModuleDino*>(generator)->fx_dino_tail;
 
 	 damage = 5;
 
@@ -30,6 +34,7 @@ void ParticleDinoTail::ParticleUpdate()
 		position.x += TAIL_SPEED_FORWARD;
 		if (position.x >= TAIL_LIMIT_RIGHT)
 		{
+			App->audio->PlayFx(fx_dino_tail);
 			position.x = TAIL_LIMIT_RIGHT;
 			state = TAIL_BACKWARDS;
 		}

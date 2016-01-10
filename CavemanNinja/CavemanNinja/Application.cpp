@@ -11,6 +11,7 @@
 #include "ModuleParticles.h"
 #include "ModuleDino.h"
 #include "ModuleAudio.h"
+#include "ModuleHud.h"
 
 Application::Application()
 {
@@ -27,6 +28,7 @@ Application::Application()
 	modules.push_back(player1 = new ModulePlayer(false));
 	modules.push_back(particles = new ModuleParticles(false));
 	modules.push_back(dino = new ModuleDino(false));
+	modules.push_back(hud = new ModuleHud(false));
 	modules.push_back(renderer = new ModuleRender());
 }
 

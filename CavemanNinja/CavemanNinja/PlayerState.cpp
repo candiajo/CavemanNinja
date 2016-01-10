@@ -6,7 +6,7 @@
 
 void PlayerState::OnCollision(Collider* my_collider, Collider* other_collider)
 {
-	Sprite* player = dynamic_cast<Sprite*>(my_collider->callback);
+	ModulePlayer* player = dynamic_cast<ModulePlayer*>(my_collider->callback);
 
 	if (!player->invulnerable)
 	{
@@ -14,7 +14,8 @@ void PlayerState::OnCollision(Collider* my_collider, Collider* other_collider)
 		{
 			Sprite* enemy = dynamic_cast<Sprite*>(other_collider->callback);
 
-			player->energy -= enemy->damage;
+			player->hit_received_energy = enemy->damage;
+			//todelete player->energy -= enemy->damage;
 			player->SetInvulnerable(1000);
 			if (player->direction == RIGHT) event = PLAYER_HIT_BACK;
 			else event = PLAYER_HIT_FRONT;

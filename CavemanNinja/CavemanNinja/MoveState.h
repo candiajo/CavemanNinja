@@ -15,6 +15,7 @@ private:
 	int final_position;
 	particle_type projectile;
 	dino_substate substate;
+	int channel;				// of the sound played, for stopping it
 };
 
 #endif //__DINOMOVESTATE_H__

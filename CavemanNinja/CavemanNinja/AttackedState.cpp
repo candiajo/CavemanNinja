@@ -3,6 +3,7 @@
 #include "PlayerDefeatedState.h"
 #include "Timer.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
 
 AttackedState::~AttackedState()
 {
@@ -24,7 +25,11 @@ PlayerState* AttackedState::update(ModulePlayer& player)
 			if (attacked_from == ATTACKED_FROM_BEHIND) return new PlayerDefeatedState(ATTACKED_FROM_BEHIND);
 			else return new PlayerDefeatedState(ATTACKED_FROM_FRONT);
 		}
-		else return new IdleState();
+		else
+		{
+			player.is_hit = false;
+			return new IdleState();
+		}
 	}
 
 	if (substate != ON_GROUND)
@@ -43,6 +48,9 @@ void AttackedState::enter(ModulePlayer& player)
 	player.x_speed = 0;
 	player.y_speed = -1.2f;
 	
+	player.energy -= player.hit_received_energy;
+	player.hit_received_energy = 0;
+
 	substate = BOUNCE;
 	if (attacked_from == ATTACKED_FROM_FRONT)
 	{
@@ -57,7 +65,9 @@ void AttackedState::enter(ModulePlayer& player)
 		else move = +1;
 	}
 
+	player.is_hit = true;
 	player.StopArm();
+	App->audio->PlayFx(App->player1->fx_player_hurt);
 }
 
 void AttackedState::OnCollision(Collider* my_collider, Collider* other_collider)

@@ -1,3 +1,6 @@
+#include "ModuleAudio.h"
+#include "ModuleSceneDino.h"
+#include "ModuleDino.h"
 #include "DinoDefeatedState.h"
 #include "Timer.h"
 #include "SpriteDinoBody.h"
@@ -29,17 +32,23 @@ DinoState* DinoDefeatedState::update(ModuleDino& dino)
 		break;
 	case DINO_DEFEATED_FALLING:
 		dino.position.x += 0.4f;
-		dino.position.y *= 1.04f;
-		if (dino.position.y >= DINO_DOWN_LIMIT) substate = DINO_DEFEATED_BOUNCE;
+		//dino.position.y *= 1.04f;
+		dino.y_speed += 0.1f;
+		dino.position.y += dino.y_speed;
+
+		if (dino.position.y >= DINO_DOWN_LIMIT) 
+		{ 
+			substate = DINO_DEFEATED_BOUNCE;  
+			dino.y_speed = -2.0f;
+			dino.position.y = DINO_DOWN_LIMIT - 1; 
+		}
 		break;
 	case DINO_DEFEATED_BOUNCE:
-		dino.position.y *= 0.985f;
-		if (dino.position.y <= DINO_DOWN_LIMIT - 20) substate = DINO_DEFEATED_FINAL;
-		break;
-	case DINO_DEFEATED_FINAL:
-		dino.position.y *= 1.015f;
-		//dino.position.y += 2.0f;
+		dino.y_speed += 0.1f;
+		dino.position.y += dino.y_speed;
 		if (dino.position.y >= DINO_DOWN_LIMIT)	substate = DINO_STOP;
+	case DINO_STOP:
+		App->scene_dino->dino_defeated = true;
 	}
 	return nullptr;
 }
@@ -51,4 +60,5 @@ void DinoDefeatedState::enter(ModuleDino& dino)
 	timer->StartTimer();
 	dino.spritedinobody->current_animation->speed = 0.2f;
 	substate = DINO_DEFEATED_HIT;
+	App->audio->PlayFx(App->dino->fx_dino_defeated);
 }

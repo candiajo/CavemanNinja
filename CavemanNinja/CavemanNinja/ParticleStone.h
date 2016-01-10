@@ -26,6 +26,7 @@ private:
 	Animation* breakingstone;
 	stone_state state;
 	collider_type first_bounce;
+	unsigned int fx_weapon_hit;
 };
 
 #endif //__PARTICLESTONE_H_
