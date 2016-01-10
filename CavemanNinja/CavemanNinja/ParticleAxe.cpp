@@ -25,6 +25,7 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 
 	if (type == SUPER_AXE)
 	{
+		hit_particle_type = WOMP;
 		delay = new Timer(100);
 		x_speed = 3.0f;
 		damage = 3;
@@ -39,6 +40,7 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 		delay = new Timer(0);
 		if (type == AXE_HORZ)
 		{
+			hit_particle_type = WAM_H;
 			x_speed = 2.0f;
 			first_state = AXE_FORWARD;
 			offset.x = 55;
@@ -53,6 +55,7 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 		}
 		else if (type == AXE_VERT)
 		{
+			hit_particle_type = WAM_V;
 			x_speed = 0.0f;
 			offset.x = 35;
 			offset.y = 0;
@@ -156,18 +159,16 @@ void ParticleAxe::OnCollision(Collider* my_collider, Collider* other_collider)
 		if (my_collider->type == COLLIDER_DETECT_GROUND)
 		{
 			if (other_collider->type == COLLIDER_PLATFORM &&
-				(state == AXE_UP || state == AXE_FORWARD))
+				(state == AXE_UP || state == AXE_FORWARD || state == AXE_WAITING_DELAY))
 			{
 			}// there is no collision in this situation
 			else if (other_collider->type == COLLIDER_GROUND ||
 				other_collider->type == COLLIDER_PLATFORM)
 			{
 				particle_flag = INNOCUOUS;
-				//todelete state = AXE_ON_GROUND;
 				state = AXE_LAST_MOMENT;
 				timer->StartTimer(250);
-				LOG("250")
-					current_frame = &(*current_animation).PeekFrame(6 - 1);
+				current_frame = &(*current_animation).PeekFrame(6 - 1);
 			}
 		}
 		else if (my_collider->type == COLLIDER_PLAYER_SHOT &&
@@ -175,6 +176,7 @@ void ParticleAxe::OnCollision(Collider* my_collider, Collider* other_collider)
 		{
 			timer->StartTimer(40);
 			current_frame = &(*current_animation).PeekFrame(6 - 1);
+			App->particles->AddParticle(hit_particle_type, this);
 			state = AXE_LAST_MOMENT;
 		}
 	}

@@ -21,8 +21,8 @@ ParticleArm::ParticleArm(particle_type type, Sprite* generator) : Particle(type,
 
 	player->rolling_arm = true;
 
-	arm_slow = new Animation(App->particles->armslow, this);
-	arm_fast = new Animation(App->particles->armfast, this);
+	arm_slow = new Animation(App->particles->armslow_animation, this);
+	arm_fast = new Animation(App->particles->armfast_animation, this);
 
 	channel = App->audio->PlayFx(fx_charging, NO_REPEAT);
 	SetCurrentAnimation(arm_slow);

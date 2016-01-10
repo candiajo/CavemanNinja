@@ -4,7 +4,7 @@
 #include "ModuleParticles.h"
 #include "AttackedState.h"
 
-PlayerState* ShotWeaponState::update(ModulePlayer& player)
+PlayerState* ShotWeaponState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
@@ -19,13 +19,13 @@ PlayerState* ShotWeaponState::update(ModulePlayer& player)
 	}
 }
 
-void ShotWeaponState::enter(ModulePlayer& player)
+void ShotWeaponState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 
 	if (weapon == SUPER_AXE) player.SetCurrentAnimation(&player.supershot);
 	else player.SetCurrentAnimation(&player.shotweapon);
-	Shot(&player, weapon);
+	ThrowParticle(&player, weapon);
 }
 
 void ShotWeaponState::OnCollision(Collider* my_collider, Collider* other_collider)

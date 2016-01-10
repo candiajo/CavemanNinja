@@ -10,10 +10,12 @@
 LookUpState::LookUpState()
 {}
 
-PlayerState* LookUpState::update(ModulePlayer& player)
+PlayerState* LookUpState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+
+	CheckPosition(player);
 
 	if (player.is_tired) return new TiredState();
 
@@ -49,7 +51,7 @@ PlayerState* LookUpState::update(ModulePlayer& player)
 		return SAME_STATE;
 }
 
-void LookUpState::enter(ModulePlayer& player)
+void LookUpState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)

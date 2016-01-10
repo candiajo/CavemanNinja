@@ -10,13 +10,13 @@ PlayerDefeatedState::~PlayerDefeatedState()
 	RELEASE(timer);
 }
 
-PlayerState* PlayerDefeatedState::update(ModulePlayer& player)
+PlayerState* PlayerDefeatedState::Update(ModulePlayer& player)
 {
 	if (timer->TimeOver()) App->player1->player_end = true;
 	return SAME_STATE;
 }
 
-void PlayerDefeatedState::enter(ModulePlayer& player)
+void PlayerDefeatedState::Enter(ModulePlayer& player)
 {
 	timer = new Timer(1500);
 	timer->StartTimer();

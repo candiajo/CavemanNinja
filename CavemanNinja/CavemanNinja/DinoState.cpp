@@ -17,8 +17,10 @@ void DinoState::OnCollision(Collider* my_collider, Collider* other_collider)
 		{
 			App->audio->PlayFx(App->dino->fx_weapon_hit);
 			dino->energy -= weapon->damage;
-			LOG("dino energy: %d", dino->energy);
-			if (dino->energy <= 0) event = DINO_IS_DEFEATED;
+			if (dino->energy <= 0)
+			{
+				event = DINO_IS_DEFEATED;
+			}
 			else if (weapon->type == SUPER_AXE) event = DINO_GET_SUPERHIT;
 			else event = DINO_GET_HIT;
 			dino->SetInvulnerable(1500);
@@ -27,7 +29,7 @@ void DinoState::OnCollision(Collider* my_collider, Collider* other_collider)
 	}
 }
 
-void DinoState::Shot(ModuleDino* dino, particle_type projectile)
+void DinoState::ThrowParticle(ModuleDino* dino, particle_type projectile)
 {
 	App->particles->AddParticle(projectile, dynamic_cast<Module*>(dino));
 }

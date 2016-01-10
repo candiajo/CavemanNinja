@@ -13,7 +13,7 @@ JumpState::JumpState()
 JumpState::JumpState(jump_substate substate) : substate(substate)
 {}
 
-PlayerState* JumpState::update(ModulePlayer& player)
+PlayerState* JumpState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
@@ -24,7 +24,11 @@ PlayerState* JumpState::update(ModulePlayer& player)
 		return new IdleState();
 	}
 
-	if (event == PLAYER_STEP_ENEMY)	return new JumpState(MICROJUMP);
+	if (event == PLAYER_STEP_ENEMY)
+	{
+		ThrowParticle(&player, KUP);
+		return new JumpState(MICROJUMP);
+	}
 
 	if (player.is_tired)
 	{
@@ -66,7 +70,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 	{
 		case PRE_SHOT_SUPER:
 			player.SetCurrentAnimation(&player.supershot);
-			Shot(&player, SUPER_AXE);
+			ThrowParticle(&player, SUPER_AXE);
 			fire = SHOT_H;
 			break;
 		case PRE_SHOT_H:
@@ -74,7 +78,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 			{
 				player.SetCurrentAnimation(&player.shotweapon);
 			}
-			Shot(&player, AXE_HORZ);
+			ThrowParticle(&player, AXE_HORZ);
 			fire = SHOT_H;
 			break;
 
@@ -97,7 +101,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 
 		case PRE_SHOT_V:
 			player.SetCurrentAnimation(&player.shotup);
-			Shot(&player, AXE_VERT);
+			ThrowParticle(&player, AXE_VERT);
 			fire = SHOT_V;
 			break;
 
@@ -162,7 +166,7 @@ PlayerState* JumpState::update(ModulePlayer& player)
 	return SAME_STATE;
 }
 
-void JumpState::enter(ModulePlayer& player)
+void JumpState::Enter(ModulePlayer& player)
 {
 	fire = NO_FIRE;
 	player.is_jumping = true;
@@ -216,15 +220,15 @@ void JumpState::OnCollision(Collider* my_collider, Collider* other_collider)
 	{
 		while (my_collider->IsColliding(other_collider))
 		{
-			my_collider->rect.y-= 1;
-			player->position.y -= 1.0f / (float)SCREEN_SIZE;
+			player->position.y -= 1.0f;
+			player->PlaceColliders();
 		}
 
 		player->is_jumping = false;
 		event = PLAYER_STEP_GROUND;
 	}
 	if ((substate == DOWNJUMP || substate == FALLING) &&
-		(my_collider->type == COLLIDER_DETECT_GROUND && other_collider->type == COLLIDER_ENEMY))
+		(my_collider->type == COLLIDER_PLAYER_ATTACK && other_collider->type == COLLIDER_ENEMY))
 	{
 		player->hit_received_energy = 0;	// to prevent same frame hit with the enemy stepped
 		event = PLAYER_STEP_ENEMY;

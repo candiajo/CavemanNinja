@@ -96,6 +96,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleArm.cpp" />
     <ClCompile Include="ParticleDinoTail.cpp" />
+    <ClCompile Include="ParticleHit.cpp" />
     <ClCompile Include="ParticleStone.cpp" />
     <ClCompile Include="ParticleEnemy.cpp" />
     <ClCompile Include="PlayerDefeatedState.cpp" />
@@ -112,6 +113,7 @@
     <ClCompile Include="ShotWeaponState.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="SpriteDinoBody.cpp" />
+    <ClCompile Include="SpritePlatform.cpp" />
     <ClCompile Include="SuperHitState.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TiredState.cpp" />
@@ -145,6 +147,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleArm.h" />
     <ClInclude Include="ParticleDinoTail.h" />
+    <ClInclude Include="ParticleHit.h" />
     <ClInclude Include="ParticleStone.h" />
     <ClInclude Include="ParticleEnemy.h" />
     <ClInclude Include="PlayerDefeatedState.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="ShotWeaponState.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="SpriteDinoBody.h" />
+    <ClInclude Include="SpritePlatform.h" />
     <ClInclude Include="SuperHitState.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TiredState.h" />

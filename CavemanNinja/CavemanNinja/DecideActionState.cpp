@@ -12,7 +12,7 @@ DecideActionState::~DecideActionState()
 }
 
 // decide next move (slow stone, fast stone, enemy, open mouth only, agressive attack or move
-DinoState* DecideActionState::update(ModuleDino& dino)
+DinoState* DecideActionState::Update(ModuleDino& dino)
 {
 	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
 	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
@@ -71,7 +71,7 @@ DinoState* DecideActionState::update(ModuleDino& dino)
 	}
 }
 
-void DecideActionState::enter(ModuleDino& dino)
+void DecideActionState::Enter(ModuleDino& dino)
 {
 	timer = new Timer(1000);	// only one decisione every second
 	timer->StartTimer();

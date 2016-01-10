@@ -9,6 +9,7 @@
 #include "ParticleEnemy.h"
 #include "ParticleDinoTail.h"
 #include "ParticleArm.h"
+#include "ParticleHit.h"
 
 bool ModuleParticles::Start()
 {
@@ -56,12 +57,16 @@ void ModuleParticles::AddParticle(particle_type type, Module* generator)
 	case DINO_TAIL:
 		particles.push_back(new ParticleDinoTail(type, dynamic_cast<Sprite*>(generator)));
 		break;
+	case HIT: case KUP: case WAM_H: case WAM_V: case WOMP:
+		particles.push_back(new ParticleHit(type, dynamic_cast<Sprite*>(generator)));
+		break;	
 	case ARM:
 		ParticleArm* arm = new ParticleArm(type, dynamic_cast<Sprite*>(generator));
 		particles.push_back(arm);
 		App->player1->SetArm(arm);
 		arm = nullptr;
 		break;
+
 	}
 }
 
@@ -87,8 +92,9 @@ void ModuleParticles::LoadData()
 		else if (name == "hitenemy") StoreData(info, data, hitenemy_animation, this);
 		else if (name == "defeatedenemy") StoreData(info, data, defeatedenemy_animation, this);
 		else if (name == "dinotail") StoreData(info, data, dinotail_animation, this);
-		else if (name == "armslow") StoreData(info, data, armslow, this);
-		else if (name == "armfast") StoreData(info, data, armfast, this);
+		else if (name == "armslow") StoreData(info, data, armslow_animation, this);
+		else if (name == "armfast") StoreData(info, data, armfast_animation, this);
+		else if (name == "hit") StoreData(info, data, hit_animation, this);
 	}
 }
 

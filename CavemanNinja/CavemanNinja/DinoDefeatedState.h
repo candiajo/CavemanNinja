@@ -14,8 +14,8 @@ public:
 	DinoDefeatedState(){};
 	~DinoDefeatedState();
 
-	DinoState* update(ModuleDino& dino);
-	void enter(ModuleDino& dino);
+	DinoState* Update(ModuleDino& dino);
+	void Enter(ModuleDino& dino);
 
 private:
 	Timer* timer;

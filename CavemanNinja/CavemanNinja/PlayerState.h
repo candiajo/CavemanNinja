@@ -10,15 +10,15 @@ class PlayerState
 {
 public:
 	virtual ~PlayerState() {};
-	virtual PlayerState* update(ModulePlayer& player) = 0;
-	virtual void enter(ModulePlayer& player) = 0;
+	virtual PlayerState* Update(ModulePlayer& player) = 0;
+	virtual void Enter(ModulePlayer& player) = 0;
+	void CheckPosition(ModulePlayer& player);
 	virtual void OnCollision(Collider* my_collider, Collider* other_collider) = 0;
 
 protected:
 	game_events event;
 
-	void Shot(ModulePlayer* player, particle_type weapon);
-
+	void ThrowParticle(ModulePlayer* player, particle_type weapon);
 	void RollArm(ModulePlayer* player);
 };
 

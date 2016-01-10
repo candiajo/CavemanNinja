@@ -26,8 +26,8 @@ public:
 	JumpState();
 	JumpState(jump_substate substate);
 
-	PlayerState* update(ModulePlayer& player);
-	void enter(ModulePlayer& player);
+	PlayerState* Update(ModulePlayer& player);
+	void Enter(ModulePlayer& player);
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:

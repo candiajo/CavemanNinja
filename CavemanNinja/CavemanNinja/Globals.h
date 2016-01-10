@@ -12,7 +12,11 @@ typedef unsigned __int32 uint32;
 
 enum particle_type
 {
-	NO_PARTICLE,
+	HIT = 0,
+	KUP = 1,
+	WAM_H = 2,
+	WAM_V = 3,
+	WOMP = 4,
 	AXE_HORZ,
 	AXE_VERT,
 	AXE_CROUCH,
@@ -22,7 +26,8 @@ enum particle_type
 	ENEMY,
 	FAKE_ATTACK,
 	DINO_TAIL,
-	ARM
+	ARM,
+	NO_PARTICLE
 };
 enum main_states
 {

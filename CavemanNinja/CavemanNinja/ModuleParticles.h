@@ -30,8 +30,9 @@ public:
 	Animation hitenemy_animation;
 	Animation defeatedenemy_animation;
 	Animation dinotail_animation;
-	Animation armslow;
-	Animation armfast;
+	Animation armslow_animation;
+	Animation armfast_animation;
+	Animation hit_animation;
 	
 	SDL_Texture* texture_particles;
 

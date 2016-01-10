@@ -8,7 +8,7 @@
 ShotcrouchState::ShotcrouchState()
 {}
 
-PlayerState* ShotcrouchState::update(ModulePlayer& player)
+PlayerState* ShotcrouchState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
@@ -26,11 +26,11 @@ PlayerState* ShotcrouchState::update(ModulePlayer& player)
 	}
 }
 
-void ShotcrouchState::enter(ModulePlayer& player)
+void ShotcrouchState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.SetCurrentAnimation(&player.shotcrouch);
-	Shot(&player, AXE_CROUCH);
+	ThrowParticle(&player, AXE_CROUCH);
 }
 
 void ShotcrouchState::OnCollision(Collider* my_collider, Collider* other_collider)

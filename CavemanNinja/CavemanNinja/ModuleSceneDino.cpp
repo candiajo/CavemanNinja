@@ -1,3 +1,4 @@
+#include "SpritePlatform.h"
 #include <string>
 #include "Globals.h"
 #include "Application.h"
@@ -29,12 +30,11 @@ bool ModuleSceneDino::Start()
 	texture_scene_dino = App->textures->Load(IMG_SCENE_DINO);
 	App->audio->PlayMusic(MUSIC_BOSS_LEVEL);
 
+	bgplatform_sprite = new SpritePlatform(texture_scene_dino, &bgplatform_animation);
+
 	LoadData();
 
-	bgplatform.colliders.front()->SetPos((int)bgplatform.frames.front().offset.x, (int)bgplatform.frames.front().offset.y);
-	bgplatform.colliders.back()->SetPos((int)bgplatform.frames.back().offset.x, (int)bgplatform.frames.back().offset.y);
-	App->collisions->AddCollider(bgplatform.colliders.front());	// adds the first colliders
-	App->collisions->AddCollider(bgplatform.colliders.back());	// adds the second collider
+	bgplatform_sprite->Start();
 
 	bgflowers.colliders.front()->SetPos((int)bgflowers.frames.front().offset.x, (int)bgflowers.frames.front().offset.y);
 	App->collisions->AddCollider(bgflowers.colliders.front());	// adds the first (and only) collider
@@ -43,6 +43,10 @@ bool ModuleSceneDino::Start()
 	timer->StartTimer();
 
 	dino_defeated = false;
+	player_defeated = false;
+
+	App->dino->energy = DINO_MAX_ENERGY;
+	App->player1->energy = PLAYER_MAX_ENERGY;
 
 	state = PLAY;
 
@@ -60,7 +64,7 @@ void ModuleSceneDino::LoadData()
 	while (background_data.GetAnimInfo(info, name, data))
 	{
 		if (name == "bgvolcanos") StoreData(info, data, bgvolcanos, this);
-		else if (name == "bgplatform") StoreData(info, data, bgplatform, this);
+		else if (name == "bgplatform") StoreData(info, data, bgplatform_animation, bgplatform_sprite);
 		else if (name == "bgflowers") StoreData(info, data, bgflowers, this);
 		else if (name == "girl") StoreData(info, data, girl, this);
 		else if (name == "gameover") StoreData(info, data, gameover, this);
@@ -75,7 +79,7 @@ update_status ModuleSceneDino::Update()
 	switch (state)
 	{
 	case PLAY:
-		if (timer->TimeOver() && !App->dino->IsEnabled()) 
+		if (timer->TimeOver() && !App->dino->IsEnabled())
 			App->dino->Enable();
 
 		if (App->player1->player_end)
@@ -84,6 +88,7 @@ update_status ModuleSceneDino::Update()
 			if (App->lives < 0)
 			{
 				timer->StartTimer(4000);
+				App->dino->invulnerable = true;
 				state = GAMEOVER;
 			}
 			else NextScene(this);
@@ -91,6 +96,7 @@ update_status ModuleSceneDino::Update()
 		else if (dino_defeated)
 		{
 			timer->StartTimer(1000);
+			App->player1->invulnerable = true;
 			state = PRE_CONGRATULATIONS;
 		}
 		break;
@@ -101,7 +107,9 @@ update_status ModuleSceneDino::Update()
 			timer->StartTimer(7000);
 			state = CONGRATULATIONS;
 		}
+		//no break;
 	case GAMEOVER:
+		//no break;
 	case CONGRATULATIONS:
 		if (timer->TimeOver()) NextScene(App->scene_title);
 		break;
@@ -109,7 +117,7 @@ update_status ModuleSceneDino::Update()
 	
 
 	//todelete
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		NextScene(App->scene_title);
 	}
@@ -145,8 +153,8 @@ bool ModuleSceneDino::CleanUp()
 
 	bgflowers.DestroyColliders();
 	bgvolcanos.DestroyColliders();
-	bgplatform.DestroyColliders();
 
+	RELEASE(bgplatform_sprite);
 	RELEASE(timer);
 	return true;
 }
@@ -169,15 +177,18 @@ void ModuleSceneDino::DrawScenario()
 	y = (int)bgvolcanos.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgvolcanos.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = (int)bgplatform.GetCurrentFrame().offset.x;
+	bgplatform_sprite->Update(App->dino->energy);
+
+	//todelete
+	/*x = (int)bgplatform.GetCurrentFrame().offset.x;
 	y = (int)bgplatform.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, (bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);
+	App->renderer->Blit(texture_scene_dino, x, y, (bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);*/
 
 	x = (int)bgflowers.GetCurrentFrame().offset.x;
 	y = (int)bgflowers.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
 
-	x = (int)girl.GetCurrentFrame().offset.x;
-	y = (int)girl.GetCurrentFrame().offset.y;
+	x = (int)bgplatform_sprite->position.x + (int)girl.GetCurrentFrame().offset.x;
+	y = (int)bgplatform_sprite->position.y + (int)girl.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (girl.GetCurrentFrame().section), SDL_FLIP_NONE);
 }

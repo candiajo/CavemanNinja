@@ -4,6 +4,8 @@
 #include <array>
 #include "Module.h"
 
+class Timer;
+
 class ModuleInput : public Module
 {
 public:
@@ -15,9 +17,12 @@ public:
 	bool CleanUp();
 	key_state GetKey(int id) const;
 	void debug();
+	void DeactivateInput(int time);
 
 private:	
 	std::array<key_state, MAX_KEYS> keyboard;
+	Timer* timer;
+	bool input_active;
 };
 
 

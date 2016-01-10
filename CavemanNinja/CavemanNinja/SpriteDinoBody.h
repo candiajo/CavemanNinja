@@ -12,9 +12,9 @@ class ModuleDino;
 class SpriteDinoBody : public Sprite
 {
 public:
-	SpriteDinoBody(bool active) : Sprite(active) {};
+	SpriteDinoBody() : Sprite(true) {};
 	SpriteDinoBody(SDL_Texture* sprite_texture);
-	~SpriteDinoBody() {};
+	~SpriteDinoBody();
 
 	bool Start();
 	update_status Update(Point head_position);

@@ -4,7 +4,7 @@
 #include "SuperHitState.h"
 #include "ModuleAudio.h"
 
-DinoState* AgressiveAttackState::update(ModuleDino& dino)
+DinoState* AgressiveAttackState::Update(ModuleDino& dino)
 {
 	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
 	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
@@ -33,7 +33,7 @@ DinoState* AgressiveAttackState::update(ModuleDino& dino)
 	return SAME_STATE;
 }
 
-void AgressiveAttackState::enter(ModuleDino& dino)
+void AgressiveAttackState::Enter(ModuleDino& dino)
 {
 	dino.SetCurrentAnimation(&dino.openmouth);
 	dino.openmouth.SetLastFrame();	// set dino open mouth (last frame of the animation)

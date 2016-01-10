@@ -2,6 +2,7 @@
 
 #include "SDL_scancode.h"
 #include "SDL.h"
+#include "Timer.h"
 
 //debug
 #include "Application.h"
@@ -26,12 +27,17 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+	input_active = true;
+	timer = new Timer();
+
 	return ret;
 }
 
 update_status ModuleInput::PreUpdate()
 {
 	static SDL_Event event;
+
+	if (!input_active && timer->TimeOver()) input_active = true;
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
@@ -76,12 +82,15 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 
+	RELEASE(timer);
+
 	return true;
 }
 
 key_state ModuleInput::GetKey(int key) const
 {
-	return keyboard[key];
+	if (input_active) return keyboard[key];
+	else return KEY_UP;
 }
 
 void ModuleInput::debug()
@@ -100,4 +109,11 @@ void ModuleInput::debug()
 		LOG("var2: %f \n", App->var2);
 		//LOG("var3: %f \n", App->var3);
 	}
+}
+
+void ModuleInput::DeactivateInput(int time)
+{
+	input_active = false;
+
+	timer->StartTimer(time);
 }

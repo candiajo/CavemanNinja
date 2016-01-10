@@ -147,3 +147,14 @@ void ModuleCollisions::LoadData()
 		collision_matrix[data.val2][data.val1] = data.yes_no;
 	}
 }
+
+bool ModuleCollisions::IsCollidingWithGround(Collider& me)
+{
+	for (auto& collider : colliders)
+	{
+		if ((collider->type == COLLIDER_GROUND || collider->type == COLLIDER_PLATFORM) && 
+			me.IsColliding(collider)) return true;
+	}
+
+	return false;
+}

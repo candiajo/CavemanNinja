@@ -44,7 +44,7 @@ public:
 	unsigned int fx_dino_stomps;
 	unsigned int fx_dino_tail;
 
-	SpriteDinoBody* spritedinobody;
+	SpriteDinoBody* dinobody_sprite;
 
 	bool player_too_near;		// true when the player gets under de head
 

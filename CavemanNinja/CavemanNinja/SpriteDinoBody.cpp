@@ -11,6 +11,12 @@ SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture) : Sprite(active)
 	this->texture_sprite = sprite_texture;
 }
 
+SpriteDinoBody::~SpriteDinoBody()
+{
+	dinobody_animation->DestroyColliders();
+	dinobodyground_animation->DestroyColliders();
+}
+
 bool SpriteDinoBody::Start()
 {
 	damage = 4;

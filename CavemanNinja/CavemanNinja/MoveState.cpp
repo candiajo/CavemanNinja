@@ -10,7 +10,7 @@ final_position(final_position),
 projectile(projectile)
 {}
 
-DinoState* MoveState::update(ModuleDino& dino)
+DinoState* MoveState::Update(ModuleDino& dino)
 {
 	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
 	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
@@ -58,7 +58,7 @@ DinoState* MoveState::update(ModuleDino& dino)
 	return SAME_STATE;						// still moving to final position
 }
 
-void MoveState::enter(ModuleDino& dino)
+void MoveState::Enter(ModuleDino& dino)
 {
 	if (dino.position.x > final_position)					// dino is going back
 	{

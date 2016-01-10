@@ -20,6 +20,7 @@ public:
 
 	void SetArm(ParticleArm* arm);
 	void StopArm();
+	Collider* GetGroundCollider();
 
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 

@@ -32,7 +32,8 @@ private:
 	axe_state first_state;
 	Timer* delay;
 	Animation* axe;
-	int distance_straight = 0;	// distance that the axe goes straight (then falls)
+	int distance_straight;	// distance that the axe goes straight (then falls)
+	particle_type hit_particle_type;
 };
 
 #endif //__PARTICLEAXE_H_

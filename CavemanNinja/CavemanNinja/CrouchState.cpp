@@ -9,7 +9,7 @@
 CrouchState::CrouchState()
 {}
 
-PlayerState* CrouchState::update(ModulePlayer& player)
+PlayerState* CrouchState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
@@ -54,7 +54,7 @@ PlayerState* CrouchState::update(ModulePlayer& player)
 
 }
 
-void CrouchState::enter(ModulePlayer& player)
+void CrouchState::Enter(ModulePlayer& player)
 {
 	player.is_crouch = true;
 	player.x_speed = 0;

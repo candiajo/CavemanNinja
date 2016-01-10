@@ -9,7 +9,7 @@ TiredState::~TiredState()
 	delete timer;
 }
 
-PlayerState* TiredState::update(ModulePlayer& player)
+PlayerState* TiredState::Update(ModulePlayer& player)
 {
 	if (timer->TimeOver())
 	{
@@ -20,7 +20,7 @@ PlayerState* TiredState::update(ModulePlayer& player)
 	return SAME_STATE;
 }
 
-void TiredState::enter(ModulePlayer& player)
+void TiredState::Enter(ModulePlayer& player)
 {
 	player.SetCurrentAnimation(&player.tired);
 	timer = new Timer(2000);

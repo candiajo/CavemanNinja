@@ -7,8 +7,8 @@ class MoveState : public DinoState
 {
 public:
 	MoveState(int final_position, particle_type projectile = NO_PARTICLE);
-	DinoState* update(ModuleDino& dino);
-	void enter(ModuleDino& dino);
+	DinoState* Update(ModuleDino& dino);
+	void Enter(ModuleDino& dino);
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:

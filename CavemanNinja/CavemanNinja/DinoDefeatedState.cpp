@@ -10,7 +10,7 @@ DinoDefeatedState::~DinoDefeatedState()
 	delete timer;
 }
 
-DinoState* DinoDefeatedState::update(ModuleDino& dino)
+DinoState* DinoDefeatedState::Update(ModuleDino& dino)
 {
 	switch (substate)
 	{
@@ -26,7 +26,7 @@ DinoState* DinoDefeatedState::update(ModuleDino& dino)
 		dino.position.y += Y_variation();
 		if (dino.position.x <= DINO_LEFT_LIMIT)
 		{
-			dino.spritedinobody->SetCurrentAnimation(dino.spritedinobody->dinobodyground_animation);
+			dino.dinobody_sprite->SetCurrentAnimation(dino.dinobody_sprite->dinobodyground_animation);
 			substate = DINO_DEFEATED_FALLING;
 		}
 		break;
@@ -53,12 +53,13 @@ DinoState* DinoDefeatedState::update(ModuleDino& dino)
 	return nullptr;
 }
 
-void DinoDefeatedState::enter(ModuleDino& dino)
+void DinoDefeatedState::Enter(ModuleDino& dino)
 {
 	dino.SetCurrentAnimation(&dino.superhit);
 	timer = new Timer(1000);
 	timer->StartTimer();
-	dino.spritedinobody->current_animation->speed = 0.2f;
+	dino.dinobody_sprite->current_animation->speed = 0.2f;
 	substate = DINO_DEFEATED_HIT;
 	App->audio->PlayFx(App->dino->fx_dino_defeated);
+	App->input->DeactivateInput(13000);
 }

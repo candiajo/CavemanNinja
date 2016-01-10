@@ -10,10 +10,12 @@
 WalkState::WalkState()
 {}
 
-PlayerState* WalkState::update(ModulePlayer& player)
+PlayerState* WalkState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+
+	CheckPosition(player);
 
 	if (player.is_tired)
 	{
@@ -66,7 +68,7 @@ PlayerState* WalkState::update(ModulePlayer& player)
 	return SAME_STATE;
 }
 
-void WalkState::enter(ModulePlayer& player)
+void WalkState::Enter(ModulePlayer& player)
 {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		player.direction = LEFT;
@@ -78,8 +80,7 @@ void WalkState::enter(ModulePlayer& player)
 		player.SetCurrentAnimation(&player.walk, ANGRY_VERSION);
 		RollArm(&player);
 	}
-	else
-		player.SetCurrentAnimation(&player.walk);
+	else player.SetCurrentAnimation(&player.walk);
 }
 
 void WalkState::OnCollision(Collider* my_collider, Collider* other_collider)
@@ -89,8 +90,22 @@ void WalkState::OnCollision(Collider* my_collider, Collider* other_collider)
 	ModulePlayer* player = dynamic_cast<ModulePlayer*>(my_collider->callback);
 
 	if (my_collider->type == COLLIDER_DETECT_GROUND &&
+		other_collider->type == COLLIDER_GROUND || other_collider->type == COLLIDER_PLATFORM)
+	{
+		while (my_collider->IsColliding(other_collider))
+		{
+			player->position.y -= 1;
+			dynamic_cast<Sprite*>(player)->PlaceColliders();
+		}
+	}
+
+	// todelete
+	if (my_collider->type == COLLIDER_DETECT_GROUND &&
 		other_collider->type == COLLIDER_BORDER)
 	{
 		event = WALK_OFF_PLATFORM;
 	}
 }
+
+
+

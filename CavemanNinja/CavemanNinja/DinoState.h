@@ -39,15 +39,15 @@ class DinoState
 {
 public:
 	virtual ~DinoState() {};
-	virtual DinoState* update(ModuleDino& dino) = 0;
-	virtual void enter(ModuleDino& dino) = 0;
+	virtual DinoState* Update(ModuleDino& dino) = 0;
+	virtual void Enter(ModuleDino& dino) = 0;
 	virtual void OnCollision(Collider* my_collider, Collider* other_collider);
 
 protected:
 	game_events event = NO_EVENT;
 	dino_substate substate;
 
-	void Shot(ModuleDino* dino, particle_type projectile);
+	void ThrowParticle(ModuleDino* dino, particle_type projectile);
 	float Y_variation();
 
 	float total_y_variation = 0.0f;

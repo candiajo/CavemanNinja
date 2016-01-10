@@ -8,8 +8,8 @@ class ShotupState : public PlayerState
 public:
 	ShotupState();
 
-	PlayerState* update(ModulePlayer& player);
-	void enter(ModulePlayer& player);
+	PlayerState* Update(ModulePlayer& player);
+	void Enter(ModulePlayer& player);
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 };
 

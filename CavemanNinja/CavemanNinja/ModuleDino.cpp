@@ -19,12 +19,12 @@ bool ModuleDino::Start()
 
 	texture_sprite = App->textures->Load(IMG_DINO);
 
-	spritedinobody = new SpriteDinoBody(texture_sprite);
+	dinobody_sprite = new SpriteDinoBody(texture_sprite);
 
 	LoadData();
 
 	state = new AgressiveAttackState();
-	state->enter(*this);
+	state->Enter(*this);
 
 	position.x = -120;
 	position.y = 15;
@@ -38,7 +38,7 @@ bool ModuleDino::Start()
 	time_between_blinks = new Timer(TIME_BETWEEN_BLINKS);
 	time_between_blinks->StartTimer();
 
-	spritedinobody->Start();
+	dinobody_sprite->Start();
 
 	return true;
 }
@@ -46,14 +46,14 @@ bool ModuleDino::Start()
 update_status ModuleDino::Update()
 {
 	SDL_Rect* frame_section;
-	DinoState* temp_state = state->update(*this);
+	DinoState* temp_state = state->Update(*this);
 
 	if (temp_state != nullptr)
 	{
 		delete state;
 		state = temp_state;
 
-		state->enter(*this);
+		state->Enter(*this);
 	}
 
 	current_frame = &(*current_animation).GetCurrentFrame();
@@ -74,7 +74,7 @@ update_status ModuleDino::Update()
 	else if (time_between_blinks->TimeOver()) CloseEye(DINO_BLINK);
 	
 	// draw head over body
-	spritedinobody->Update(position);
+	dinobody_sprite->Update(position);
 	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, frame_section, SDL_FLIP_NONE);
 
 	return UPDATE_CONTINUE;
@@ -98,10 +98,10 @@ bool ModuleDino::CleanUp()
 	defeated.DestroyColliders();
 	eyeclosed1.DestroyColliders();
 	eyeclosed2.DestroyColliders();
-	dinobody.DestroyColliders();
-	dinobodyground.DestroyColliders();
+	// todelete dinobody.DestroyColliders();
+	// todelete dinobodyground.DestroyColliders();
 
-	if (spritedinobody != nullptr) delete spritedinobody;
+	RELEASE(dinobody_sprite);
 	
 	RELEASE(invulnerable_time);
 	RELEASE(time_between_blinks);
@@ -130,8 +130,8 @@ void ModuleDino::LoadData()
 		else if (name == "eyeclosed1") StoreData(info, data, eyeclosed1, this);
 		else if (name == "eyeclosed2") StoreData(info, data, eyeclosed2, this);
 
-		else if (name == "dinobody") StoreData(info, data, dinobody, spritedinobody);
-		else if (name == "dinobodyground") StoreData(info, data, dinobodyground, spritedinobody);
+		else if (name == "dinobody") StoreData(info, data, dinobody, dinobody_sprite);
+		else if (name == "dinobodyground") StoreData(info, data, dinobodyground, dinobody_sprite);
 	}
 
 	fx_dino_defeated = App->audio->LoadFx(FX_DINO_DEFEATED);

@@ -1,3 +1,5 @@
+#include "ModuleCollisions.h"
+#include "Application.h"
 #include "TiredState.h"
 #include "Timer.h"
 #include "IdleState.h"
@@ -8,7 +10,6 @@
 #include "ShotWeaponState.h"
 #include "AttackedState.h"
 #include "Globals.h"
-//#include "SDL.h"
 
 IdleState::IdleState() : PlayerState()
 {}
@@ -18,10 +19,12 @@ IdleState::~IdleState()
 	delete timer;
 }
 
-PlayerState* IdleState::update(ModulePlayer& player)
+PlayerState* IdleState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+
+	CheckPosition(player);
 
 	if (player.is_tired) return new TiredState();
 
@@ -75,7 +78,7 @@ PlayerState* IdleState::update(ModulePlayer& player)
 	return SAME_STATE;
 }
 
-void IdleState::enter(ModulePlayer& player)
+void IdleState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.y_speed = 0;
@@ -88,6 +91,15 @@ void IdleState::enter(ModulePlayer& player)
 
 	timer = new Timer(3000);
 	timer->StartTimer();
+
+	// todelete
+	//Collider* my_collider = player.GetGroundCollider();
+
+	//while (App->collisions->IsCollidingWithGround(*my_collider))
+	//{
+	//	player.position.y--;
+	//	player.PlaceColliders();
+	//}
 }
 
 void IdleState::OnCollision(Collider* my_collider, Collider* other_collider)

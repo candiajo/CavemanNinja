@@ -22,8 +22,8 @@ Application::Application()
 	modules.push_back(collisions = new ModuleCollisions());
 	modules.push_back(begin_level = new ModuleBeginLevel());
 
-	modules.push_back(scene_title = new ModuleSceneTitle(false));
-	modules.push_back(scene_dino = new ModuleSceneDino(true));
+	modules.push_back(scene_title = new ModuleSceneTitle(true));
+	modules.push_back(scene_dino = new ModuleSceneDino(false));
 
 	modules.push_back(player1 = new ModulePlayer(false));
 	modules.push_back(particles = new ModuleParticles(false));

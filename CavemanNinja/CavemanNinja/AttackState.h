@@ -10,8 +10,8 @@ class AttackState : public DinoState
 public:
 	AttackState(particle_type projectile = FAKE_ATTACK) : projectile(projectile) {};
 	~AttackState();
-	DinoState* update(ModuleDino& dino);
-	void enter(ModuleDino& dino);
+	DinoState* Update(ModuleDino& dino);
+	void Enter(ModuleDino& dino);
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:

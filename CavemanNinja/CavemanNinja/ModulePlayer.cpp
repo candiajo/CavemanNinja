@@ -22,12 +22,10 @@ bool ModulePlayer::Start()
 	LoadData();
 	
 	state = new JumpState(FALLING);
-	state->enter(*this);
+	state->Enter(*this);
 
 	position.x = 50;
 	position.y = 0;
-
-	energy = PLAYER_MAX_ENERGY;
 
 	invulnerable_time = new Timer();
 	
@@ -47,14 +45,14 @@ bool ModulePlayer::Start()
 
 update_status ModulePlayer::Update()
 {
-	PlayerState* temp_state = state->update(*this);
+	PlayerState* temp_state = state->Update(*this);
 
 	if (temp_state != nullptr)
 	{
 		delete state;
 		state = temp_state;
 
-		state->enter(*this);
+		state->Enter(*this);
 	}
 
 	current_frame = &(*current_animation).GetCurrentFrame();
@@ -178,4 +176,21 @@ void ModulePlayer::SetArm(ParticleArm* arm)
 void ModulePlayer::StopArm()
 {
 	if (arm != nullptr) arm->state = ARM_STOP;
+}
+
+// returns the COLLIDER_DETECT_GROUND of the player
+// looks in animation and frame colliders
+// animation collider has preference
+// nullptr if no COLLIDER_DETECT_GROUND found
+Collider* ModulePlayer::GetGroundCollider()
+{
+	for (auto& collider : current_animation->colliders)
+		if (collider->type == COLLIDER_DETECT_GROUND) return collider;
+
+	for (auto& frame : current_animation->frames)
+		for (auto& collider : frame.colliders)
+			if (collider->type == COLLIDER_DETECT_GROUND) return collider;
+
+	LOG ("No COLLIDER_DETECT_GROUND found")
+	return (nullptr);
 }

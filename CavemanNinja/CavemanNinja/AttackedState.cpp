@@ -10,7 +10,7 @@ AttackedState::~AttackedState()
 	delete timer;
 }
 
-PlayerState* AttackedState::update(ModulePlayer& player)
+PlayerState* AttackedState::Update(ModulePlayer& player)
 {
 	switch (substate)
 	{
@@ -39,7 +39,7 @@ PlayerState* AttackedState::update(ModulePlayer& player)
 	return SAME_STATE;
 }
 
-void AttackedState::enter(ModulePlayer& player)
+void AttackedState::Enter(ModulePlayer& player)
 {
 	timer = new Timer(600);
 	timer->StartTimer();
@@ -68,6 +68,8 @@ void AttackedState::enter(ModulePlayer& player)
 	player.is_hit = true;
 	player.StopArm();
 	App->audio->PlayFx(App->player1->fx_player_hurt);
+
+	ThrowParticle(&player, HIT);
 }
 
 void AttackedState::OnCollision(Collider* my_collider, Collider* other_collider)

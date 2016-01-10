@@ -4,7 +4,7 @@
 #include "DinoDefeatedState.h"
 #include "SuperHitState.h"
 
-DinoState* AttackState::update(ModuleDino& dino)
+DinoState* AttackState::Update(ModuleDino& dino)
 {
 	if (event == DINO_IS_DEFEATED) return new DinoDefeatedState();
 	else if (event == DINO_GET_SUPERHIT) return new SuperHitState();
@@ -30,7 +30,7 @@ DinoState* AttackState::update(ModuleDino& dino)
 		if (timer->TimeOver()) substate = PRE_DINO_CLOSING_MOUTH;
 		break;
 	case PRE_DINO_SHOT:
-		Shot(&dino, projectile);
+		ThrowParticle(&dino, projectile);
 		substate = DINO_SHOT;
 		break;
 	case DINO_SHOT:
@@ -56,7 +56,7 @@ AttackState::~AttackState()
 	delete timer;
 }
 
-void AttackState::enter(ModuleDino& dino)
+void AttackState::Enter(ModuleDino& dino)
 {
 	substate = PRE_DINO_OPENING_MOUTH;
 }

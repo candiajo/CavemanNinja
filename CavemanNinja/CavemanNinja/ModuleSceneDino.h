@@ -16,6 +16,8 @@ enum scene_state
 	CONGRATULATIONS
 };
 
+class SpritePlatform;
+
 class ModuleSceneDino : public Module
 {
 public:
@@ -30,17 +32,21 @@ public:
 	void DrawScenario();
 
 	bool dino_defeated;
-	//debug bool player_defeated = false;
+	bool player_defeated;
 	SDL_Texture* texture_scene_dino = nullptr;
+
+	SpritePlatform* bgplatform_sprite;
 
 private:
 	void LoadData();
 	Animation bgvolcanos;
 	Animation bgflowers;
-	Animation bgplatform;
 	Animation girl;
 	Animation gameover;
 	Animation congratulations;
+	
+	Animation bgplatform_animation;
+	
 	scene_state state;
 
 	Timer* timer;
