@@ -12,7 +12,7 @@ void PlayerState::OnCollision(Collider* my_collider, Collider* other_collider)
 
 	if (!player->invulnerable)
 	{
-		if (my_collider->type == COLLIDER_PLAYER_BODY && other_collider->type != COLLIDER_PROXIMITY)
+		if (my_collider->type == COLLIDER_PLAYER_BODY && other_collider->type != COLLIDER_PROXIMITY && other_collider->type != COLLIDER_ITEM)
 		{
 			Sprite* enemy = dynamic_cast<Sprite*>(other_collider->callback);
 
@@ -24,12 +24,12 @@ void PlayerState::OnCollision(Collider* my_collider, Collider* other_collider)
 	}
 }
 
-void PlayerState::ThrowParticle(ModulePlayer* player, particle_type weapon)
+void PlayerState::ThrowParticle(ModulePlayer* player, particle_type weapon) const
 {
 	App->particles->AddParticle(weapon, dynamic_cast<Module*>(player));
 }
 
-void PlayerState::RollArm(ModulePlayer* player)
+void PlayerState::RollArm(ModulePlayer* player) const
 {
 	if (player->rolling_arm == false)
 		App->particles->AddParticle(ARM, dynamic_cast<Module*>(player));

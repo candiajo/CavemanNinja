@@ -65,7 +65,7 @@ void MoveState::Enter(ModuleDino& dino)
 		substate = DINO_MOVING_BACK;
 		dino.SetCurrentAnimation(&dino.closemouth);
 		dino.closemouth.SetLastFrame();						// set closed mouth frame
-		channel = App->audio->PlayFx(dino.fx_dino_stomps, NO_REPEAT);
+		channel = App->audio->PlayFx(dino.fx_dino_stomps);
 
 	}
 	else if (dino.position.x < final_position)				// dino is going forward
@@ -73,7 +73,7 @@ void MoveState::Enter(ModuleDino& dino)
 		substate = DINO_MOVING_FORWARD;
 		dino.SetCurrentAnimation(&dino.semiopenmouth);
 		dino.semiopenmouth.SetLastFrame();					// set dino semi open mouth frame (last frame of the animation)
-		channel = App->audio->PlayFx(dino.fx_dino_stomps, NO_REPEAT);
+		channel = App->audio->PlayFx(dino.fx_dino_stomps);
 	}
 	else
 	{

@@ -37,7 +37,7 @@ public:
 	bool started;
 
 protected:
-	void StoreData(info_type info, GenericData& data, Animation& animation, Module* module);
+	void StoreData(info_type const info, GenericData& data, Animation& animation, Module* module);
 
 	bool active;
 };

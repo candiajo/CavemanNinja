@@ -18,8 +18,8 @@ public:
 protected:
 	game_events event;
 
-	void ThrowParticle(ModulePlayer* player, particle_type weapon);
-	void RollArm(ModulePlayer* player);
+	void ThrowParticle(ModulePlayer* player, particle_type weapon) const;
+	void RollArm(ModulePlayer* player) const;
 };
 
 #endif //__PLAYERSTATE_H__

@@ -11,8 +11,8 @@ public:
 	~Timer();
 
 	void StartTimer(int time = 0);
-	bool TimeOver();
-	int ElapsedTime();
+	bool TimeOver() const;
+	int ElapsedTime() const;
 
 private:
 	int start_time;

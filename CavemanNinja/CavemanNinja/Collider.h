@@ -14,7 +14,7 @@ public:
 	Collider(SDL_Rect rectangle, Point& offset, int frame_w, collider_type type, Module* callback);
 	void SetPos(int x, int y, bool can_flip = false);
 	bool IsColliding(Collider* collider) const;
-	Point GetOffset();
+	Point GetOffset() const;
 
 	SDL_Rect rect;
 	bool to_detach = false;		// only detach from the list

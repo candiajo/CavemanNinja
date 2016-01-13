@@ -8,7 +8,7 @@ class Timer;
 class IdleState : public PlayerState
 {
 public:
-	IdleState();
+	IdleState() {};
 	~IdleState();
 
 	PlayerState* Update(ModulePlayer& player);

@@ -7,7 +7,7 @@
 
 DinoDefeatedState::~DinoDefeatedState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 DinoState* DinoDefeatedState::Update(ModuleDino& dino)
@@ -50,7 +50,7 @@ DinoState* DinoDefeatedState::Update(ModuleDino& dino)
 	case DINO_STOP:
 		App->scene_dino->dino_defeated = true;
 	}
-	return nullptr;
+	return SAME_STATE;
 }
 
 void DinoDefeatedState::Enter(ModuleDino& dino)

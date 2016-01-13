@@ -53,7 +53,7 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = NULL, SDL_RendererFlip flip, float degrees) const
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -81,7 +81,7 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = 
 	return ret;
 }
 
-bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) const
 {
 	bool ret = true;
 

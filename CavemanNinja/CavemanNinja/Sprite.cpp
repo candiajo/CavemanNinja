@@ -63,7 +63,7 @@ void Sprite::RefreshColliders()
 }
 
 // moves the frame and animation colliders to the sprite position (+offset)
-void Sprite::PlaceColliders()
+void Sprite::PlaceColliders() const
 {
 	if (current_frame != nullptr)
 		for (auto& collider : (*current_frame).colliders)

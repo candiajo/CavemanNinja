@@ -6,7 +6,7 @@
 
 TiredState::~TiredState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 PlayerState* TiredState::Update(ModulePlayer& player)

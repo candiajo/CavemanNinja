@@ -7,14 +7,15 @@ class ShotWeaponState : public PlayerState
 {
 public:
 	ShotWeaponState() {};
-	ShotWeaponState::ShotWeaponState(particle_type weapon) : weapon(weapon) {}
+	ShotWeaponState(weapon_subtype weapon_subtype) : weapon_subtype(weapon_subtype) {}
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-	particle_type weapon;
+// todelete	particle_type weapon;
+	weapon_subtype weapon_subtype;
 };
 
 #endif //__SHOTWEAPONSTATE_H__

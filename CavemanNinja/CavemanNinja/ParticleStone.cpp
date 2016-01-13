@@ -38,33 +38,35 @@ ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(t
 
 	timer = new Timer(3000);
 	timer->StartTimer();
-
 }
 
 ParticleStone::~ParticleStone()
 {
-	delete rollingstone;
-	delete breakingstone;
-	delete timer;
+	RELEASE(rollingstone);
+	RELEASE(breakingstone);
+	RELEASE(timer);
 }
 
 void ParticleStone::ParticleUpdate()
 {
-	if (timer->TimeOver() ||
-		(state == STONE_BREAKING && breakingstone->Finished()))
-		to_destroy = true;
+	if (timer->TimeOver()) to_destroy = true;
 	else
 	{
-		if (state == STONE_BOUNCING)
+		switch (state)
 		{
-			if (y_speed > -0.5 && y_speed < 0) y_speed = 0.5;
-			if (y_speed < 0) y_speed *= 0.9f;
-			else y_speed *= 1.05f;
-
+		case STONE_BOUNCING:
+			y_speed += 0.1f;
 			position.y += y_speed;
-		}
+			//no break;
+		
+		case STONE_ROLLING:
+			position.x += x_speed;
+			break;
 
-		if (state != STONE_BREAKING) position.x += x_speed;
+		case STONE_BREAKING:
+			if (breakingstone->Finished()) to_destroy = true;
+			break;
+		}
 
 		current_frame = &(*current_animation).GetCurrentFrame();
 		PlaceColliders();
@@ -86,8 +88,8 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 	{
 		while (my_collider->IsColliding(other_collider))
 		{
-        	my_collider->rect.y -= 1;
-			position.y -= (1.0f / (float)SCREEN_SIZE);
+			position.y--;
+			PlaceColliders();
 		}
 
 		if (y_speed > 1)
@@ -106,7 +108,7 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 		{
 			energy -= weapon->damage;
 			weapon->particle_flag = INNOCUOUS;
-			App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
+			App->audio->PlayFx(fx_weapon_hit);
 			if (energy <= 0)
 			{
 				state = STONE_BREAKING;
@@ -114,12 +116,16 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 				SetCurrentAnimation(breakingstone);
 			}
 		}
+
+		if (weapon->subtype == SUPER) App->particles->AddParticle(WOMP, weapon);
+		else if (weapon->subtype == VERTICAL) App->particles->AddParticle(WAM_V, weapon);
+		else App->particles->AddParticle(WAM_H, weapon); // HORIZONTAL or CROUCH
 	}
 	else if (other_collider->type == COLLIDER_PLAYER_ATTACK)
 	{
 		state = STONE_BREAKING;
 		App->player1->score += 200;
-		App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
+		App->audio->PlayFx(fx_weapon_hit);
 		SetCurrentAnimation(breakingstone);
 	}
 }

@@ -34,7 +34,7 @@ bool Collider::IsColliding(Collider* collider) const
 	return SDL_IntersectRect(&rect, &(collider->rect), &discard);
 }
 
-Point Collider::GetOffset()
+Point Collider::GetOffset() const
 {
 	Point temp_offset = offset;
 	if (dynamic_cast<Sprite*>(callback)->direction == LEFT)

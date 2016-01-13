@@ -7,9 +7,6 @@
 #include "ShotWeaponState.h"
 #include "AttackedState.h"
 
-LookUpState::LookUpState()
-{}
-
 PlayerState* LookUpState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
@@ -19,32 +16,32 @@ PlayerState* LookUpState::Update(ModulePlayer& player)
 
 	if (player.is_tired) return new TiredState();
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough)
-			return new ShotWeaponState(SUPER_AXE);
+			return new ShotWeaponState(SUPER);
 		else
 			player.SetCurrentAnimation(player.current_animation);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_UP)
+	if (App->input->GetKey(UP_BUTTON) == KEY_UP)
 	{
 		return new IdleState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(JUMP_BUTTON) == KEY_DOWN)
 	{
 		return new JumpState(SUPERJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_DOWN)
 	{
 		return new ShotupState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
-		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	else if (App->input->GetKey(LEFT_BUTTON) == KEY_REPEAT ||
+		App->input->GetKey(RIGHT_BUTTON) == KEY_REPEAT)
 	{
 		return new WalkState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_UP)
 	{
 		player.SetCurrentAnimation(&player.lookup);
 	}
@@ -54,7 +51,7 @@ PlayerState* LookUpState::Update(ModulePlayer& player)
 void LookUpState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_REPEAT)
 	{
 		RollArm(&player);
 		player.SetCurrentAnimation(&player.lookup, ANGRY_VERSION);

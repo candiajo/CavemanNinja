@@ -11,12 +11,9 @@
 #include "AttackedState.h"
 #include "Globals.h"
 
-IdleState::IdleState() : PlayerState()
-{}
-
 IdleState::~IdleState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 PlayerState* IdleState::Update(ModulePlayer& player)
@@ -40,39 +37,39 @@ PlayerState* IdleState::Update(ModulePlayer& player)
 		timer->StartTimer(3000);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough)
-			return new ShotWeaponState(SUPER_AXE);
+			return new ShotWeaponState(SUPER);
 		else
 			player.SetCurrentAnimation(player.current_animation);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(DOWN_BUTTON) == KEY_REPEAT)
 	{
 		return new CrouchState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
-		     App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	else if (App->input->GetKey(LEFT_BUTTON) == KEY_REPEAT ||
+		     App->input->GetKey(RIGHT_BUTTON) == KEY_REPEAT)
 	{
 		return new WalkState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN &&
-		     App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	else if (App->input->GetKey(JUMP_BUTTON) == KEY_DOWN &&
+		     App->input->GetKey(UP_BUTTON) == KEY_REPEAT)
 	{
 		return new JumpState(SUPERJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(JUMP_BUTTON) == KEY_DOWN)
 	{
 		return new JumpState(NORMALJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	else if (App->input->GetKey(UP_BUTTON) == KEY_REPEAT)
 	{
 		return new LookUpState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_DOWN)
 	{
-		return new ShotWeaponState(AXE_HORZ);
+		return new ShotWeaponState(HORIZONTAL);
 	}
 
 	return SAME_STATE;
@@ -82,7 +79,7 @@ void IdleState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.y_speed = 0;
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_REPEAT)
 	{
 		player.SetCurrentAnimation(&player.idle, ANGRY_VERSION);
 		RollArm(&player);
@@ -91,15 +88,6 @@ void IdleState::Enter(ModulePlayer& player)
 
 	timer = new Timer(3000);
 	timer->StartTimer();
-
-	// todelete
-	//Collider* my_collider = player.GetGroundCollider();
-
-	//while (App->collisions->IsCollidingWithGround(*my_collider))
-	//{
-	//	player.position.y--;
-	//	player.PlaceColliders();
-	//}
 }
 
 void IdleState::OnCollision(Collider* my_collider, Collider* other_collider)

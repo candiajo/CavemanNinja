@@ -5,7 +5,6 @@
 #include "ModuleRender.h"
 #include "Application.h"
 
-
 SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture) : Sprite(active)
 {
 	this->texture_sprite = sprite_texture;
@@ -31,15 +30,15 @@ bool SpriteDinoBody::Start()
 
 update_status SpriteDinoBody::Update(Point head_position)
 {
-	position = head_position;
 	current_frame = &(*current_animation).GetCurrentFrame();
 	
-	position.x += BODY_X_OFFSET;
-	position.y += BODY_Y_OFFSET;
+	position = head_position;
+	position.x += current_frame->offset.x;
+	position.y += current_frame->offset.y;
 
 	PlaceColliders();
-	position = head_position;
-	App->renderer->Blit(texture_sprite, (int)position.x + BODY_X_OFFSET, (int)position.y + BODY_Y_OFFSET, (*current_frame).section, SDL_FLIP_NONE);
+
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, (*current_frame).section, SDL_FLIP_NONE);
 
 	return UPDATE_CONTINUE;
 }

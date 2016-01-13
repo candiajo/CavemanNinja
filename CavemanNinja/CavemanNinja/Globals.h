@@ -10,19 +10,60 @@ typedef unsigned int uint;
 typedef unsigned char uchar;
 typedef unsigned __int32 uint32;
 
+enum weapon_type
+{
+	AXE = 0,
+	WHEEL,
+	BONE,
+	TUSK,
+	BOOMERANG
+};
+
+enum weapon_subtype
+{
+	HORIZONTAL,
+	VERTICAL,
+	SUPER,
+	CROUCH
+};
+
 enum particle_type
 {
-	HIT = 0,
+	HIT_PLAYER = 0,
 	KUP = 1,
 	WAM_H = 2,
 	WAM_V = 3,
 	WOMP = 4,
+	HIT_DINO = 5,
+
+	ITEM_WHEEL,
+	ITEM_BONE,
+	ITEM_BOOMERANG,
+	ITEM_TUSK,
+
 	AXE_HORZ,
 	AXE_VERT,
 	AXE_CROUCH,
 	SUPER_AXE,
+
+	WHEEL_HORZ,
+	WHEEL_VERT,
+	WHEEL_CROUCH,
+	SUPER_WHEEL,
+
+	BONE_HORZ,
+	BONE_VERT,
+	BONE_CROUCH,
+	SUPER_BONE,
+
+	TUSK_HORZ,
+	TUSK_VERT,
+	TUSK_CROUCH,
+	SUPER_TUSK,
+
 	SLOW_STONE,
 	FAST_STONE,
+
 	ENEMY,
 	FAKE_ATTACK,
 	DINO_TAIL,
@@ -84,8 +125,8 @@ enum collider_type
 	COLLIDER_PLAYER_SHOT = 6,	// throwable weapon
 	COLLIDER_ENEMY = 7,			// where enemies can get damage and cause damage to the player
 	COLLIDER_DINO = 8,			// for the dinosaur's head
-	COLLIDER_BORDER = 9,		// for detecting platform borders and fall down
-	COLLIDER_PROXIMITY = 10,	// for detecting if the player is too near from dino (in that case, the dino attacks with it's tail)
+	COLLIDER_PROXIMITY = 9,		// for detecting if the player is too near from dino (in that case, the dino attacks with it's tail)
+	COLLIDER_ITEM = 10,			// weapon items
 	NUM_COLLIDERS				// 
 };
 
@@ -138,6 +179,7 @@ void log(const char file[], int line, const char* format, ...);
 #define MAX_KEYS 300
 #define PRESSED 1
 #define SAME_STATE nullptr
+#define AVAILABLE_WEAPONS 4
 
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 240
@@ -179,6 +221,7 @@ void log(const char file[], int line, const char* format, ...);
 #define FX_DINO_ROAR "Content\\Audio\\dino roar.wav"
 #define FX_DINO_STOPMS "Content\\Audio\\dino stomps.wav"
 #define FX_DINO_TAIL "Content\\Audio\\dino tail.wav"
+#define FX_BEGIN_PLAY "Content\\Audio\\begin play.wav"
 
 #define	LEFT_LIMIT -25
 #define	RIGHT_LIMIT 195
@@ -186,9 +229,6 @@ void log(const char file[], int line, const char* format, ...);
 #define DINO_HIT 800
 
 #define DEFAULT_X_SPEED 1
-#define NORMAL_JUMP_SPEED -6
-#define SUPER_JUMP_SPEED -8
-#define DOWN_JUMP_SPEED 0.4
 #define PLAYER_MAX_ENERGY 18
 #define DINO_MAX_ENERGY 13
 
@@ -196,6 +236,13 @@ void log(const char file[], int line, const char* format, ...);
 #define ANGRY_VERSION true
 #define CLOSED_EYE_VERSION true
 #define NO_REPEAT 0
+
+#define JUMP_BUTTON SDL_SCANCODE_X
+#define UP_BUTTON SDL_SCANCODE_UP
+#define DOWN_BUTTON SDL_SCANCODE_DOWN
+#define LEFT_BUTTON SDL_SCANCODE_LEFT
+#define RIGHT_BUTTON SDL_SCANCODE_RIGHT
+#define FIRE_BUTTON SDL_SCANCODE_Z
 
 #define RELEASE( x ) \
     { \
@@ -207,14 +254,3 @@ void log(const char file[], int line, const char* format, ...);
     }
 
 #endif //__GLOBALS_H__
-
-/* DEBUG - TODELETE
-#include "ModuleInput.h"
-
-if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) x++;
-if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) x--;
-if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) y--;
-if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) y++;
-LOG("x: %d \n", x);
-LOG("y: %d \n", y);
-*/

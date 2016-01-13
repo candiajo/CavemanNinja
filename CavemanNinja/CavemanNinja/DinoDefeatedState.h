@@ -11,7 +11,7 @@ class Timer;
 class DinoDefeatedState : public DinoState
 {
 public:
-	DinoDefeatedState(){};
+	DinoDefeatedState() {};
 	~DinoDefeatedState();
 
 	DinoState* Update(ModuleDino& dino);

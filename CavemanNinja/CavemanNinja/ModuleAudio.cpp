@@ -11,10 +11,6 @@ using namespace std;
 ModuleAudio::ModuleAudio( bool start_enabled) : Module( start_enabled)
 {}
 
-// Destructor
-ModuleAudio::~ModuleAudio()
-{}
-
 // Called before render is available
 bool ModuleAudio::Init()
 {
@@ -119,7 +115,7 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 	return ret;
 }
 
-void ModuleAudio::StopMusic()
+void ModuleAudio::StopMusic() const
 {
 	Mix_HaltMusic();
 }
@@ -144,7 +140,7 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 }
 
 // Play WAV
-int ModuleAudio::PlayFx(unsigned int id, int repeat)
+int ModuleAudio::PlayFx(unsigned int id, int repeat) const
 {
 	if(id < fx.size())
 	{
@@ -153,7 +149,7 @@ int ModuleAudio::PlayFx(unsigned int id, int repeat)
 	else return NULL;
 }
 
-void ModuleAudio::StopFxChannel(int channel)
+void ModuleAudio::StopFxChannel(int channel) const
 {
 	Mix_HaltChannel(channel);
 }

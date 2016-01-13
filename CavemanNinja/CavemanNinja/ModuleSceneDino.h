@@ -22,7 +22,6 @@ class ModuleSceneDino : public Module
 {
 public:
 	ModuleSceneDino(bool active) : Module(active) {};
-	~ModuleSceneDino(){};
 
 	bool Start();
 	update_status Update();
@@ -30,6 +29,7 @@ public:
 	bool CleanUp();
 	void NextScene(Module* scene);
 	void DrawScenario();
+	const particle_type GetRandomItem() const;
 
 	bool dino_defeated;
 	bool player_defeated;
@@ -44,9 +44,8 @@ private:
 	Animation girl;
 	Animation gameover;
 	Animation congratulations;
-	
 	Animation bgplatform_animation;
-	
+
 	scene_state state;
 
 	Timer* timer;

@@ -24,15 +24,15 @@ ParticleArm::ParticleArm(particle_type type, Sprite* generator) : Particle(type,
 	arm_slow = new Animation(App->particles->armslow_animation, this);
 	arm_fast = new Animation(App->particles->armfast_animation, this);
 
-	channel = App->audio->PlayFx(fx_charging, NO_REPEAT);
+	channel = App->audio->PlayFx(fx_charging);
 	SetCurrentAnimation(arm_slow);
 }
 
 ParticleArm::~ParticleArm()
 {
-	delete arm_slow;
-	delete arm_fast;
-	delete timer;
+	RELEASE(arm_slow);
+	RELEASE(arm_fast);
+	RELEASE(timer);
 }
 
 void ParticleArm::ParticleUpdate()
@@ -74,7 +74,7 @@ void ParticleArm::ParticleUpdate()
 		break;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP) to_destroy = true;
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP) to_destroy = true;
 	
 	if (to_destroy)
 	{
@@ -86,20 +86,19 @@ void ParticleArm::ParticleUpdate()
 
 	direction = player->direction;
 
-	Point final_position;
-	final_position.x = player->position.x;
-	final_position.y = player->position.y;
+	position.x = player->position.x;
+	position.y = player->position.y;
 
 	if (player->is_crouch)
 	{
-		final_position.y += CROUCH_OFFSET_Y;
-		if (direction == RIGHT)	final_position.x += CROUCH_OFFSET_X;
-		else					final_position.x -= CROUCH_OFFSET_X;
+		position.y += CROUCH_OFFSET_Y;
+		if (direction == RIGHT)	position.x += CROUCH_OFFSET_X;
+		else					position.x -= CROUCH_OFFSET_X;
 	}
 	else if (player->is_jumping)
-		final_position.y += JUMP_OFFSET_Y;
-	
+		position.y += JUMP_OFFSET_Y;
+
 	current_frame = &(*current_animation).GetCurrentFrame();
-	
-	App->renderer->Blit(texture_sprite, (int)final_position.x, (int)final_position.y, current_frame->section, Flip());
+
+	App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, Flip());
 }

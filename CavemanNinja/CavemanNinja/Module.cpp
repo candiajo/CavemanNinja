@@ -67,7 +67,7 @@ bool Module::CleanUp()
 void Module::OnCollision(Collider* a, Collider* b)
 {}
 
-void Module::StoreData(info_type info, GenericData& data, Animation& animation, Module* module)
+void Module::StoreData(const info_type info, GenericData& data, Animation& animation, Module* module)
 {
 	FrameInfo frame;
 	Point offset;

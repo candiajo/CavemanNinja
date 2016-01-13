@@ -9,7 +9,6 @@ enum jump_substate
 	MICROJUMP,
 	NORMALJUMP,
 	SUPERJUMP,
-	PRE_DOWNJUMP,
 	DOWNJUMP,
 	PRE_FALLING,
 	FALLING,
@@ -23,8 +22,8 @@ enum jump_substate
 class JumpState : public PlayerState
 {
 public:
-	JumpState();
-	JumpState(jump_substate substate);
+	JumpState() {};
+	JumpState(jump_substate substate) : substate(substate) {};
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);

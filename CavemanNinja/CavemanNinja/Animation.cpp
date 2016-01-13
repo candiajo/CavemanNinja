@@ -92,7 +92,7 @@ void Animation::SetLastFrame()
 	current_frame = (float)frames.size() - 1;
 }
 
-bool Animation::Finished()
+bool Animation::Finished() const
 {
 	return loops > 0;
 }
@@ -111,7 +111,7 @@ void Animation::DestroyColliders()
 	for (auto& collider : colliders)
 	{
 		if (collider->OnList) collider->to_destroy = true;
-		else delete collider;
+		else RELEASE(collider);
 	}
 
 	// colliders in all frames
@@ -119,7 +119,7 @@ void Animation::DestroyColliders()
 		for (auto& collider : frame.colliders)
 		{
 			if (collider->OnList) collider->to_destroy = true;
-			else delete collider;
+			else RELEASE(collider);
 		}
 
 	colliders.clear();

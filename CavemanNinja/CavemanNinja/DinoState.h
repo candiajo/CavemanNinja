@@ -47,7 +47,8 @@ protected:
 	game_events event = NO_EVENT;
 	dino_substate substate;
 
-	void ThrowParticle(ModuleDino* dino, particle_type projectile);
+	void ThrowParticle(ModuleDino* dino, particle_type projectile) const;
+	const int GetRandomPosition() const;
 	float Y_variation();
 
 	float total_y_variation = 0.0f;

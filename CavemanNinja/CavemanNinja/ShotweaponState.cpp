@@ -15,7 +15,7 @@ PlayerState* ShotWeaponState::Update(ModulePlayer& player)
 	}
 	else
 	{
-		return nullptr;
+		return SAME_STATE;
 	}
 }
 
@@ -23,9 +23,20 @@ void ShotWeaponState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 
-	if (weapon == SUPER_AXE) player.SetCurrentAnimation(&player.supershot);
-	else player.SetCurrentAnimation(&player.shotweapon);
-	ThrowParticle(&player, weapon);
+	if (weapon_subtype == SUPER)
+	{
+		player.SetCurrentAnimation(&player.supershot);
+		ThrowParticle(&player, player.GetCurrentWeapon(weapon_subtype));
+	}
+	else if (player.weapons_on_screen < 2)
+	{
+		player.SetCurrentAnimation(&player.shotweapon);
+		ThrowParticle(&player, player.GetCurrentWeapon(weapon_subtype));
+	}
+	else
+	{
+		player.SetCurrentAnimation(&player.shotnoweapon);
+	}
 }
 
 void ShotWeaponState::OnCollision(Collider* my_collider, Collider* other_collider)

@@ -103,11 +103,11 @@ update_status ModuleCollisions::PostUpdate()
 			case COLLIDER_DINO:
 				App->renderer->DrawQuad(col->rect, 0, 128, 128, alpha);
 				break;
-			case COLLIDER_BORDER:
-				App->renderer->DrawQuad(col->rect, 5, 10, 200, alpha);
-				break;
 			case COLLIDER_PROXIMITY:
 				App->renderer->DrawQuad(col->rect, 225, 70, 30, alpha);
+				break;
+			case COLLIDER_ITEM:
+				App->renderer->DrawQuad(col->rect, 30, 70, 200, alpha);
 				break;
 			}
 		}
@@ -148,7 +148,7 @@ void ModuleCollisions::LoadData()
 	}
 }
 
-bool ModuleCollisions::IsCollidingWithGround(Collider& me)
+bool ModuleCollisions::IsCollidingWithGround(Collider& me) const
 {
 	for (auto& collider : colliders)
 	{

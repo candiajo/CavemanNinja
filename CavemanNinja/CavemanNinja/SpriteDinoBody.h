@@ -4,9 +4,6 @@
 #include "Sprite.h"
 #include "Animation.h"
 
-#define BODY_X_OFFSET -73
-#define BODY_Y_OFFSET 16
-
 class ModuleDino;
 
 class SpriteDinoBody : public Sprite

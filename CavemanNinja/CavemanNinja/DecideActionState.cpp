@@ -1,14 +1,13 @@
 #include "DecideActionState.h"
 #include "AgressiveAttackState.h"
 #include "MoveState.h"
-#include "SuperHitState.h"		// debug
-#include "DinoDefeatedState.h"	// debug
+#include "SuperHitState.h"
+#include "DinoDefeatedState.h"
 #include "Timer.h"
-#include <cstdlib>
 
 DecideActionState::~DecideActionState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 // decide next move (slow stone, fast stone, enemy, open mouth only, agressive attack or move
@@ -24,16 +23,8 @@ DinoState* DecideActionState::Update(ModuleDino& dino)
 		
 		if (dino.player_too_near) return new MoveState(VERY_FAR_POSITION, DINO_TAIL);
 
-		int random_number;
-		int destination;
-		
-		srand(SDL_GetTicks());
-
-		random_number = rand() % 100 + 1;
-
-		if (random_number <= 45) destination = FAR_POSITION;
-		else if (random_number <= 75)  destination = MIDDLE_POSITION;
-		else destination = NEAR_POSITION;
+		int random_number = random_number = rand() % 100 + 1;
+		const int destination = GetRandomPosition();
 		
 		if (random_number <= 5)	// Move 5%
 		{
@@ -67,7 +58,7 @@ DinoState* DecideActionState::Update(ModuleDino& dino)
 	}
 	else
 	{
-		return nullptr;
+		return SAME_STATE;
 	}
 }
 

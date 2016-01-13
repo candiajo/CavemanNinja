@@ -14,15 +14,14 @@ class ModuleRender : public Module
 {
 public:
 	ModuleRender() : Module(true) {};
-	~ModuleRender() {};
 
 	bool Init();
 	update_status PreUpdate();
 	update_status PostUpdate();
 	bool CleanUp();
 
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, SDL_RendererFlip flip);
-	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, SDL_RendererFlip flip = SDL_FLIP_NONE, float degrees = NULL) const;
+	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) const;
 
 public:
 	SDL_Renderer* renderer = nullptr;

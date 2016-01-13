@@ -29,9 +29,5 @@ ParticleHit::~ParticleHit()
 void ParticleHit::ParticleUpdate()
 {
 	if (timer->TimeOver()) to_destroy = true;
-	else
-	{
-
-		App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, SDL_FLIP_NONE);
-	}
+	else App->renderer->Blit(texture_sprite, (int)position.x, (int)position.y, current_frame->section, SDL_FLIP_NONE);
 }

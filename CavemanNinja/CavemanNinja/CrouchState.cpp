@@ -6,9 +6,6 @@
 #include "ShotWeaponState.h"
 #include "AttackedState.h"
 
-CrouchState::CrouchState()
-{}
-
 PlayerState* CrouchState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
@@ -22,28 +19,28 @@ PlayerState* CrouchState::Update(ModulePlayer& player)
 		return new TiredState();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough)
-			return new ShotWeaponState(SUPER_AXE);
+			return new ShotWeaponState(SUPER);
 		else
 			player.SetCurrentAnimation(player.current_animation);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+	if (App->input->GetKey(DOWN_BUTTON) == KEY_UP)
 	{
 		return new IdleState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN &&
+	else if (App->input->GetKey(JUMP_BUTTON) == KEY_DOWN &&
 		     player.position.y < 150)	// for avoiding downjump from the ground
 	{
 		return new JumpState(DOWNJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_DOWN)
 	{
 		return new ShotcrouchState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_UP)
 	{
 		player.SetCurrentAnimation(&player.crouch);
 	}
@@ -58,7 +55,7 @@ void CrouchState::Enter(ModulePlayer& player)
 {
 	player.is_crouch = true;
 	player.x_speed = 0;
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_REPEAT)
 	{
 		RollArm(&player);
 		player.SetCurrentAnimation(&player.crouch, ANGRY_VERSION);

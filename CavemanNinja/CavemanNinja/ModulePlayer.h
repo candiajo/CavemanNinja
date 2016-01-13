@@ -4,14 +4,16 @@
 #include "Sprite.h"
 #include "Animation.h"
 #include "Globals.h"
+#include <array>
 
 class ParticleArm;
+
+using namespace std;
 
 class ModulePlayer : public Sprite
 {
 public:
 	ModulePlayer(bool active) : Sprite(active) {};
-	~ModulePlayer() {};
 
 	bool Start();
 	update_status Update();
@@ -20,8 +22,9 @@ public:
 
 	void SetArm(ParticleArm* arm);
 	void StopArm();
-	Collider* GetGroundCollider();
-
+	Collider* GetGroundCollider() const;
+	particle_type GetCurrentWeapon(weapon_subtype subtype);
+	
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 	Animation idle;
@@ -32,8 +35,10 @@ public:
 	Animation superjump;
 	Animation downjump;
 	Animation shotweapon;
+	Animation shotnoweapon;
 	Animation shotcrouch;
 	Animation shotup;
+	Animation shotupnw;
 	Animation frontattack;
 	Animation backattack;
 	Animation frontdying;
@@ -67,15 +72,19 @@ public:
 	bool is_hit;
 
 	int hit_received_energy;
-
+	int weapons_on_screen;
 	int score;
 
 	ParticleArm* arm = nullptr;
 
+	weapon_type current_weapon;
+	array<array<particle_type, 4>, AVAILABLE_WEAPONS> player_weapon;
+
 private:
 	void LoadData();
 	PlayerState* state;
-	
+
+	void DebugChooseWeapon();
 };
 
 #endif // __MODULEPLAYER_H__

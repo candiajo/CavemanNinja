@@ -6,9 +6,11 @@
 #include "SDL.h"
 #include "Timer.h"
 
-ModuleBeginLevel::~ModuleBeginLevel()
+bool ModuleBeginLevel::CleanUp()
 {
 	RELEASE(timer);
+
+	return true;
 }
 
 bool ModuleBeginLevel::Start()

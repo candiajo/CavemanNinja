@@ -98,8 +98,6 @@ bool ModuleDino::CleanUp()
 	defeated.DestroyColliders();
 	eyeclosed1.DestroyColliders();
 	eyeclosed2.DestroyColliders();
-	// todelete dinobody.DestroyColliders();
-	// todelete dinobodyground.DestroyColliders();
 
 	RELEASE(dinobody_sprite);
 	
@@ -159,7 +157,7 @@ void ModuleDino::CloseEye(int time)
 }
 
 // returns the "closedeye" frame equivalent to the current frame
-FrameInfo* ModuleDino::getClosedEyeFrame()
+FrameInfo* ModuleDino::getClosedEyeFrame() 
 {
 	int n = (int)current_animation->current_frame;
 

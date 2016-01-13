@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleInput.h"
 #include "ModuleBeginLevel.h"
+#include "ModuleAudio.h"
 
 #include "SDL.h"
 
@@ -15,10 +16,7 @@ bool ModuleSceneTitle::Start()
 	LOG("Loading Title assets");
 
 	texture_title = App->textures->Load(IMG_TITLE_SCREEN);
-	//App->audio->PlayMusic("intro.ogg", 0.0f);
-	//fx = App->audio->LoadFx("starting.wav");
-	
-	App->lives = 2;
+	fx_begin_play = App->audio->LoadFx(FX_BEGIN_PLAY);
 
 	return (texture_title != nullptr);
 }
@@ -31,7 +29,7 @@ update_status ModuleSceneTitle::Update()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->begin_level->Transition(App->scene_dino, this, 1);
-		//App->audio->PlayFx(fx);
+		App->audio->PlayFx(fx_begin_play);
 	}
 
 	return UPDATE_CONTINUE;

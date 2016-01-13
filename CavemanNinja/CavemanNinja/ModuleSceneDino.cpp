@@ -28,6 +28,7 @@ bool ModuleSceneDino::Start()
 	LOG("Loading Title assets");
 
 	texture_scene_dino = App->textures->Load(IMG_SCENE_DINO);
+
 	App->audio->PlayMusic(MUSIC_BOSS_LEVEL);
 
 	bgplatform_sprite = new SpritePlatform(texture_scene_dino, &bgplatform_animation);
@@ -48,6 +49,8 @@ bool ModuleSceneDino::Start()
 	App->dino->energy = DINO_MAX_ENERGY;
 	App->player1->energy = PLAYER_MAX_ENERGY;
 
+	App->particles->AddParticle(GetRandomItem(), this);
+
 	state = PLAY;
 
 	return (texture_scene_dino != nullptr);
@@ -60,7 +63,7 @@ void ModuleSceneDino::LoadData()
 	GenericData data;
 
 	File background_data(DATA_SCENE_DINO);
-	
+
 	while (background_data.GetAnimInfo(info, name, data))
 	{
 		if (name == "bgvolcanos") StoreData(info, data, bgvolcanos, this);
@@ -113,13 +116,6 @@ update_status ModuleSceneDino::Update()
 	case CONGRATULATIONS:
 		if (timer->TimeOver()) NextScene(App->scene_title);
 		break;
-	}
-	
-
-	//todelete
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		NextScene(App->scene_title);
 	}
 
 	return UPDATE_CONTINUE;
@@ -179,11 +175,6 @@ void ModuleSceneDino::DrawScenario()
 
 	bgplatform_sprite->Update(App->dino->energy);
 
-	//todelete
-	/*x = (int)bgplatform.GetCurrentFrame().offset.x;
-	y = (int)bgplatform.GetCurrentFrame().offset.y;
-	App->renderer->Blit(texture_scene_dino, x, y, (bgplatform.GetCurrentFrame().section), SDL_FLIP_NONE);*/
-
 	x = (int)bgflowers.GetCurrentFrame().offset.x;
 	y = (int)bgflowers.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (bgflowers.GetCurrentFrame().section), SDL_FLIP_NONE);
@@ -191,4 +182,18 @@ void ModuleSceneDino::DrawScenario()
 	x = (int)bgplatform_sprite->position.x + (int)girl.GetCurrentFrame().offset.x;
 	y = (int)bgplatform_sprite->position.y + (int)girl.GetCurrentFrame().offset.y;
 	App->renderer->Blit(texture_scene_dino, x, y, (girl.GetCurrentFrame().section), SDL_FLIP_NONE);
+}
+
+
+const particle_type ModuleSceneDino::GetRandomItem() const
+{
+	int random_number;
+
+	srand(SDL_GetTicks());
+
+	random_number = rand() % 100 + 1;
+
+	if (random_number <= 33) return(ITEM_WHEEL);
+	else if (random_number <= 66) return(ITEM_BONE);
+	else return(ITEM_TUSK);
 }

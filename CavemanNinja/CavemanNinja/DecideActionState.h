@@ -8,8 +8,8 @@ class Timer;
 class DecideActionState : public DinoState
 {
 public:
+	DecideActionState() {};
 	~DecideActionState();
-	DecideActionState::DecideActionState() {};
 	DinoState* Update(ModuleDino& dino);
 	void Enter(ModuleDino& dino);
 	void DecideActionState::OnCollision(Collider* my_collider, Collider* other_collider);

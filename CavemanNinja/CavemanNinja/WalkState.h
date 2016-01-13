@@ -9,7 +9,7 @@
 class WalkState : public PlayerState
 {
 public:
-	WalkState();
+	WalkState() {};
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);

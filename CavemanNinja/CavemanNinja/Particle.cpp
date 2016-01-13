@@ -8,6 +8,11 @@ Particle::Particle()
 	particle_flag = NORMAL;
 }
 
+Particle::Particle(particle_type type) : Particle()
+{
+	this->type = type;
+}
+
 Particle::Particle(particle_type type, Sprite* generator) : Particle()
 {
 	this->position = generator->position;

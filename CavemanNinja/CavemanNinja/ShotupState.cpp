@@ -5,9 +5,6 @@
 #include "ModuleParticles.h"
 #include "AttackedState.h"
 
-ShotupState::ShotupState()
-{}
-
 PlayerState* ShotupState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
@@ -15,22 +12,29 @@ PlayerState* ShotupState::Update(ModulePlayer& player)
 
 	if (player.current_animation->Finished())
 	{
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		if (App->input->GetKey(UP_BUTTON) == KEY_REPEAT)
 			return new LookUpState();
 		else
 			return new IdleState();
 	}
 	else
 	{
-		return nullptr;
+		return SAME_STATE;
 	}
 }
 
 void ShotupState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
-	player.SetCurrentAnimation(&player.shotup);
-	ThrowParticle(&player, AXE_VERT);
+	if (player.weapons_on_screen < 2)
+	{
+		player.SetCurrentAnimation(&player.shotup);
+		ThrowParticle(&player, player.GetCurrentWeapon(VERTICAL));
+	}
+	else
+	{
+		player.SetCurrentAnimation(&player.shotupnw);
+	}
 }
 
 void ShotupState::OnCollision(Collider* my_collider, Collider* other_collider)

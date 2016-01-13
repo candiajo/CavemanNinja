@@ -11,13 +11,15 @@ class ModuleSceneTitle : public Module
 {
 public:
 	ModuleSceneTitle(bool active) : Module(active){};
-	~ModuleSceneTitle() {};
 
 	bool Start();
 	update_status Update();
 	bool CleanUp();
 
 	SDL_Texture* texture_title = nullptr;
+
+private:
+	unsigned int fx_begin_play;
 };
 
 #endif //__MODULESCENETITLE_H__

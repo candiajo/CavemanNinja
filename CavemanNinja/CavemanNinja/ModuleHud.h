@@ -42,7 +42,6 @@ class ModuleHud: public Module
 {
 public:
 	ModuleHud(bool active) : Module(active) {};
-	~ModuleHud();
 
 	bool Start();
 	update_status Update();

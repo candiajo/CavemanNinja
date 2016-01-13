@@ -1,5 +1,5 @@
 #include "AttackState.h"
-#include "DecideActionState.h"
+#include "MoveState.h"
 #include "Timer.h"
 #include "DinoDefeatedState.h"
 #include "SuperHitState.h"
@@ -44,7 +44,7 @@ DinoState* AttackState::Update(ModuleDino& dino)
 		if (dino.current_animation->Finished())
 		{
 			dino.player_too_near = false;
-			return new DecideActionState();
+			return new MoveState(GetRandomPosition(), NO_PARTICLE);
 		}
 	}
 	
@@ -53,7 +53,7 @@ DinoState* AttackState::Update(ModuleDino& dino)
 
 AttackState::~AttackState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 void AttackState::Enter(ModuleDino& dino)

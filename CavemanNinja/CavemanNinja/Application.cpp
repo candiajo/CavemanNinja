@@ -36,6 +36,8 @@ Application::~Application()
 {
 	for (auto& module : modules) 
 		delete(module);
+
+	modules.clear();
 }
 
 bool Application::Init()

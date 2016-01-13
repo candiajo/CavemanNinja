@@ -12,10 +12,10 @@ class ModuleBeginLevel : public Module
 {
 public:
 	ModuleBeginLevel() : Module(true) {};
-	~ModuleBeginLevel();
 
 	bool Start();
 	update_status Update();
+	bool CleanUp();
 	void Transition(Module* next_scene, Module* previous_scene = nullptr, Uint32 time = 0);
 	void LoadData();
 

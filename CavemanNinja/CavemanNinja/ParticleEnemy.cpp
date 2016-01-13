@@ -53,8 +53,7 @@ ParticleEnemy::~ParticleEnemy()
 
 void ParticleEnemy::ParticleUpdate()
 {
-	if (timer->TimeOver())
-		to_destroy = true;
+	if (timer->TimeOver()) to_destroy = true;
 	else
 	{
 		switch (state)
@@ -100,8 +99,8 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 	{
 		while (my_collider->IsColliding(other_collider))
 		{
-			my_collider->rect.y -= 1;
-			position.y -= (1.0f / (float)SCREEN_SIZE);
+			position.y--;
+			PlaceColliders();
 		}
 
 		bounces++;
@@ -129,7 +128,7 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 
 			state = ENEMY_HIT;
 			App->player1->score += 300;
-			App->audio->PlayFx(fx_enemy_hurt, NO_REPEAT);
+			App->audio->PlayFx(fx_enemy_hurt);
 			SetCurrentAnimation(hitenemy);
 		}
 		else if (other_collider->type == COLLIDER_PLAYER_SHOT)
@@ -152,14 +151,18 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 				}
 				y_speed = -2.5f;
 
-				if (weapon->type == SUPER_AXE)
+				if (weapon->subtype == SUPER)
 				{
 					x_speed *= 1.5f;
 					y_speed *= 1.5f;
+					App->particles->AddParticle(WOMP, weapon);
 				}
+				else if (weapon->subtype == VERTICAL) App->particles->AddParticle(WAM_V, weapon);
+				else App->particles->AddParticle(WAM_H, weapon); // HORIZONTAL or CROUCH
+
 				state = ENEMY_HIT;
-				App->audio->PlayFx(fx_weapon_hit, NO_REPEAT);
-				App->audio->PlayFx(fx_enemy_hurt, NO_REPEAT);
+				App->audio->PlayFx(fx_weapon_hit);
+				App->audio->PlayFx(fx_enemy_hurt);
 				weapon->particle_flag = INNOCUOUS;
 				App->player1->score += 300;
 				SetCurrentAnimation(hitenemy);

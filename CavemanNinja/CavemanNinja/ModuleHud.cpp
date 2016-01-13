@@ -7,11 +7,6 @@
 #include "ModuleDino.h"
 #include "Timer.h"
 
-ModuleHud::~ModuleHud()
-{
-	RELEASE(timer);
-}
-
 bool ModuleHud::Start()
 {
 	LoadData();
@@ -82,7 +77,7 @@ void ModuleHud::DrawHudItem(hud_index item)
 	App->renderer->Blit(texture_hud, (int)frame.offset.x, (int)frame.offset.y, frame.section, SDL_FLIP_NONE);
 }
 
-void ModuleHud::DrawPlayerLife(int energy)
+void ModuleHud::DrawPlayerLife(const int energy)
 {
 	FrameInfo frame;
 	hud_index color;

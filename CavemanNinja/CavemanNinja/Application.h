@@ -48,7 +48,7 @@ public:
 	int lives = 2;
 
 	//debug
-	float var1 = 20, var2 = 100, var3 = 1.05f;
+	float var1 = 222, var2 = 190, var3 = 1.05f;
 
 private:
 	std::list<Module*> modules;

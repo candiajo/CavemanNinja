@@ -10,7 +10,6 @@ class ModuleInput : public Module
 {
 public:
 	ModuleInput();
-	~ModuleInput() {};
 
 	bool Init();
 	update_status PreUpdate();

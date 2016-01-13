@@ -5,9 +5,6 @@
 #include "ModuleParticles.h"
 #include "AttackedState.h"
 
-ShotcrouchState::ShotcrouchState()
-{}
-
 PlayerState* ShotcrouchState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
@@ -15,14 +12,14 @@ PlayerState* ShotcrouchState::Update(ModulePlayer& player)
 
 	if (player.current_animation->Finished())
 	{
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		if (App->input->GetKey(DOWN_BUTTON) == KEY_REPEAT)
 			return new CrouchState();
 		else
 			return new IdleState();
 	}
 	else
 	{
-		return nullptr;
+		return SAME_STATE;
 	}
 }
 
@@ -30,7 +27,7 @@ void ShotcrouchState::Enter(ModulePlayer& player)
 {
 	player.x_speed = 0;
 	player.SetCurrentAnimation(&player.shotcrouch);
-	ThrowParticle(&player, AXE_CROUCH);
+	ThrowParticle(&player, player.GetCurrentWeapon(CROUCH));
 }
 
 void ShotcrouchState::OnCollision(Collider* my_collider, Collider* other_collider)

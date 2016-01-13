@@ -8,7 +8,7 @@ class IdleState;
 class CrouchState : public PlayerState
 {
 public:
-	CrouchState();
+	CrouchState() {};
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);

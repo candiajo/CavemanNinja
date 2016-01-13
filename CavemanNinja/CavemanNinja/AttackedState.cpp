@@ -7,7 +7,7 @@
 
 AttackedState::~AttackedState()
 {
-	delete timer;
+	RELEASE(timer);
 }
 
 PlayerState* AttackedState::Update(ModulePlayer& player)
@@ -19,16 +19,18 @@ PlayerState* AttackedState::Update(ModulePlayer& player)
 		player.position.y += player.y_speed;
 		break;
 	case ON_GROUND:
-		player.y_speed = 0;
-		if (player.energy <= 0)
+		if (timer->TimeOver())
 		{
-			if (attacked_from == ATTACKED_FROM_BEHIND) return new PlayerDefeatedState(ATTACKED_FROM_BEHIND);
-			else return new PlayerDefeatedState(ATTACKED_FROM_FRONT);
-		}
-		else
-		{
-			player.is_hit = false;
-			return new IdleState();
+			if (player.energy <= 0)
+			{
+				if (attacked_from == ATTACKED_FROM_BEHIND) return new PlayerDefeatedState(ATTACKED_FROM_BEHIND);
+				else return new PlayerDefeatedState(ATTACKED_FROM_FRONT);
+			}
+			else
+			{
+				player.is_hit = false;
+				return new IdleState();
+			}
 		}
 	}
 
@@ -41,8 +43,6 @@ PlayerState* AttackedState::Update(ModulePlayer& player)
 
 void AttackedState::Enter(ModulePlayer& player)
 {
-	timer = new Timer(600);
-	timer->StartTimer();
 	initial_y = (int)player.position.y;
 
 	player.x_speed = 0;
@@ -69,7 +69,7 @@ void AttackedState::Enter(ModulePlayer& player)
 	player.StopArm();
 	App->audio->PlayFx(App->player1->fx_player_hurt);
 
-	ThrowParticle(&player, HIT);
+	ThrowParticle(&player, HIT_PLAYER);
 }
 
 void AttackedState::OnCollision(Collider* my_collider, Collider* other_collider)
@@ -84,6 +84,9 @@ void AttackedState::OnCollision(Collider* my_collider, Collider* other_collider)
 				my_collider->rect.y -= 1;
 				player->position.y -= 1.0f / (float)SCREEN_SIZE;
 			}
+			timer = new Timer(250);
+			timer->StartTimer();
+			player->y_speed = 0.0f;
 			substate = ON_GROUND;
 		}
 	}

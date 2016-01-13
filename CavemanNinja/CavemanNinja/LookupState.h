@@ -6,7 +6,7 @@
 class LookUpState : public PlayerState
 {
 public:
-	LookUpState();
+	LookUpState() {};
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);

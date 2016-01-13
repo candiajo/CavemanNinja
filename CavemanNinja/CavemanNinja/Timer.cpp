@@ -15,7 +15,7 @@ void Timer::StartTimer(int time)
 	start_time = SDL_GetTicks();
 }
 
-bool Timer::TimeOver()
+bool Timer::TimeOver() const
 {
 	int elapsed_time = (SDL_GetTicks() - start_time);
 
@@ -25,7 +25,7 @@ bool Timer::TimeOver()
 		return false;
 }
 
-int Timer::ElapsedTime()
+int Timer::ElapsedTime() const
 {
 	return (SDL_GetTicks() - start_time);
 }

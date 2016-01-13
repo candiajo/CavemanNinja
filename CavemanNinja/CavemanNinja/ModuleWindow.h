@@ -9,8 +9,7 @@ struct SDL_Surface;
 class ModuleWindow : public Module
 {
 public:
-	ModuleWindow() : Module(true){};
-	~ModuleWindow(){};
+	ModuleWindow() : Module(true) {};
 
 	bool Init();
 	bool CleanUp();

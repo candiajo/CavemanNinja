@@ -15,7 +15,7 @@ public:
 
 	void SetCurrentAnimation(Animation* next_animation, bool alternate = false);
 	void SetInvulnerable(int time);
-	void PlaceColliders();
+	void PlaceColliders() const;
 
 	Animation* previous_animation = nullptr;
 	Animation* current_animation = nullptr;
@@ -35,7 +35,7 @@ protected:
 	SDL_RendererFlip Flip();
 	void RefreshColliders();
 
-	Timer* invulnerable_time;
+	Timer* invulnerable_time = nullptr;
 
 	SDL_Texture* texture_sprite = nullptr;
 	Timer* timer = nullptr;

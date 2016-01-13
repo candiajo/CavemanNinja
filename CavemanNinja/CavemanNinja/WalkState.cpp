@@ -7,9 +7,6 @@
 #include "TiredState.h"
 #include "AttackedState.h"
 
-WalkState::WalkState()
-{}
-
 PlayerState* WalkState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
@@ -25,38 +22,38 @@ PlayerState* WalkState::Update(ModulePlayer& player)
 
 	if (event == WALK_OFF_PLATFORM)
 	{
-		return new JumpState(DOWNJUMP);
+		return new JumpState(FALLING);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm)
 	{
 		if (player.charge_enough)
-			return new ShotWeaponState(SUPER_AXE);
+			return new ShotWeaponState(SUPER);
 		else
 			player.SetCurrentAnimation(player.current_animation);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP ||
-		App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
+	if (App->input->GetKey(LEFT_BUTTON) == KEY_UP ||
+		App->input->GetKey(RIGHT_BUTTON) == KEY_UP)
 	{
 		return new IdleState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	else if (App->input->GetKey(DOWN_BUTTON) == KEY_DOWN)
 	{
 		return new CrouchState();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+	else if (App->input->GetKey(JUMP_BUTTON) == KEY_DOWN)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		if (App->input->GetKey(UP_BUTTON) == KEY_REPEAT)
 			return new JumpState(SUPERJUMP);
 		else
 			return new JumpState(NORMALJUMP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_DOWN)
 	{
-		return new ShotWeaponState(AXE_HORZ);
+		return new ShotWeaponState(HORIZONTAL);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_UP)
+	else if (App->input->GetKey(FIRE_BUTTON) == KEY_UP)
 	{
 		player.SetCurrentAnimation(&player.walk);
 	}
@@ -70,12 +67,12 @@ PlayerState* WalkState::Update(ModulePlayer& player)
 
 void WalkState::Enter(ModulePlayer& player)
 {
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(LEFT_BUTTON) == KEY_REPEAT)
 		player.direction = LEFT;
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	else if (App->input->GetKey(RIGHT_BUTTON) == KEY_REPEAT)
 		player.direction = RIGHT;
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_REPEAT)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_REPEAT)
 	{
 		player.SetCurrentAnimation(&player.walk, ANGRY_VERSION);
 		RollArm(&player);
@@ -97,13 +94,6 @@ void WalkState::OnCollision(Collider* my_collider, Collider* other_collider)
 			player->position.y -= 1;
 			dynamic_cast<Sprite*>(player)->PlaceColliders();
 		}
-	}
-
-	// todelete
-	if (my_collider->type == COLLIDER_DETECT_GROUND &&
-		other_collider->type == COLLIDER_BORDER)
-	{
-		event = WALK_OFF_PLATFORM;
 	}
 }
 

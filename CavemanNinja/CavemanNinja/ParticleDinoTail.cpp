@@ -23,7 +23,7 @@ ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Part
 
 ParticleDinoTail::~ParticleDinoTail()
 {
-	delete dinotail;
+	RELEASE(dinotail);
 }
 
 void ParticleDinoTail::ParticleUpdate()

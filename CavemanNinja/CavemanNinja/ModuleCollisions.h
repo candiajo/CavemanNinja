@@ -8,14 +8,13 @@ class ModuleCollisions : public Module
 {
 public:
 	ModuleCollisions() : Module(true) {};
-	~ModuleCollisions() {};
 
 	bool Start();
 	update_status PreUpdate();
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	bool IsCollidingWithGround(Collider& me);
+	bool IsCollidingWithGround(Collider& me) const;
 
 	void AddCollider(Collider* collider);
 	

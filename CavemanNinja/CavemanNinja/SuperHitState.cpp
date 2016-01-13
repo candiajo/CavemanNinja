@@ -14,7 +14,7 @@ DinoState* SuperHitState::Update(ModuleDino& dino)
 
 SuperHitState::~SuperHitState()
 {
-	delete timer;
+	RELEASE(timer);
 };
 
 void SuperHitState::Enter(ModuleDino& dino)

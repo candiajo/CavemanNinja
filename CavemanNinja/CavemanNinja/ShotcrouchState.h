@@ -6,7 +6,7 @@
 class ShotcrouchState : public PlayerState
 {
 public:
-	ShotcrouchState();
+	ShotcrouchState() {};
 
 	PlayerState* Update(ModulePlayer& player);
 	void Enter(ModulePlayer& player);
