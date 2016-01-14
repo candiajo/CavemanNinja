@@ -14,7 +14,6 @@ public:
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-// todelete	particle_type weapon;
 	weapon_subtype weapon_subtype;
 };
 

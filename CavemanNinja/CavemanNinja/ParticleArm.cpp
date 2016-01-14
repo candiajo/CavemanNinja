@@ -21,17 +21,17 @@ ParticleArm::ParticleArm(particle_type type, Sprite* generator) : Particle(type,
 
 	player->rolling_arm = true;
 
-	arm_slow = new Animation(App->particles->armslow_animation, this);
-	arm_fast = new Animation(App->particles->armfast_animation, this);
+	arm_slow_animation = new Animation(App->particles->armslow_animation, this);
+	arm_fast_animation = new Animation(App->particles->armfast_animation, this);
 
 	channel = App->audio->PlayFx(fx_charging);
-	SetCurrentAnimation(arm_slow);
+	SetCurrentAnimation(arm_slow_animation);
 }
 
 ParticleArm::~ParticleArm()
 {
-	RELEASE(arm_slow);
-	RELEASE(arm_fast);
+	RELEASE(arm_slow_animation);
+	RELEASE(arm_fast_animation);
 	RELEASE(timer);
 }
 
@@ -44,13 +44,13 @@ void ParticleArm::ParticleUpdate()
 		{
 			timer->StartTimer(500);
 			state = ARM_SLOW_2;
-			arm_slow->speed *= 2;
+			arm_slow_animation->speed *= 2;
 		}
 		break;
 	case ARM_SLOW_2:
 		if (timer->TimeOver())
 		{
-			SetCurrentAnimation(arm_fast);
+			SetCurrentAnimation(arm_fast_animation);
 			timer->StartTimer(750);
 			player->charge_enough = true;
 			state = ARM_FAST_1;
@@ -60,7 +60,7 @@ void ParticleArm::ParticleUpdate()
 		if (timer->TimeOver())
 		{
 			timer->StartTimer(2200);
-			arm_fast->speed *= 2;
+			arm_fast_animation->speed *= 2;
 			state = ARM_FAST_2;
 		}
 		break;

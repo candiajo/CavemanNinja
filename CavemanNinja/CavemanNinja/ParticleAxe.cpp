@@ -38,7 +38,7 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 		offset.y = -15;
 		distance_straight = 60;
 		first_state = AXE_FORWARD;
-		axe = new Animation(App->particles->superaxe_animation, this);
+		axe_animation = new Animation(App->particles->superaxe_animation, this);
 	}
 	else // normal axe
 	{
@@ -71,15 +71,15 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 
 		damage = 1;
 		distance_straight = 30;
-		axe = new Animation(App->particles->axe_animation, this);
+		axe_animation = new Animation(App->particles->axe_animation, this);
 	}
 
 	x_speed *= (float)modifier;
 		
-	SetCurrentAnimation(axe);
+	SetCurrentAnimation(axe_animation);
 
 	if (direction == LEFT)
-		offset.x = (generator->current_frame->section->w - axe->frames.front().section->w - offset.x);
+		offset.x = (generator->current_frame->section->w - axe_animation->frames.front().section->w - offset.x);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -91,7 +91,7 @@ ParticleAxe::ParticleAxe(particle_type type, Sprite* generator) : Particle(type,
 
 ParticleAxe::~ParticleAxe()
 {
-	RELEASE(axe);
+	RELEASE(axe_animation);
 	RELEASE(timer);
 	RELEASE(delay);
 }

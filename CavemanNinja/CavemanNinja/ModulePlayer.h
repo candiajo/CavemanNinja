@@ -46,6 +46,7 @@ public:
 	Animation salute;
 	Animation tired;
 	Animation supershot;
+	Animation scared;
 	Animation ch_idle;
 	Animation ch_walk;
 	Animation ch_crouch;
@@ -61,6 +62,7 @@ public:
 	unsigned int fx_player_jump;
 	unsigned int fx_player_land;
 	unsigned int fx_super_jump;
+	unsigned int fx_take_item;
 
 	bool rolling_arm;
 	bool is_crouch;

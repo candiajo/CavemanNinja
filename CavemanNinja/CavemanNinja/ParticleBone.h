@@ -30,7 +30,7 @@ private:
 	unsigned int fx_player_superattack;
 	bone_state first_state;
 	Timer* delay;
-	Animation* bone;
+	Animation* bone_animation;
 	float distance_straight;	// distance that the bone goes straight (then falls)
 };
 

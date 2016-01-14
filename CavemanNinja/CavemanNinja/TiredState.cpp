@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "IdleState.h"
 #include "ModuleAudio.h"
+#include "ScaredState.h"
 
 TiredState::~TiredState()
 {
@@ -11,13 +12,20 @@ TiredState::~TiredState()
 
 PlayerState* TiredState::Update(ModulePlayer& player)
 {
+	if (event == ENTER_DINO) return new ScaredState();
+
+	CheckPosition(player);
+
 	if (timer->TimeOver())
 	{
 		player.is_tired = false;
 		return new IdleState();
 	}
-	player.y_speed *= 1.08f;
-	return SAME_STATE;
+	else
+	{
+		player.y_speed *= 1.08f;
+		return SAME_STATE;
+	}
 }
 
 void TiredState::Enter(ModulePlayer& player)

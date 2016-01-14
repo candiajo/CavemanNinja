@@ -12,8 +12,8 @@ SpriteDinoBody::SpriteDinoBody(SDL_Texture* sprite_texture) : Sprite(active)
 
 SpriteDinoBody::~SpriteDinoBody()
 {
-	dinobody_animation->DestroyColliders();
-	dinobodyground_animation->DestroyColliders();
+	dinobody_animation->ClearAnimation();
+	dinobodyground_animation->ClearAnimation();
 }
 
 bool SpriteDinoBody::Start()

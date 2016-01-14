@@ -22,9 +22,9 @@ public:
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-	Animation* rollingenemy;
-	Animation* hitenemy;
-	Animation* defeatedenemy;
+	Animation* rollingenemy_animation;
+	Animation* hitenemy_animation;
+	Animation* defeatedenemy_animation;
 	enemy_state state;
 	collider_type first_bounce;
 	int bounces = 0;

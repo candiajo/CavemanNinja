@@ -15,7 +15,6 @@ public:
 	update_status PreUpdate();
 	bool CleanUp();
 	key_state GetKey(int id) const;
-	void debug();
 	void DeactivateInput(int time);
 
 private:	

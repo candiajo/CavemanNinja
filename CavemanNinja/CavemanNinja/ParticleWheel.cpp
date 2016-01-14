@@ -40,7 +40,7 @@ ParticleWheel::ParticleWheel(particle_type type, Sprite* generator) : Particle(t
 		offset.y = -25;
 		distance_straight = 35;
 		first_state = WHEEL_FLY_FORWARD;
-		wheel = new Animation(App->particles->superwheel_animation, this);
+		wheel_animation = new Animation(App->particles->superwheel_animation, this);
 	}
 	else // normal wheel
 	{
@@ -73,15 +73,15 @@ ParticleWheel::ParticleWheel(particle_type type, Sprite* generator) : Particle(t
 
 		damage = 2;
 		distance_straight = 15;
-		wheel = new Animation(App->particles->wheel_animation, this);
+		wheel_animation = new Animation(App->particles->wheel_animation, this);
 	}
 
 	x_speed *= (float)modifier;
 
-	SetCurrentAnimation(wheel);
+	SetCurrentAnimation(wheel_animation);
 
 	if (direction == LEFT)
-		offset.x = (generator->current_frame->section->w - wheel->frames.front().section->w - offset.x);
+		offset.x = (generator->current_frame->section->w - wheel_animation->frames.front().section->w - offset.x);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -93,7 +93,7 @@ ParticleWheel::ParticleWheel(particle_type type, Sprite* generator) : Particle(t
 
 ParticleWheel::~ParticleWheel()
 {
-	RELEASE(wheel);
+	RELEASE(wheel_animation);
 	RELEASE(timer);
 	RELEASE(delay);
 }

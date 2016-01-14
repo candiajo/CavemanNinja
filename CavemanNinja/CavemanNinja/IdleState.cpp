@@ -10,6 +10,7 @@
 #include "ShotWeaponState.h"
 #include "AttackedState.h"
 #include "Globals.h"
+#include "ScaredState.h"
 
 IdleState::~IdleState()
 {
@@ -20,8 +21,11 @@ PlayerState* IdleState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+	else if (event == ENTER_DINO) return new ScaredState();
 
 	CheckPosition(player);
+	
+	if (event == WALK_OFF_PLATFORM) return new JumpState(FALLING);
 
 	if (player.is_tired) return new TiredState();
 

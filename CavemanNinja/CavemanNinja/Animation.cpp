@@ -48,7 +48,7 @@ Animation::Animation(Animation& source, Module* new_callback)
 
 Animation::~Animation()
 {
-	DestroyColliders(); // mark all (frame and animation) colliders to_destroy
+	ClearAnimation(); // mark all (frame and animation) colliders to_destroy
 
 	colliders.clear();
 	frames.clear();
@@ -105,7 +105,8 @@ void Animation::Reset()
 
 // marks to_destroy the colliders in the game colliders list
 // deletes from memory all colliders that are not in that list
-void Animation::DestroyColliders()
+// deletes all frames
+void Animation::ClearAnimation()
 {
 	// animation colliders
 	for (auto& collider : colliders)
@@ -131,6 +132,5 @@ void Animation::SetAlternateVersion(Animation* alternate_version)
 	for (int i = 0; i < frames.size(); i++)
 		frames[i].alternate = alternate_version->frames[i].original;
 
-	//debug alternate_version->speed = this->speed;
 	this->alternate_version = alternate_version;
 }

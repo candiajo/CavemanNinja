@@ -32,6 +32,7 @@ public:
 	const particle_type GetRandomItem() const;
 
 	bool dino_defeated;
+	bool enter_dino;
 	bool player_defeated;
 	SDL_Texture* texture_scene_dino = nullptr;
 

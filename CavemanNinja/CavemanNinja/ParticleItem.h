@@ -15,7 +15,7 @@ public:
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-	//unsigned int fx_take_item;
+	unsigned int fx_take_item;
 	Timer* delay;
 	Animation* item_animation;
 	weapon_type weapon;

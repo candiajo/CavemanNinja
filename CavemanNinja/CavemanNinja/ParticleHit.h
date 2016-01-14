@@ -16,7 +16,7 @@ public:
 
 private:
 	Timer* delay;
-	Animation* hit;
+	Animation* hit_animation;
 };
 
 #endif //__PARTICLEHIT_H__

@@ -44,11 +44,7 @@ public:
 	ModuleAudio* audio;
 	ModuleHud* hud;
 
-	// debug int lives = 2;
-	int lives = 2;
-
-	//debug
-	float var1 = 222, var2 = 190, var3 = 1.05f;
+	int lives;
 
 private:
 	std::list<Module*> modules;

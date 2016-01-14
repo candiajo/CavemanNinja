@@ -11,8 +11,8 @@
 
 ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(type, generator)
 {
-	rollingstone = new Animation(App->particles->rollingstone_animation, this);
-	breakingstone = new Animation(App->particles->breakingstone_animation, this);
+	rollingstone_animation = new Animation(App->particles->rollingstone_animation, this);
+	breakingstone_animation = new Animation(App->particles->breakingstone_animation, this);
 
 	fx_weapon_hit = dynamic_cast<ModuleDino*>(generator)->fx_weapon_hit;
 
@@ -22,7 +22,7 @@ ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(t
 	offset.x = 40;
 	offset.y = 50;
 
-	SetCurrentAnimation(rollingstone);
+	SetCurrentAnimation(rollingstone_animation);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -42,8 +42,8 @@ ParticleStone::ParticleStone(particle_type type, Sprite* generator) : Particle(t
 
 ParticleStone::~ParticleStone()
 {
-	RELEASE(rollingstone);
-	RELEASE(breakingstone);
+	RELEASE(rollingstone_animation);
+	RELEASE(breakingstone_animation);
 	RELEASE(timer);
 }
 
@@ -64,7 +64,7 @@ void ParticleStone::ParticleUpdate()
 			break;
 
 		case STONE_BREAKING:
-			if (breakingstone->Finished()) to_destroy = true;
+			if (breakingstone_animation->Finished()) to_destroy = true;
 			break;
 		}
 
@@ -113,7 +113,7 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 			{
 				state = STONE_BREAKING;
 				App->player1->score += 200;
-				SetCurrentAnimation(breakingstone);
+				SetCurrentAnimation(breakingstone_animation);
 			}
 		}
 
@@ -126,6 +126,6 @@ void ParticleStone::OnCollision(Collider* my_collider, Collider* other_collider)
 		state = STONE_BREAKING;
 		App->player1->score += 200;
 		App->audio->PlayFx(fx_weapon_hit);
-		SetCurrentAnimation(breakingstone);
+		SetCurrentAnimation(breakingstone_animation);
 	}
 }

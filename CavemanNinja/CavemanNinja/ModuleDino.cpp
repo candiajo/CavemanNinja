@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleDino.h"
 #include "DinoState.h"
+#include "ModuleSceneDino.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "Animation.h"
@@ -32,6 +33,7 @@ bool ModuleDino::Start()
 	energy = DINO_MAX_ENERGY;
 	damage = 4;
 
+	App->scene_dino->enter_dino = true;
 	eyeclosed = false;
 	
 	invulnerable_time = new Timer();
@@ -90,14 +92,14 @@ update_status ModuleDino::PostUpdate()
 
 bool ModuleDino::CleanUp()
 {
-	openmouth.DestroyColliders();
-	closemouth.DestroyColliders();
-	semiopenmouth.DestroyColliders();
-	semiclosemouth.DestroyColliders();
-	superhit.DestroyColliders();
-	defeated.DestroyColliders();
-	eyeclosed1.DestroyColliders();
-	eyeclosed2.DestroyColliders();
+	openmouth.ClearAnimation();
+	closemouth.ClearAnimation();
+	semiopenmouth.ClearAnimation();
+	semiclosemouth.ClearAnimation();
+	superhit.ClearAnimation();
+	defeated.ClearAnimation();
+	eyeclosed1.ClearAnimation();
+	eyeclosed2.ClearAnimation();
 
 	RELEASE(dinobody_sprite);
 	

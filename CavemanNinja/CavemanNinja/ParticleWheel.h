@@ -32,7 +32,7 @@ private:
 	unsigned int fx_player_superattack;
 	wheel_state first_state;
 	Timer* delay;
-	Animation* wheel;
+	Animation* wheel_animation;
 	float distance_straight;	// distance that the wheel goes straight (then falls)
 	int hits;
 };

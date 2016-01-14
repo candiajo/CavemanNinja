@@ -11,9 +11,9 @@
 
 ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(type, generator)
 {
-	rollingenemy = new Animation(App->particles->rollingenemy_animation, this);
-	hitenemy = new Animation(App->particles->hitenemy_animation, this);
-	defeatedenemy = new Animation(App->particles->defeatedenemy_animation, this);
+	rollingenemy_animation = new Animation(App->particles->rollingenemy_animation, this);
+	hitenemy_animation = new Animation(App->particles->hitenemy_animation, this);
+	defeatedenemy_animation = new Animation(App->particles->defeatedenemy_animation, this);
 
 	fx_enemy_hurt = dynamic_cast<ModuleDino*>(generator)->fx_enemy_hurt;
 	fx_weapon_hit= dynamic_cast<ModuleDino*>(generator)->fx_weapon_hit;
@@ -24,7 +24,7 @@ ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(t
 	offset.x = 40;
 	offset.y = 50;
 
-	SetCurrentAnimation(rollingenemy);
+	SetCurrentAnimation(rollingenemy_animation);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -45,9 +45,9 @@ ParticleEnemy::ParticleEnemy(particle_type type, Sprite* generator) : Particle(t
 
 ParticleEnemy::~ParticleEnemy()
 {
-	RELEASE(rollingenemy);
-	RELEASE(hitenemy);
-	RELEASE(defeatedenemy);
+	RELEASE(rollingenemy_animation);
+	RELEASE(hitenemy_animation);
+	RELEASE(defeatedenemy_animation);
 	RELEASE(timer);
 }
 
@@ -71,7 +71,7 @@ void ParticleEnemy::ParticleUpdate()
 				x_speed = 0;
 				y_speed = 0;
 				timer->StartTimer(1000);
-				SetCurrentAnimation(defeatedenemy);
+				SetCurrentAnimation(defeatedenemy_animation);
 				state = ENEMY_DEFEATED;
 			}
 			break;
@@ -129,7 +129,7 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 			state = ENEMY_HIT;
 			App->player1->score += 300;
 			App->audio->PlayFx(fx_enemy_hurt);
-			SetCurrentAnimation(hitenemy);
+			SetCurrentAnimation(hitenemy_animation);
 		}
 		else if (other_collider->type == COLLIDER_PLAYER_SHOT)
 		{
@@ -165,7 +165,7 @@ void ParticleEnemy::OnCollision(Collider* my_collider, Collider* other_collider)
 				App->audio->PlayFx(fx_enemy_hurt);
 				weapon->particle_flag = INNOCUOUS;
 				App->player1->score += 300;
-				SetCurrentAnimation(hitenemy);
+				SetCurrentAnimation(hitenemy_animation);
 			}
 		}
 	}

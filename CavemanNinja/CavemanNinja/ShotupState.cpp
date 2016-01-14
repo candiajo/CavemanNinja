@@ -4,11 +4,15 @@
 #include "LookUpState.h"
 #include "ModuleParticles.h"
 #include "AttackedState.h"
+#include "ScaredState.h"
 
 PlayerState* ShotupState::Update(ModulePlayer& player)
 {
 	if (event == PLAYER_HIT_BACK) return new AttackedState(ATTACKED_FROM_BEHIND);
 	else if (event == PLAYER_HIT_FRONT) return new AttackedState(ATTACKED_FROM_FRONT);
+	else if (event == ENTER_DINO) return new ScaredState();
+
+	CheckPosition(player);
 
 	if (player.current_animation->Finished())
 	{

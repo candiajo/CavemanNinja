@@ -4,8 +4,7 @@
 #include "Collider.h"
 #include "AttackedState.h"
 #include "TiredState.h"
-
-#include "SDL.h"
+#include "ScaredState.h"
 
 PlayerState* JumpState::Update(ModulePlayer& player)
 {
@@ -14,17 +13,20 @@ PlayerState* JumpState::Update(ModulePlayer& player)
 	case PLAYER_STEP_GROUND:
 		App->audio->PlayFx(player.fx_player_land);
 		return new IdleState();
-		break;
+		
 	case PLAYER_STEP_ENEMY:
 		ThrowParticle(&player, KUP);
 		return new JumpState(MICROJUMP);
-		break;
+		
 	case PLAYER_HIT_FRONT:
 		return new AttackedState(ATTACKED_FROM_FRONT);
-		break;
+		
 	case PLAYER_HIT_BACK:
 		return new AttackedState(ATTACKED_FROM_BEHIND);
-		break;
+		
+	case ENTER_DINO:
+		return new ScaredState();
+
 	}
 
 	if (player.is_tired)
@@ -33,9 +35,9 @@ PlayerState* JumpState::Update(ModulePlayer& player)
 		return new TiredState();
 	}
 
-	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm)
+	if (App->input->GetKey(FIRE_BUTTON) == KEY_UP && player.rolling_arm && player.charge_enough)
 	{
-		if (player.charge_enough) fire = PRE_SHOT_SUPER;
+		fire = PRE_SHOT_SUPER;
 	}
 
 	if (App->input->GetKey(LEFT_BUTTON) == KEY_REPEAT)
@@ -57,8 +59,7 @@ PlayerState* JumpState::Update(ModulePlayer& player)
 	if (App->input->GetKey(FIRE_BUTTON) == KEY_DOWN &&
 		(fire != SHOT_V && fire != SHOT_H))
 	{
-		if (App->input->GetKey(UP_BUTTON) == KEY_REPEAT &&
-			substate != SUPERJUMP)
+		if (App->input->GetKey(UP_BUTTON) == KEY_REPEAT &&	substate != SUPERJUMP)
 			fire = PRE_SHOT_V;
 		else
 			fire = PRE_SHOT_H;

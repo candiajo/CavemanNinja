@@ -73,7 +73,6 @@ update_status ModuleInput::PreUpdate()
 		if (event.type == SDL_QUIT) return UPDATE_STOP;
 	}
 
-	debug();
 	return UPDATE_CONTINUE;
 }
 
@@ -91,22 +90,6 @@ key_state ModuleInput::GetKey(int key) const
 {
 	if (input_active) return keyboard[key];
 	else return KEY_UP;
-}
-
-void ModuleInput::debug()
-{
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) App->var1 += 1;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) App->var1 -= 1;
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) App->var1 += 5;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) App->var1 -= 5;
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) App->var2 += 1;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) App->var2 -= 1;
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
-	{
-		LOG("var1: %f \n", App->var1);
-		LOG("var2: %f \n", App->var2);
-		//LOG("var3: %f \n", App->var3);
-	}
 }
 
 void ModuleInput::DeactivateInput(int time)

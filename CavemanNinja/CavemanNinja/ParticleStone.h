@@ -22,8 +22,8 @@ public:
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-	Animation* rollingstone;
-	Animation* breakingstone;
+	Animation* rollingstone_animation;
+	Animation* breakingstone_animation;
 	stone_state state;
 	collider_type first_bounce;
 	unsigned int fx_weapon_hit;

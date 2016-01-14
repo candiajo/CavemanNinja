@@ -1,4 +1,4 @@
-#include <vld.h>
+//#include <vld.h> // visual leak detector
 
 #include "Globals.h"
 #include "Application.h"

@@ -18,6 +18,8 @@ bool ModuleSceneTitle::Start()
 	texture_title = App->textures->Load(IMG_TITLE_SCREEN);
 	fx_begin_play = App->audio->LoadFx(FX_BEGIN_PLAY);
 
+	App->lives = PLAYER_MAX_LIVES;
+
 	return (texture_title != nullptr);
 }
 

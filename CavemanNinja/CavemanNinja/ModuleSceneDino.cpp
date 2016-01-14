@@ -44,6 +44,7 @@ bool ModuleSceneDino::Start()
 	timer->StartTimer();
 
 	dino_defeated = false;
+	enter_dino = false;
 	player_defeated = false;
 
 	App->dino->energy = DINO_MAX_ENERGY;
@@ -147,8 +148,8 @@ bool ModuleSceneDino::CleanUp()
 	App->textures->Unload(texture_scene_dino);
 	App->audio->StopMusic();
 
-	bgflowers.DestroyColliders();
-	bgvolcanos.DestroyColliders();
+	bgflowers.ClearAnimation();
+	bgvolcanos.ClearAnimation();
 
 	RELEASE(bgplatform_sprite);
 	RELEASE(timer);

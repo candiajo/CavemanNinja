@@ -22,7 +22,7 @@ public:
 	FrameInfo& GetCurrentFrame();
 	FrameInfo& PeekFrame(int n);
 	void SetLastFrame();
-	void DestroyColliders();	// mark 'to_destroy' all (frame and animation) colliders 
+	void ClearAnimation();	// mark 'to_destroy' all (frame and animation) colliders 
 	bool Finished() const;
 	void Reset();
 	void SetAlternateVersion(Animation* alternate_version);

@@ -32,8 +32,8 @@ public:
 private:
 	unsigned int fx_charging;
 	int channel;				// of the sound played, for stopping it
-	Animation* arm_slow;
-	Animation* arm_fast;
+	Animation* arm_slow_animation;
+	Animation* arm_fast_animation;
 	ModulePlayer* player;
 };
 

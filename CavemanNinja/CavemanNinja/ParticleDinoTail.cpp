@@ -7,7 +7,7 @@
 
 ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Particle(type, generator)
 {
-	 dinotail = new Animation(App->particles->dinotail_animation, this);
+	dinotail_animation = new Animation(App->particles->dinotail_animation, this);
 
 	 position.x = TAIL_LIMIT_LEFT;
 	 position.y = TAIL_Y;
@@ -16,14 +16,14 @@ ParticleDinoTail::ParticleDinoTail(particle_type type, Sprite* generator) : Part
 
 	 damage = 5;
 
-	 SetCurrentAnimation(dinotail);
+	 SetCurrentAnimation(dinotail_animation);
 
 	 state = TAIL_FORWARD;
 }
 
 ParticleDinoTail::~ParticleDinoTail()
 {
-	RELEASE(dinotail);
+	RELEASE(dinotail_animation);
 }
 
 void ParticleDinoTail::ParticleUpdate()

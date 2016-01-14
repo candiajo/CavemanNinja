@@ -127,19 +127,23 @@ bool ModuleParticles::CleanUp()
 
 	particles.clear();
 
-	axe_animation.DestroyColliders();
-	superaxe_animation.DestroyColliders();
-	bone_animation.DestroyColliders();
-	superbone_animation.DestroyColliders();
-	tusk_animation.DestroyColliders();
-	wheel_animation.DestroyColliders();
-	superwheel_animation.DestroyColliders();
-	rollingstone_animation.DestroyColliders();
-	breakingstone_animation.DestroyColliders();
-	rollingenemy_animation.DestroyColliders();
-	dinotail_animation.DestroyColliders();
-	item_animation.DestroyColliders();
-
+	axe_animation.ClearAnimation();
+	superaxe_animation.ClearAnimation();
+	bone_animation.ClearAnimation();
+	superbone_animation.ClearAnimation();
+	tusk_animation.ClearAnimation();
+	wheel_animation.ClearAnimation();
+	superwheel_animation.ClearAnimation();
+	rollingstone_animation.ClearAnimation();
+	breakingstone_animation.ClearAnimation();
+	rollingenemy_animation.ClearAnimation();
+	hitenemy_animation.ClearAnimation();
+	defeatedenemy_animation.ClearAnimation();
+	dinotail_animation.ClearAnimation();
+	item_animation.ClearAnimation();
+	armfast_animation.ClearAnimation();
+	armslow_animation.ClearAnimation();
+	hit_animation.ClearAnimation();
 
 	return true;
 }

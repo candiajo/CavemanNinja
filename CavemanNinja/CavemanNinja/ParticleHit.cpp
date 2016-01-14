@@ -6,10 +6,10 @@
 
 ParticleHit::ParticleHit(particle_type type, Sprite* generator) : Particle(type, generator)
 {
-	hit = new Animation(App->particles->hit_animation, this);
-	SetCurrentAnimation(hit);
+	hit_animation = new Animation(App->particles->hit_animation, this);
+	SetCurrentAnimation(hit_animation);
 
-	current_frame = &hit->PeekFrame(type);
+	current_frame = &hit_animation->PeekFrame(type);
 
 	position.x = generator->position.x + current_frame->offset.x;
 	position.y = generator->position.y + current_frame->offset.y;
@@ -22,7 +22,7 @@ ParticleHit::ParticleHit(particle_type type, Sprite* generator) : Particle(type,
 
 ParticleHit::~ParticleHit()
 {
-	RELEASE(hit);
+	RELEASE(hit_animation);
 	RELEASE(timer);
 }
 

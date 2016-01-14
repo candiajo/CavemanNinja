@@ -38,7 +38,7 @@ ParticleBone::ParticleBone(particle_type type, Sprite* generator) : Particle(typ
 		offset.y = -15;
 		distance_straight = 60;
 		first_state = BONE_FORWARD;
-		bone = new Animation(App->particles->superbone_animation, this);
+		bone_animation = new Animation(App->particles->superbone_animation, this);
 	}
 	else // normal bone
 	{
@@ -71,15 +71,15 @@ ParticleBone::ParticleBone(particle_type type, Sprite* generator) : Particle(typ
 
 		damage = 1;
 		distance_straight = 30;
-		bone = new Animation(App->particles->bone_animation, this);
+		bone_animation = new Animation(App->particles->bone_animation, this);
 	}
 
 	x_speed *= (float)modifier;
 
-	SetCurrentAnimation(bone);
+	SetCurrentAnimation(bone_animation);
 
 	if (direction == LEFT)
-		offset.x = (generator->current_frame->section->w - bone->frames.front().section->w - offset.x);
+		offset.x = (generator->current_frame->section->w - bone_animation->frames.front().section->w - offset.x);
 
 	position.x += offset.x;
 	position.y += offset.y;
@@ -91,7 +91,7 @@ ParticleBone::ParticleBone(particle_type type, Sprite* generator) : Particle(typ
 
 ParticleBone::~ParticleBone()
 {
-	RELEASE(bone);
+	RELEASE(bone_animation);
 	RELEASE(timer);
 	RELEASE(delay);
 }

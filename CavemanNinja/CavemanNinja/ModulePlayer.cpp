@@ -1,3 +1,4 @@
+#include "ModuleSceneDino.h"
 #include "ParticleArm.h"
 #include "ModuleAudio.h"
 #include "Timer.h"
@@ -59,6 +60,8 @@ update_status ModulePlayer::Update()
 		state->Enter(*this);
 	}
 
+	if (App->scene_dino->enter_dino) state->event = ENTER_DINO;
+
 	current_frame = &(*current_animation).GetCurrentFrame();
 	position.x += x_speed;
 	position.y += y_speed;
@@ -91,24 +94,32 @@ update_status ModulePlayer::PostUpdate()
 
 bool ModulePlayer::CleanUp()
 {
-	idle.DestroyColliders();
-	walk.DestroyColliders();
-	crouch.DestroyColliders();
-	lookup.DestroyColliders();
-	normaljump.DestroyColliders();
-	superjump.DestroyColliders();
-	downjump.DestroyColliders();
-	shotweapon.DestroyColliders();
-	shotnoweapon.DestroyColliders();
-	shotcrouch.DestroyColliders();
-	shotup.DestroyColliders();
-	shotupnw.DestroyColliders();
-	frontattack.DestroyColliders();
-	backattack.DestroyColliders();
-	frontdying.DestroyColliders();
-	backdying.DestroyColliders();
-	salute.DestroyColliders();
-	tired.DestroyColliders();
+	idle.ClearAnimation();
+	walk.ClearAnimation();
+	crouch.ClearAnimation();
+	lookup.ClearAnimation();
+	normaljump.ClearAnimation();
+	superjump.ClearAnimation();
+	supershot.ClearAnimation();
+	downjump.ClearAnimation();
+	shotweapon.ClearAnimation();
+	shotnoweapon.ClearAnimation();
+	shotcrouch.ClearAnimation();
+	shotup.ClearAnimation();
+	shotupnw.ClearAnimation();
+	frontattack.ClearAnimation();
+	backattack.ClearAnimation();
+	frontdying.ClearAnimation();
+	backdying.ClearAnimation();
+	salute.ClearAnimation();
+	tired.ClearAnimation();
+	scared.ClearAnimation();
+	ch_idle.ClearAnimation();
+	ch_walk.ClearAnimation();
+	ch_crouch.ClearAnimation();
+	ch_lookup.ClearAnimation();
+	ch_normaljump.ClearAnimation();
+	ch_downjump.ClearAnimation();
 
 	App->textures->Unload(texture_sprite);
 
@@ -154,6 +165,7 @@ void ModulePlayer::LoadData()
 		else if (name == "salute") StoreData(info, data, salute, this);
 		else if (name == "tired") StoreData(info, data, tired, this);
 		else if (name == "supershot") StoreData(info, data, supershot, this);
+		else if (name == "scared") StoreData(info, data, scared, this);
 	}
 
 	idle.SetAlternateVersion(&ch_idle);
@@ -171,6 +183,7 @@ void ModulePlayer::LoadData()
 	fx_player_jump = App->audio->LoadFx(FX_PLAYER_JUMP);
 	fx_player_land = App->audio->LoadFx(FX_PLAYER_LAND);
 	fx_super_jump = App->audio->LoadFx(FX_SUPER_JUMP);
+	fx_take_item = App->audio->LoadFx(FX_TAKE_ITEM);
 
 	player_weapon[AXE][HORIZONTAL] = AXE_HORZ;
 	player_weapon[AXE][VERTICAL] = AXE_VERT;

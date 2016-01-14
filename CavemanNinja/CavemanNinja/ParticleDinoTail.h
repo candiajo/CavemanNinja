@@ -28,7 +28,7 @@ public:
 	void OnCollision(Collider* my_collider, Collider* other_collider);
 
 private:
-	Animation* dinotail;
+	Animation* dinotail_animation;
 	dinotail_state state;
 	unsigned int fx_dino_tail;
 };

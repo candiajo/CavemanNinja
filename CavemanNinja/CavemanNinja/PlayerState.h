@@ -15,9 +15,9 @@ public:
 	void CheckPosition(ModulePlayer& player);
 	virtual void OnCollision(Collider* my_collider, Collider* other_collider) = 0;
 
-protected:
 	game_events event;
 
+protected:
 	void ThrowParticle(ModulePlayer* player, particle_type weapon) const;
 	void RollArm(ModulePlayer* player) const;
 };

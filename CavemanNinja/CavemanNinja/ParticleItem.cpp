@@ -1,3 +1,4 @@
+#include "ModuleAudio.h"
 #include "ParticleItem.h"
 #include "Timer.h"
 #include "ModuleParticles.h"
@@ -11,8 +12,9 @@ ParticleItem::ParticleItem(particle_type type)
 	timer = new Timer(9000);
 	timer->StartTimer();
 
-	item_animation = new Animation(App->particles->item_animation, this);
+	fx_take_item = App->player1->fx_take_item;
 
+	item_animation = new Animation(App->particles->item_animation, this);
 	SetCurrentAnimation(item_animation);
 	
 	if (type == ITEM_BONE) current_frame = &current_animation->PeekFrame(0);
@@ -64,6 +66,7 @@ void ParticleItem::OnCollision(Collider* my_collider, Collider* other_collider)
 {
 	if (other_collider->type == COLLIDER_PLAYER_BODY)
 	{
+		App->audio->PlayFx(fx_take_item);
 		dynamic_cast<ModulePlayer*>(other_collider->callback)->current_weapon = weapon;
 		to_destroy = true;
 	}

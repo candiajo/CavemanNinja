@@ -140,7 +140,8 @@ enum game_events
 	DINO_GET_SUPERHIT,
 	DINO_IS_DEFEATED,
 	PLAYER_HIT_FRONT,
-	PLAYER_HIT_BACK
+	PLAYER_HIT_BACK,
+	ENTER_DINO
 };
 
 enum attack_direction
@@ -183,7 +184,7 @@ void log(const char file[], int line, const char* format, ...);
 
 #define SCREEN_WIDTH 256
 #define SCREEN_HEIGHT 240
-#define SCREEN_SIZE 2
+#define SCREEN_SIZE 3
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "Joe & Mac Caveman Ninja"
@@ -222,6 +223,7 @@ void log(const char file[], int line, const char* format, ...);
 #define FX_DINO_STOPMS "Content\\Audio\\dino stomps.wav"
 #define FX_DINO_TAIL "Content\\Audio\\dino tail.wav"
 #define FX_BEGIN_PLAY "Content\\Audio\\begin play.wav"
+#define FX_TAKE_ITEM "Content\\Audio\\take item.wav"
 
 #define	LEFT_LIMIT -25
 #define	RIGHT_LIMIT 195
@@ -231,6 +233,7 @@ void log(const char file[], int line, const char* format, ...);
 #define DEFAULT_X_SPEED 1
 #define PLAYER_MAX_ENERGY 18
 #define DINO_MAX_ENERGY 13
+#define PLAYER_MAX_LIVES 2
 
 #define CAN_FLIP true
 #define ANGRY_VERSION true

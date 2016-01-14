@@ -192,6 +192,9 @@
     <ClCompile Include="ParticleTusk.cpp">
       <Filter>Particles</Filter>
     </ClCompile>
+    <ClCompile Include="ScaredState.cpp">
+      <Filter>StatesMachine\Player States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="ParticleTusk.h">
       <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaredState.h">
+      <Filter>StatesMachine\Player States</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ SpritePlatform::SpritePlatform(SDL_Texture* sprite_texture, Animation* animation
 
 SpritePlatform::~SpritePlatform() 
 {
-	bgplatform_animation->DestroyColliders(); 
+	bgplatform_animation->ClearAnimation(); 
 };
 
 bool SpritePlatform::Start()

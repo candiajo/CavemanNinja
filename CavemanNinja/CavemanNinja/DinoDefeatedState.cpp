@@ -21,6 +21,7 @@ DinoState* DinoDefeatedState::Update(ModuleDino& dino)
 			substate = DINO_DEFEATED_BACKWARDS;
 		}
 		break;
+
 	case DINO_DEFEATED_BACKWARDS:
 		dino.position.x -= 0.8f;
 		dino.position.y += Y_variation();
@@ -30,9 +31,9 @@ DinoState* DinoDefeatedState::Update(ModuleDino& dino)
 			substate = DINO_DEFEATED_FALLING;
 		}
 		break;
+
 	case DINO_DEFEATED_FALLING:
 		dino.position.x += 0.4f;
-		//dino.position.y *= 1.04f;
 		dino.y_speed += 0.1f;
 		dino.position.y += dino.y_speed;
 
@@ -43,10 +44,13 @@ DinoState* DinoDefeatedState::Update(ModuleDino& dino)
 			dino.position.y = DINO_DOWN_LIMIT - 1; 
 		}
 		break;
+
 	case DINO_DEFEATED_BOUNCE:
 		dino.y_speed += 0.1f;
 		dino.position.y += dino.y_speed;
 		if (dino.position.y >= DINO_DOWN_LIMIT)	substate = DINO_STOP;
+		break;
+
 	case DINO_STOP:
 		App->scene_dino->dino_defeated = true;
 	}

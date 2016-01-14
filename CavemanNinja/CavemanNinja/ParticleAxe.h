@@ -30,7 +30,7 @@ private:
 	unsigned int fx_player_superattack;
 	axe_state first_state;
 	Timer* delay;
-	Animation* axe;
+	Animation* axe_animation;
 	float distance_straight;	// distance that the axe goes straight (then falls)
 };
 

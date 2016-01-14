@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ModuleAudio::ModuleAudio( bool start_enabled) : Module( start_enabled)
+ModuleAudio::ModuleAudio( bool start_enabled) : Module(start_enabled)
 {}
 
 // Called before render is available
